@@ -15,9 +15,12 @@
         android:textColor="@color/white" />
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
+        android:layout_width="76dp"
+        android:layout_height="68dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="172dp"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/chat" />
 
 </RelativeLayout>
