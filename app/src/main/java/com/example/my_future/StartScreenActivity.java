@@ -19,6 +19,6 @@ public class StartScreenActivity extends AppCompatActivity {
                 startActivity(new Intent(StartScreenActivity.this, AuthorizationActivity.class));
                 finish();
             }
-        }, 3000);
+        }, 2000);
     }
 }
