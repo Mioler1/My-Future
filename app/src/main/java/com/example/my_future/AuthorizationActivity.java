@@ -41,7 +41,6 @@ public class AuthorizationActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
-
         come = findViewById(R.id.comeButton);
         registration = findViewById(R.id.regButton);
 
@@ -65,6 +64,8 @@ public class AuthorizationActivity extends AppCompatActivity {
         LinearLayout registrationLayout = findViewById(R.id.RegLayout);
         authorizationLayout.setVisibility(View.VISIBLE);
         registrationLayout.setVisibility(View.GONE);
+        come.setVisibility(View.VISIBLE);
+        registration.setVisibility(View.GONE);
 
         EditText emailAf = findViewById(R.id.email_authorization);
         EditText emailReg = findViewById(R.id.email_registration);
@@ -80,6 +81,8 @@ public class AuthorizationActivity extends AppCompatActivity {
         LinearLayout registrationLayout = findViewById(R.id.RegLayout);
         authorizationLayout.setVisibility(View.GONE);
         registrationLayout.setVisibility(View.VISIBLE);
+        come.setVisibility(View.GONE);
+        registration.setVisibility(View.VISIBLE);
     }
 
     private void MyToast(String message) {

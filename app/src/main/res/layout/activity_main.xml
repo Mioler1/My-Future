@@ -30,4 +30,10 @@
         android:layout_marginBottom="0dp"
         android:src="@drawable/chat" />
 
+    <WebView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/v2" />
+
+
 </RelativeLayout>

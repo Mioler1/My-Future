@@ -4,21 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fon"
     tools:context=".AuthorizationActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logog"
+        android:layout_centerHorizontal="true"
+        />
 
     <LinearLayout
         android:id="@+id/autoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal"
+        android:layout_below="@+id/logo"
+        >
+
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_weight="1"
+            android:background="@drawable/shape_button"
+            android:fontFamily="@font/roboto"
             android:onClick="onClickAuthorization"
             android:text="Авторизация" />
 
@@ -27,6 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
+            android:background="@drawable/shape_button"
+            android:fontFamily="@font/roboto"
             android:onClick="onClickRegistration"
             android:text="Регистрация" />
 
@@ -35,9 +51,13 @@
     <LinearLayout
         android:id="@+id/AutoLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="325dp"
+        android:layout_below="@+id/autoButton"
         android:layout_centerInParent="true"
+        android:background="@drawable/shape_login"
         android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
         android:visibility="visible">
 
         <EditText
@@ -46,9 +66,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
+            android:drawableRight="@drawable/email"
+            android:fontFamily="@font/roboto"
             android:hint="Email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:visibility="visible" />
 
         <EditText
             android:id="@+id/password_authorization"
@@ -58,26 +82,48 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
+            android:drawableRight="@drawable/padlock"
+            android:fontFamily="@font/roboto"
             android:hint="Пароль"
             android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/comeButton"
-            android:layout_width="200dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="Войти" />
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="right"
+            android:paddingLeft="50dp"
+            android:paddingTop="20dp"
+            android:paddingRight="25dp"
+            android:text="Забыли пароль?"
+            android:textSize="16sp" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/comeButton"
+        android:layout_width="252dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/AutoLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/shape_button"
+        android:fontFamily="@font/roboto"
+        android:text="Войти" />
 
     <LinearLayout
         android:id="@+id/RegLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="325dp"
+        android:layout_below="@id/autoButton"
         android:layout_centerInParent="true"
+        android:background="@drawable/shape_login"
         android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
         android:visibility="gone">
+
 
         <EditText
             android:id="@+id/email_registration"
@@ -85,7 +131,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
+            android:fontFamily="@font/roboto"
             android:hint="Email"
             android:inputType="textEmailAddress" />
 
@@ -97,6 +145,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
+            android:fontFamily="@font/roboto"
             android:hint="Пароль"
             android:inputType="textPassword" />
 
@@ -108,17 +157,22 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
+            android:fontFamily="@font/roboto"
             android:hint="Повторить пароль"
             android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/regButton"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="Зарегистрироваться" />
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/regButton"
+        android:layout_width="252dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/RegLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/shape_button"
+        android:fontFamily="@font/roboto"
+        android:text="Зарегистрироваться"
+        android:visibility="gone" />
 
 </RelativeLayout>
