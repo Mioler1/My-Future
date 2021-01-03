@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">My_Future</string>
+    <string name="changePassword">Забыли пароль?</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Auto">Авторизоваться</string>
+    <string name="Reg">Регистрация</string>
+    <string name="Add">Войти</string>
+    <string name="Registration">Зарегистрироваться</string>
+    <string name="RepeatPassword">Повторите пароль</string>
 </resources>
