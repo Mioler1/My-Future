@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Выход"
-        android:onClick="onClickOut"/>
+        android:onClick="onClickOut"
+        android:text="Выход" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
     <WebView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/v2" />
+        android:src="@drawable/logo_gif" />
 
 
 </RelativeLayout>
