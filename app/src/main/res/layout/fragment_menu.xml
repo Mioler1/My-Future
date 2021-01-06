@@ -8,11 +8,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/white"
+        android:background="#202225"
         app:headerLayout="@layout/menu_header"
         app:itemIconSize="30dp"
-        app:itemIconTint="#FF5722"
-        app:itemTextColor="#DA1E1E"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
         app:menu="@menu/drawer_menu" />
 
 </RelativeLayout>

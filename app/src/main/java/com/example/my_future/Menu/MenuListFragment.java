@@ -1,8 +1,13 @@
 package com.example.my_future.Menu;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,7 +39,7 @@ public class MenuListFragment extends Fragment {
                 return false;
             }
         });
-//        fontFor();
+        fontFor();
         return view;
     }
 
@@ -42,30 +47,29 @@ public class MenuListFragment extends Fragment {
         this.navItemSelectedListener = navItemSelectedListener;
     }
 
-//    private void fontFor() {
-//        Menu menu = vNavigation.getMenu();
-//        for (int i = 0; i < menu.size(); i++) {
-//            MenuItem menuItem = menu.getItem(i);
-//
-//            SubMenu subMenu = menuItem.getSubMenu();
-//            if (subMenu != null && subMenu.size() > 0) {
-//                for (int j = 0; j < subMenu.size(); j++) {
-//                    MenuItem subMenuItem = subMenu.getItem(j);
-//                    applyFontToMenuItem(subMenuItem);
-//                }
-//            }
-//            applyFontToMenuItem(menuItem);
-//        }
-//    }
-//
-//    private void applyFontToMenuItem(MenuItem menuItem) {
-//        if (getActivity() != null) {
-//            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), getString(R.string.font));
-//            SpannableString mNewTitle = new SpannableString(menuItem.getTitle());
-//            mNewTitle.setSpan(new CustomTypeFaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-//            menuItem.setTitle(mNewTitle);
-//        }
-//    }
+    private void fontFor() {
+        Menu menu = vNavigation.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
 
+            SubMenu subMenu = menuItem.getSubMenu();
+            if (subMenu != null && subMenu.size() > 0) {
+                for (int j = 0; j < subMenu.size(); j++) {
+                    MenuItem subMenuItem = subMenu.getItem(j);
+                    applyFontToMenuItem(subMenuItem);
+                }
+            }
+            applyFontToMenuItem(menuItem);
+        }
+    }
+
+    private void applyFontToMenuItem(MenuItem menuItem) {
+        if (getActivity() != null) {
+            Typeface font = Typeface.createFromAsset(getActivity().getAssets(), getString(R.string.font));
+            SpannableString mNewTitle = new SpannableString(menuItem.getTitle());
+            mNewTitle.setSpan(new CustomTypeFaceSpan("", font), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            menuItem.setTitle(mNewTitle);
+        }
+    }
 
 }
