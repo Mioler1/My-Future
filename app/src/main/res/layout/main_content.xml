@@ -12,22 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:onClick="onClickOut"
-        android:text="Выход"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Hello Serge31"
-        android:textColor="@color/white" />
+        android:text="Выход" />
 
     <ImageView
-        android:layout_width="76dp"
-        android:layout_height="68dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="172dp"
-        android:layout_marginBottom="0dp"
-        android:src="@drawable/chat" />
+        android:id="@+id/avatar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop" />
 
 </RelativeLayout>

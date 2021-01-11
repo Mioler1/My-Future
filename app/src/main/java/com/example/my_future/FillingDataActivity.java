@@ -1,17 +1,22 @@
 package com.example.my_future;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -19,7 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.my_future.Models.User;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +35,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
 
 public class FillingDataActivity extends AppCompatActivity {
 
@@ -37,10 +49,14 @@ public class FillingDataActivity extends AppCompatActivity {
     TextView textNoVisibleGender;
     TextView textNoVisibleTarget;
     ProgressBar progressBar;
+    ImageView avatar_img;
 
-    FirebaseAuth mAuth;
     FirebaseDatabase db;
+    FirebaseAuth mAuth;
     DatabaseReference myRef;
+    StorageReference mStorageRef;
+
+    Uri uploadUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +74,62 @@ public class FillingDataActivity extends AppCompatActivity {
         gender = findViewById(R.id.gender);
         target = findViewById(R.id.target);
         progressBar = findViewById(R.id.progressBar);
+        avatar_img = findViewById(R.id.avatar);
 
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
+        mAuth = FirebaseAuth.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
+
+        avatar_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent uploadIntent = new Intent();
+                uploadIntent.setType("image/*");
+                uploadIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(uploadIntent, 1);
+            }
+        });
     }
 
     private void MyToast(String message) {
         Toast.makeText(FillingDataActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && data != null && data.getData() != null) {
+            if (resultCode == RESULT_OK) {
+                avatar_img.setImageURI(data.getData());
+                uploadImage();
+            }
+        }
+    }
+
+    private void uploadImage() {
+        Bitmap bitmap = ((BitmapDrawable) avatar_img.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] byteArray = baos.toByteArray();
+        final StorageReference myStorage = mStorageRef.child(System.currentTimeMillis() + "my_avatar");
+        UploadTask uploadTask = myStorage.putBytes(byteArray);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                return myStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                uploadUri = task.getResult();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                MyToast("Картинка не загрузилась");
+            }
+        });
     }
 
     public void onClickSaveFillingData(View view) {
@@ -94,6 +158,7 @@ public class FillingDataActivity extends AppCompatActivity {
                 user.setWeight(weight.getText().toString());
                 user.setGender(textNoVisibleGender.getText().toString());
                 user.setTarget(textNoVisibleTarget.getText().toString());
+                user.setAvatar(uploadUri.toString());
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
 
                 comeEmailVer();

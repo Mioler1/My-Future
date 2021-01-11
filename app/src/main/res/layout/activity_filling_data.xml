@@ -26,6 +26,14 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fon" />
+
         <EditText
             android:id="@+id/nickname"
             android:layout_width="match_parent"
