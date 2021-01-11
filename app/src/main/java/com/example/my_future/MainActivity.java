@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.my_future.Menu.MenuListFragment;
 import com.example.my_future.Menu.NavItemSelectedListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
     FirebaseAuth mAuth;
@@ -20,7 +23,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         setupMenu();
         init();
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
     public void onClickOut(View view) {
         mAuth.signOut();
-        startActivity(new Intent(MainActivity.this, AuthorizationActivity.class));
+        startActivity(new Intent(MainActivity.this, FirstScreen.class));
         finish();
     }
 }

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">My_Future</string>
     <string name="font">JetBrainsMono-VariableFont_wght.ttf</string>
+    <string name="cyberfall">19700.ttf</string>
     // Авторизация
     <string name="Email">Email</string>
     <string name="Password">Password</string>
@@ -10,5 +11,10 @@
     <string name="Registration">Регистрация</string>
     <string name="Come">Войти</string>
     <string name="changePassword">Забыли пароль?</string>
+    <string name="start">Погнали!</string>
+    <string name="Already">Уже зарегистрирован?</string>
+    <string name="Aut">Войти</string>
+    <string name="ProjectName">My Future</string>
+    <string name="quote">Победит не тот, кто сильнее, а тот, кто готов идти до конца.</string>
     // ...
 </resources>

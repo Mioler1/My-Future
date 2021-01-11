@@ -26,13 +26,17 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".AuthorizationActivity"
+        <activity android:name=".FirstScreen"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".AuthorizationActivity"
+            android:screenOrientation="portrait" />
+
 
         <activity
             android:name=".FillingDataActivity"
