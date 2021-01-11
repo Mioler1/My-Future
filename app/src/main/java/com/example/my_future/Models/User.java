@@ -3,13 +3,9 @@ package com.example.my_future.Models;
 public class User {
     private String email, password;
     private String nickname, weight, gender, target;
+    private String avatar;
 
     public User() {
-    }
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
     }
 
     public String getEmail() {
@@ -58,5 +54,13 @@ public class User {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
