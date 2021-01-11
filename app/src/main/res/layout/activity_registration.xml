@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fon"
-    tools:context=".AuthorizationActivity">
+    tools:context=".RegistrationActivity">
 
     <ImageView
         android:id="@+id/logo"
@@ -15,80 +15,63 @@
         android:src="@drawable/shortcut_logo" />
 
     <LinearLayout
-        android:id="@+id/AutoLayout"
+        android:id="@+id/RegLayout"
         android:layout_width="match_parent"
         android:layout_height="325dp"
         android:layout_centerInParent="true"
         android:background="@drawable/shape_login"
         android:orientation="vertical"
         android:paddingStart="50dp"
-        android:paddingEnd="50dp"
-        android:visibility="visible">
+        android:paddingEnd="50dp">
 
         <EditText
-            android:id="@+id/email_authorization"
+            android:id="@+id/email_registration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
-            android:drawableEnd="@drawable/email"
             android:fontFamily="@font/roboto"
             android:hint="@string/Email"
-            android:inputType="textEmailAddress"
-            android:visibility="visible" />
+            android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/password_authorization"
+            android:id="@+id/password_registration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="20dp"
-            android:drawableEnd="@drawable/padlock"
             android:fontFamily="@font/roboto"
             android:hint="@string/Password"
             android:inputType="textPassword" />
 
-        <TextView
+        <EditText
+            android:id="@+id/repeat_password_registration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
             android:fontFamily="@font/roboto"
-            android:gravity="end"
-            android:paddingStart="50dp"
-            android:paddingTop="20dp"
-            android:paddingEnd="25dp"
-            android:text="@string/changePassword"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/roboto"
-            android:gravity="end"
-            android:paddingStart="50dp"
-            android:paddingTop="20dp"
-            android:paddingEnd="25dp"
-            android:text="@string/Registration"
-            android:textSize="16sp"
-            android:onClick="onClickRegistrationActivity"/>
+            android:hint="@string/RepeatPassword"
+            android:inputType="textPassword" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/comeButton"
+        android:id="@+id/regButton"
         android:layout_width="252dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/AutoLayout"
+        android:layout_below="@id/RegLayout"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/shape_button"
         android:fontFamily="@font/roboto"
-        android:text="@string/Come"
+        android:text="@string/Registration"
         android:textColor="#d7ddcf" />
 
     <ProgressBar

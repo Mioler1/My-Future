@@ -1,80 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#000000"
-    tools:context=".FirstScreen">
+    tools:context=".FirstScreenActivity">
 
     <com.synnapps.carouselview.CarouselView
         android:id="@+id/carousel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:slideInterval="7000"
+        app:animateOnBoundary="false"
         app:pageTransformInterval="2200"
         app:pageTransformer="zoom"
-        app:animateOnBoundary="false"
-
-        />
+        app:slideInterval="7000" />
 
     <TextView
         android:id="@+id/NameProject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:fontFamily="@font/audiowide"
         android:text="@string/ProjectName"
         android:textColor="#d7ddcf"
-        android:textSize="40sp"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="40sp" />
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/quote"-->
-<!--        android:textSize="16dp"-->
-<!--        android:layout_marginStart="30dp"-->
-<!--        android:layout_marginEnd="30dp"-->
-<!--        android:textColor="#d7ddcf"-->
-<!--        android:layout_below="@id/NameProject"-->
-<!--        android:gravity="center"/>-->
+    <!--    <TextView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="@string/quote"-->
+    <!--        android:textSize="16dp"-->
+    <!--        android:layout_marginStart="30dp"-->
+    <!--        android:layout_marginEnd="30dp"-->
+    <!--        android:textColor="#d7ddcf"-->
+    <!--        android:layout_below="@id/NameProject"-->
+    <!--        android:gravity="center"/>-->
 
     <Button
         android:id="@+id/buttonReg"
-        android:onClick="onClickButtonReg"
         android:layout_width="250dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="450dp"
-        android:text="@string/start"
-        android:textSize="20sp"
         android:background="@drawable/shape_button"
-        android:textColor="#d7ddcf"
+        android:onClick="onClickRegistrationActivity"
+        android:text="@string/start"
         android:textAllCaps="false"
-        />
+        android:textColor="#d7ddcf"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/Questions"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:textSize="16sp"
-        android:textColor="#d7ddcf"
-        android:text="@string/Already"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/buttonReg"
-        />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/Already"
+        android:textColor="#d7ddcf"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/buttonAut"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:text="@string/Aut"
-        android:textColor="#ffffff"
-        android:background="@null"
-        android:textSize="16sp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/Questions"
-        android:textAllCaps="false"/>
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:onClick="onClickAuthorizationActivity"
+        android:text="@string/Aut"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
 
 </RelativeLayout>

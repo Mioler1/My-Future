@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.My_Future">
+        <activity android:name=".RegistrationActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
@@ -25,23 +26,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".FirstScreen"
+        <activity
+            android:name=".FirstScreenActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".AuthorizationActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".FillingDataActivity"
             android:screenOrientation="portrait" />
-
     </application>
 
 </manifest>

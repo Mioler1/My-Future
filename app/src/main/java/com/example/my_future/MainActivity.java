@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
     public void onClickOut(View view) {
         mAuth.signOut();
-        startActivity(new Intent(MainActivity.this, AuthorizationActivity.class));
+        startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
         finish();
     }
 
