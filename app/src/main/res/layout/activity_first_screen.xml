@@ -14,7 +14,8 @@
         app:animateOnBoundary="false"
         app:pageTransformInterval="2200"
         app:pageTransformer="zoom"
-        app:slideInterval="7000" />
+        app:slideInterval="7000"
+        app:indicatorVisibility= "gone"/>
 
     <TextView
         android:id="@+id/NameProject"
@@ -41,8 +42,9 @@
         android:id="@+id/buttonReg"
         android:layout_width="250dp"
         android:layout_height="60dp"
+        android:layout_below="@+id/NameProject"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="425dp"
         android:background="@drawable/shape_button"
         android:onClick="onClickRegistrationActivity"
         android:text="@string/start"
