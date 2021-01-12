@@ -1,11 +1,11 @@
-package com.example.my_future;
+package com.example.my_future.Intro;
 
-public class ScreenItemLayout {
+public class IntroItem {
 
     String title, description;
     int ScreenImg;
 
-    public ScreenItemLayout(String title, String description, int screenImg) {
+    public IntroItem(String title, String description, int screenImg) {
         this.title = title;
         this.description = description;
         ScreenImg = screenImg;

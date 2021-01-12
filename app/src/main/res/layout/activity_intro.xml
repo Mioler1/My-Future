@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Intro">
-
+    tools:context=".Intro.IntroActivity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/Pager1"
         android:layout_width="match_parent"
         android:layout_height="591dp"
         android:layout_marginTop="75dp"
-        app:layout_constraintTop_toTopOf="parent"
         android:background="#c0c0c0"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/FirstPage"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="23dp"
+        android:layout_marginEnd="23dp"
         android:layout_marginBottom="5dp"
+        android:onClick="onClickLast"
         android:text="@string/buttonIntro"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false" />
 
     <com.google.android.material.tabs.TabLayout
         android:layout_width="248dp"

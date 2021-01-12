@@ -1,4 +1,4 @@
-package com.example.my_future;
+package com.example.my_future.Intro;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,15 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.my_future.R;
+
 import java.util.List;
 
 public class IntroViewPager extends PagerAdapter {
 
 
     Context mContext;
-    List<ScreenItemLayout> mListScreen;
+    List<IntroItem> mListScreen;
 
-    public IntroViewPager(Context mContext, List<ScreenItemLayout> mListScreen) {
+    public IntroViewPager(Context mContext, List<IntroItem> mListScreen) {
         this.mContext = mContext;
         this.mListScreen = mListScreen;
     }

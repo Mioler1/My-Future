@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.my_future.Intro.IntroActivity;
 import com.example.my_future.Models.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -158,7 +159,12 @@ public class FillingDataActivity extends AppCompatActivity {
                 user.setWeight(weight.getText().toString());
                 user.setGender(textNoVisibleGender.getText().toString());
                 user.setTarget(textNoVisibleTarget.getText().toString());
-                user.setAvatar(uploadUri.toString());
+                if (uploadUri != null) {
+                    user.setAvatar(uploadUri.toString());
+                } else {
+                    user.setAvatar("default");
+                }
+
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
 
                 comeEmailVer();
@@ -234,7 +240,7 @@ public class FillingDataActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;
         if (user.isEmailVerified()) {
-            startActivity(new Intent(FillingDataActivity.this, MainActivity.class));
+            startActivity(new Intent(FillingDataActivity.this, IntroActivity.class));
         } else {
             MyToast("Зайди на почту");
             startActivity(new Intent(FillingDataActivity.this, AuthorizationActivity.class));
