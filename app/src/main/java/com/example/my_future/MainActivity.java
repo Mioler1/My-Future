@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -64,13 +65,11 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     public void onNavItemSelectedListener(MenuItem item) {
         Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
-            case R.id.id_favorite:
-                Toast.makeText(MainActivity.this, "fwfw", Toast.LENGTH_SHORT).show();
+            case R.id.id_out:
+                mAuth.signOut();
+                startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
+                finish();
                 break;
-            case R.id.id_settings:
-                Toast.makeText(MainActivity.this, "fwfw41", Toast.LENGTH_SHORT).show();
-                break;
-
         }
     }
 
@@ -100,13 +99,11 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         });
     }
 
-    public void onClickOut(View view) {
-        mAuth.signOut();
-        startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
-        finish();
-    }
-
     private void MyToast(String message) {
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClickProfileActivity(View view) {
+        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
     }
 }

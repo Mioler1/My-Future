@@ -4,35 +4,34 @@
     tools:showIn="navigation_view">
 
     <item
+        android:id="@+id/id_progress"
+        android:icon="@drawable/settings"
+        android:title="Прогресс" />
+    <item
+        android:id="@+id/id_license"
+        android:icon="@drawable/settings"
+        android:title="Лицензия" />
+    <item
+        android:id="@+id/id_help"
+        android:icon="@drawable/settings"
+        android:title="Помощь" />
+    <item
         android:id="@+id/id_settings"
         android:icon="@drawable/settings"
         android:title="Настройки" />
     <item
-        android:id="@+id/id_favorite"
+        android:id="@+id/id_out"
         android:icon="@drawable/settings"
-        android:title="Настройки" />
+        android:title="Выход" />
 
-<!--    <item android:title="@string/cosmo">-->
-<!--        <menu>-->
-<!--            <item-->
-<!--                android:id="@+id/id_planet"-->
-<!--                android:title="@string/planet" />-->
-<!--            <item-->
-<!--                android:id="@+id/id_stars"-->
-<!--                android:title="@string/stars" />-->
-<!--            <item-->
-<!--                android:id="@+id/id_travel"-->
-<!--                android:title="@string/travel" />-->
-<!--        </menu>-->
-<!--    </item>-->
-<!--    <item android:title="@string/fancy">-->
-<!--        <menu>-->
-<!--            <item-->
-<!--                android:id="@+id/id_nlo"-->
-<!--                android:title="@string/nlo" />-->
-<!--            <item-->
-<!--                android:id="@+id/id_casts"-->
-<!--                android:title="@string/casts" />-->
-<!--        </menu>-->
-<!--    </item>-->
+    <!--    <item android:title="@string/fancy">-->
+    <!--        <menu>-->
+    <!--            <item-->
+    <!--                android:id="@+id/id_nlo"-->
+    <!--                android:title="@string/nlo" />-->
+    <!--            <item-->
+    <!--                android:id="@+id/id_casts"-->
+    <!--                android:title="@string/casts" />-->
+    <!--        </menu>-->
+    <!--    </item>-->
 </menu>
