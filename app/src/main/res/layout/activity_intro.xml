@@ -4,37 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Intro.IntroActivity">
+    tools:context=".Intro.IntroActivity"
+    android:background="#ffffff">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/Pager1"
         android:layout_width="match_parent"
-        android:layout_height="591dp"
-        android:layout_marginTop="75dp"
+        android:layout_height="585dp"
+        android:layout_marginTop="40dp"
         android:background="#c0c0c0"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp" >
+
+    </androidx.viewpager.widget.ViewPager>
+
 
     <Button
-        android:id="@+id/FirstPage"
+        android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="23dp"
-        android:layout_marginBottom="5dp"
-        android:onClick="onClickLast"
+        android:layout_marginBottom="10dp"
         android:text="@string/buttonIntro"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"/>
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="248dp"
+  <com.google.android.material.tabs.TabLayout
+      android:id="@+id/tab_indicator"
+      android:layout_width="75dp"
+      app:tabIndicatorColor="#ffffff"
+      android:layout_height="wrap_content"
+      app:tabBackground="@drawable/indicator_selector"
+      android:layout_below="@+id/Pager1"
+      android:layout_marginStart="23dp">
+
+  </com.google.android.material.tabs.TabLayout>
+
+    <Button
+        android:id="@+id/btn_get_start"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/Pager1"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="41dp"
-        android:layout_toStartOf="@+id/FirstPage">
-
-    </com.google.android.material.tabs.TabLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:textAllCaps="false"
+        android:layout_centerHorizontal="true"
+        android:text="@string/startProgram"
+        android:visibility="invisible" />
+    <!--        android:onClick="onClickLast"-->
 
 </RelativeLayout>

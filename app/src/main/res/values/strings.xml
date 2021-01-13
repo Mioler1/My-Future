@@ -17,5 +17,6 @@
     <string name="ProjectName">My Future</string>
     <string name="quote">Победит не тот, кто сильнее, а тот, кто готов идти до конца.</string>
     <string name="buttonIntro">Дальше</string>
+    <string name="startProgram">Начинаем!</string>
     // ...
 </resources>
