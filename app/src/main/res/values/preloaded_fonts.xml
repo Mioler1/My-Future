@@ -4,5 +4,6 @@
         <item>@font/audiowide</item>
         <item>@font/roboto</item>
         <item>@font/roboto_thin</item>
+        <item>@font/yanone_kaffeesatz</item>
     </array>
 </resources>

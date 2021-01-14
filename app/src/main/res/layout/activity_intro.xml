@@ -5,16 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Intro.IntroActivity"
-    android:background="#ffffff">
+    android:background="@color/custom">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/Pager1"
         android:layout_width="match_parent"
-        android:layout_height="585dp"
+        android:layout_height="590dp"
         android:layout_marginTop="40dp"
-        android:background="#c0c0c0"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" >
+        android:background="@color/custom"
+        tools:layout_editor_absoluteX="0dp">
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -22,22 +21,25 @@
     <Button
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="36dp"
+        android:background="@drawable/button_from_intro"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="23dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="7dp"
         android:text="@string/buttonIntro"
+        android:textColor="#d7ddcf"
         android:textAllCaps="false"/>
 
   <com.google.android.material.tabs.TabLayout
       android:id="@+id/tab_indicator"
       android:layout_width="75dp"
-      app:tabIndicatorColor="#ffffff"
+      app:tabIndicatorColor="#2f3136"
       android:layout_height="wrap_content"
       app:tabBackground="@drawable/indicator_selector"
       android:layout_below="@+id/Pager1"
-      android:layout_marginStart="23dp">
+      android:layout_marginStart="23dp"
+      android:layout_marginTop="5dp">
 
   </com.google.android.material.tabs.TabLayout>
 
@@ -51,6 +53,20 @@
         android:layout_centerHorizontal="true"
         android:text="@string/startProgram"
         android:visibility="invisible" />
-    <!--        android:onClick="onClickLast"-->
+
+    <Button
+        android:id="@+id/Skip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#d7ddcf"
+        android:fontFamily="@font/yanone_kaffeesatz"
+        android:text="@string/skipButton"
+        android:onClick="onClickAuthorizationActivity"
+        android:textAllCaps="false"
+        android:textSize="22sp"
+        android:layout_marginEnd="5dp"
+        android:layout_alignParentEnd="true"
+        android:background="@null"
+        />
 
 </RelativeLayout>

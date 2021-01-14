@@ -7,6 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="custom">#2f3136</color>
 
     //color for button "IntroActivity"
     <color name="gradient_start_color">#4c84ff</color>

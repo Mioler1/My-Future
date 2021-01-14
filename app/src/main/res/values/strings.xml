@@ -18,5 +18,6 @@
     <string name="quote">Победит не тот, кто сильнее, а тот, кто готов идти до конца.</string>
     <string name="buttonIntro">Дальше</string>
     <string name="startProgram">Начинаем!</string>
+    <string name="skipButton">Пропустить</string>
     // ...
 </resources>

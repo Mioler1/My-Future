@@ -3,11 +3,16 @@ package com.example.my_future.Intro;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import com.example.my_future.MainActivity;
@@ -25,7 +30,9 @@ public class IntroActivity extends AppCompatActivity {
     Button btnNext;
     int position = 0;
     Button btnGetStarted;
+    Animation btnAnim;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,7 @@ public class IntroActivity extends AppCompatActivity {
         btnNext = findViewById(R.id.btn_next);
         tabIndicator = findViewById(R.id.tab_indicator);
         btnGetStarted = findViewById(R.id.btn_get_start);
+        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.button_anim);
 
         //fill list screen
         List<IntroItem> mList = new ArrayList<>();
@@ -53,6 +61,7 @@ public class IntroActivity extends AppCompatActivity {
         screenPager = findViewById(R.id.Pager1);
         introViewPager = new IntroViewPager(this,mList);
         screenPager.setAdapter(introViewPager);
+        screenPager.setBackgroundColor(Color.GRAY);
 
         //setup tablayout
         tabIndicator.setupWithViewPager(screenPager);
@@ -72,15 +81,47 @@ public class IntroActivity extends AppCompatActivity {
                     }
             }
         });
+
+        //solve the problem
+
+        tabIndicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == mList.size()-1) {
+                    LoadLastScreen();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        btnGetStarted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent introAct = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(introAct);
+
+            }
+        });
+
     }
 
     private void LoadLastScreen() {
         btnNext.setVisibility(View.INVISIBLE);
         btnGetStarted.setVisibility(View.VISIBLE);
         tabIndicator.setVisibility(View.INVISIBLE);
+        btnGetStarted.setAnimation(btnAnim);
     }
 
-//    public void onClickLast(View view) {
-//        startActivity(new Intent(IntroActivity.this, MainActivity.class));
-//    }
+    public void onClickAuthorizationActivity(View view) {
+        startActivity(new Intent(IntroActivity.this, MainActivity.class));
+    }
 }
