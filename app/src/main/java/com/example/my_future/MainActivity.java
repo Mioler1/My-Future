@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                             if (profile.getKey().equals("profile")) {
                                 for (DataSnapshot avatar : profile.getChildren()) {
                                     if (avatar.getKey().equals("avatar")) {
-                                        Glide.with(avatar_img).load(avatar.getValue().toString()).error(R.drawable.up).into(avatar_img);
+                                        Glide.with(avatar_img).load(avatar.getValue().toString()).error(R.drawable.chat).into(avatar_img);
                                     }
                                 }
                             }
