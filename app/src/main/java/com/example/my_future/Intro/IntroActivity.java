@@ -53,9 +53,10 @@ public class IntroActivity extends AppCompatActivity {
 
         //fill list screen
         List<IntroItem> mList = new ArrayList<>();
-        mList.add(new IntroItem("List1","Loremasffsafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",R.drawable.intro1));
-        mList.add(new IntroItem("List2","Loremasffsafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",R.drawable.intro2));
-        mList.add(new IntroItem("List3","Loremasffsafffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",R.drawable.intro3));
+        mList.add(new IntroItem("Выбирай тренировку и начинай работать","каждый найдет свой путь",R.drawable.intro1));
+        mList.add(new IntroItem("Следи за своим питанием","вперед к заветному весу!",R.drawable.intro2));
+        mList.add(new IntroItem("Отслеживай свой прогресс","побей свои рекорд!",R.drawable.intro3));
+        mList.add(new IntroItem("Спроси советов у лучших","asf",R.drawable.intro1));
 
         //setup ViewPager
         screenPager = findViewById(R.id.Pager1);
@@ -121,7 +122,4 @@ public class IntroActivity extends AppCompatActivity {
         btnGetStarted.setAnimation(btnAnim);
     }
 
-    public void onClickAuthorizationActivity(View view) {
-        startActivity(new Intent(IntroActivity.this, MainActivity.class));
-    }
 }

@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,7 +25,19 @@ public class FirstScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_screen);
 
+        //animation for button all activity
+        final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.button_for_activity);
+        Button btnAlpha = findViewById(R.id.buttonReg);
+        btnAlpha.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                view.startAnimation(animAlpha);
+                startActivity(new Intent(FirstScreenActivity.this, RegistrationActivity.class));
+            }
+        });
+
         init();
+
     }
 
     private void init() {
@@ -36,10 +51,6 @@ public class FirstScreenActivity extends AppCompatActivity {
                 imageView.setImageResource(mImage[position]);
             }
         });
-    }
-
-    public void onClickRegistrationActivity(View view) {
-        startActivity(new Intent(FirstScreenActivity.this, RegistrationActivity.class));
     }
 
     public void onClickAuthorizationActivity(View view) {

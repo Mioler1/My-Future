@@ -46,7 +46,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="425dp"
         android:background="@drawable/shape_button"
-        android:onClick="onClickRegistrationActivity"
         android:text="@string/start"
         android:textAllCaps="false"
         android:textColor="#d7ddcf"
