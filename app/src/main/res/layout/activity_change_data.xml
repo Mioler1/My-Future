@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#aaa"
-            android:onClick="openChangeEmail"
+            android:onClick="openChangePassword"
             android:text="Изменить пароль"
             android:textSize="30sp" />
 
@@ -41,15 +41,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#aaa"
-            android:onClick="openChangeEmail"
-            android:text="Изменить Никнейм"
+            android:onClick="openChangeNickname"
+            android:text="Изменить никнейм"
             android:textSize="30sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#aaa"
-            android:onClick="openChangeEmail"
+            android:onClick="openChangeWeight"
             android:text="Изменить вес"
             android:textSize="30sp" />
 
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#aaa"
-            android:onClick="openChangeEmail"
+            android:onClick="openChangeTarget"
             android:text="Изменить цель"
             android:textSize="30sp" />
 

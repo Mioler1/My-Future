@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,28 +28,39 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class ChangeDataActivity extends AppCompatActivity {
 
-    EditText email_change, password_change, repeat_password_change, nickname_change, weight_change;
-    Spinner target_change;
     TextView textNoVisibleTargetChange;
-    ProgressBar progressBar;
     ImageView avatar_img_change;
+    ProgressBar progressBar;
+    Spinner target_change;
+    View viewAlert;
 
-    FirebaseDatabase db;
     FirebaseAuth mAuth;
+    FirebaseDatabase db;
     DatabaseReference myRef;
     StorageReference mStorageRef;
+    FirebaseUser mUser;
 
+    AlertDialog alertDialog;
     Uri uploadUri;
 
     @Override
@@ -57,16 +69,9 @@ public class ChangeDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_data);
 
         init();
-//        targetSelection();
     }
 
     private void init() {
-        email_change = findViewById(R.id.email_change);
-        password_change = findViewById(R.id.password_change);
-        repeat_password_change = findViewById(R.id.repeat_password_change);
-        nickname_change = findViewById(R.id.nickname_change);
-        weight_change = findViewById(R.id.weight_change);
-        target_change = findViewById(R.id.target_change);
         progressBar = findViewById(R.id.progressBar);
         avatar_img_change = findViewById(R.id.avatar_change);
 
@@ -74,6 +79,7 @@ public class ChangeDataActivity extends AppCompatActivity {
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
+        mUser = mAuth.getCurrentUser();
 
         avatar_img_change.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +94,6 @@ public class ChangeDataActivity extends AppCompatActivity {
 
     private void MyToast(String message) {
         Toast.makeText(ChangeDataActivity.this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    public void onClickSaveProfileData(View view) {
-
     }
 
     @Override
@@ -131,7 +133,8 @@ public class ChangeDataActivity extends AppCompatActivity {
     }
 
     private void targetSelection() {
-        textNoVisibleTargetChange = findViewById(R.id.visible_text_target);
+
+        textNoVisibleTargetChange = viewAlert.findViewById(R.id.visible_text_target_change);
         String[] targets = {"Выбрать новую цель", "Похудеть", "Рельеф", "Мышечная масса", "Сила"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, targets) {
@@ -169,16 +172,12 @@ public class ChangeDataActivity extends AppCompatActivity {
         target_change.setOnItemSelectedListener(itemSelectedListener);
     }
 
-    public void openChangeEmail(View view) {
-        openAlertDialog();
-    }
-
     private void openAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ChangeDataActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
         LayoutInflater inflater = getLayoutInflater();
-        View viewAlert = inflater.inflate(R.layout.alert_dialog_change_data, null);
+        viewAlert = inflater.inflate(R.layout.alert_dialog_change_data, null);
         builder.setView(viewAlert).setCancelable(false);
-        AlertDialog alertDialog = builder.create();
+        alertDialog = builder.create();
 
         viewAlert.findViewById(R.id.butCloseAlertDialog).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,13 +185,204 @@ public class ChangeDataActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
+
+        alertDialog.show();
+    }
+
+    public void openChangeEmail(View view) {
+        openAlertDialog();
+        EditText email_change = viewAlert.findViewById(R.id.email_change);
+        email_change.setVisibility(View.VISIBLE);
+
         viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (email_change.getText().toString().isEmpty()) {
+                    MyToast("Введите email");
+                    return;
+                }
+                if (mAuth.getUid().equals(email_change.getText().toString())) {
+                    MyToast("Введен текущий email");
+                    return;
+                }
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        mUser.updateEmail(email_change.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    mUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            MyToast("Зайдите на почту");
+                                            myRef.child(mAuth.getUid()).child("email").setValue(email_change.getText().toString());
+                                            mAuth.signOut();
+                                            startActivity(new Intent(ChangeDataActivity.this, AuthorizationActivity.class));
+                                            finish();
+                                        }
+                                    });
+                                } else {
+                                    try {
+                                        throw Objects.requireNonNull(task.getException());
+                                    } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
+                                        MyToast("Неверный адрес");
+
+                                    } catch (FirebaseAuthUserCollisionException existEmail) {
+                                        MyToast("Данный email уже используется");
+
+                                    } catch (Exception e) {
+                                        MyToast(e.getMessage());
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+    }
+
+    public void openChangePassword(View view) {
+        openAlertDialog();
+        EditText old_password = viewAlert.findViewById(R.id.old_password);
+        EditText password_change = viewAlert.findViewById(R.id.password_change);
+        EditText repeat_password_change = viewAlert.findViewById(R.id.repeat_password_change);
+        old_password.setVisibility(View.VISIBLE);
+        password_change.setVisibility(View.VISIBLE);
+        repeat_password_change.setVisibility(View.VISIBLE);
+
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (old_password.getText().toString().isEmpty()) {
+                    MyToast("Введите старый пароль");
+                    return;
+                }
+                if (password_change.getText().toString().isEmpty()) {
+                    MyToast("Введите пароль");
+                    return;
+                }
+                if (password_change.getText().toString().length() < 6) {
+                    MyToast("Пароль не меньше 6 символов");
+                    return;
+                }
+                if (repeat_password_change.getText().toString().isEmpty()) {
+                    MyToast("Введите повторный пароль");
+                    return;
+                }
+                if (!password_change.getText().toString().equals(repeat_password_change.getText().toString())) {
+                    MyToast("Повторный пароль введен не верно");
+                    return;
+                }
+
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String passwordOld = snapshot.child(mAuth.getUid()).child("password").getValue().toString();
+                        if (!old_password.getText().toString().equals(passwordOld)) {
+                            MyToast("Старый пароль введен");
+                            return;
+                        }
+                        if (password_change.getText().toString().equals(passwordOld)) {
+                            MyToast("Вы вводите старый пароль");
+                            return;
+                        }
+                        mUser.updatePassword(password_change.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                myRef.child(mAuth.getUid()).child("password").setValue(password_change.getText().toString());
+                                MyToast("Готово");
+                                alertDialog.dismiss();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        MyToast("Не сменил");
+                    }
+                });
+            }
+        });
+    }
+
+    public void openChangeNickname(View view) {
+        openAlertDialog();
+        EditText nickname_change = viewAlert.findViewById(R.id.nickname_change);
+        nickname_change.setVisibility(View.VISIBLE);
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        myRef.child(mAuth.getUid()).child("profile").child("nickname").setValue(nickname_change.getText().toString());
+                        MyToast("Готово");
+                        alertDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        MyToast("Не сменил");
+                    }
+                });
 
             }
         });
+    }
 
-        alertDialog.show();
+    public void openChangeWeight(View view) {
+        openAlertDialog();
+        EditText weight_change = viewAlert.findViewById(R.id.weight_change);
+        weight_change.setVisibility(View.VISIBLE);
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        myRef.child(mAuth.getUid()).child("profile").child("weight").setValue(weight_change.getText().toString());
+                        MyToast("Готово");
+                        alertDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        MyToast("Не сменил");
+                    }
+                });
+            }
+        });
+    }
+
+    public void openChangeTarget(View view) {
+        openAlertDialog();
+        target_change = viewAlert.findViewById(R.id.target_change);
+        target_change.setVisibility(View.VISIBLE);
+        targetSelection();
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        myRef.child(mAuth.getUid()).child("profile").child("target").setValue(textNoVisibleTargetChange.getText().toString());
+                        MyToast("Готово");
+                        alertDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        MyToast("Не сменил");
+                    }
+                });
+            }
+        });
     }
 }

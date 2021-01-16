@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="320dp"
-    android:layout_height="400dp"
+    android:layout_height="200dp"
     android:layout_gravity="center"
     android:background="#ccc">
 
@@ -16,40 +16,54 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Введите новый email"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/old_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите старый пароль"
+            android:inputType="textPassword"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/password_change"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Введите новый пароль"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/repeat_password_change"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Повторите новый пароль"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/nickname_change"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Введите новый ник"
-            android:inputType="text" />
+            android:inputType="text"
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/weight_change"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Введите новый вес"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:visibility="gone" />
 
         <Spinner
             android:id="@+id/target_change"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,12 +86,11 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
 
     <!--  Невидимый текст  -->
     <TextView
-        android:id="@+id/visible_text_target"
+        android:id="@+id/visible_text_target_change"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
