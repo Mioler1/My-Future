@@ -4,7 +4,4 @@
     <item android:drawable="@drawable/indicator_selected"
         android:state_selected="true"/>
 
-    <item android:drawable="@drawable/indicator_dflt"/>
-
-
 </selector>

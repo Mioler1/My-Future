@@ -39,11 +39,10 @@ android:layout_centerHorizontal="true"
 
     <Button
         android:id="@+id/btn_get_start"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/button_for_lastpage_intro"
-        android:layout_marginBottom="75dp"
         android:textColor="#d7ddcf"
         android:textAllCaps="false"
         android:layout_centerHorizontal="true"
