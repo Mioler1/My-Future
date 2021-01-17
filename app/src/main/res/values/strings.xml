@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My_Future</string>
+    <string name="app_name">My Future</string>
     <string name="font">JetBrainsMono-VariableFont_wght.ttf</string>
     <string name="cyberfall">19700.ttf</string>
     // Авторизация
@@ -8,7 +8,7 @@
     <string name="RepeatPassword">Повторите пароль</string>
     <string name="Authorization">Авторизоваться</string>
     <string name="Register">Зарегистрироваться</string>
-    <string name="Registration">Регистрация</string>
+    <string name="Registration">Зарегистрироваться</string>
     <string name="Come">Войти</string>
     <string name="changePassword">Забыли пароль?</string>
     <string name="start">Погнали!</string>
@@ -19,5 +19,7 @@
     <string name="buttonIntro">Дальше</string>
     <string name="startProgram">Начинаем!</string>
     <string name="skipButton">Пропустить</string>
+    <string name="Text_for_reg">Еще не зарегистрирован?</string>
+    <string name="title">Регистрация</string>
     // ...
 </resources>

@@ -24,6 +24,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_from_intro"
         android:text="@string/buttonIntro"
+        android:textSize="16sp"
         android:textAllCaps="false"
         android:textColor="#d7ddcf" />
 
@@ -45,6 +46,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_for_lastpage_intro"
         android:text="@string/startProgram"
+        android:textSize="16sp"
         android:textAllCaps="false"
         android:textColor="#d7ddcf"
         android:visibility="invisible" />

@@ -24,19 +24,8 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/audiowide"
         android:text="@string/ProjectName"
-        android:textColor="#d7ddcf"
+        android:textColor="#ffffff"
         android:textSize="40sp" />
-
-    <!--    <TextView-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/quote"-->
-    <!--        android:textSize="16dp"-->
-    <!--        android:layout_marginStart="30dp"-->
-    <!--        android:layout_marginEnd="30dp"-->
-    <!--        android:textColor="#d7ddcf"-->
-    <!--        android:layout_below="@id/NameProject"-->
-    <!--        android:gravity="center"/>-->
 
     <Button
         android:id="@+id/buttonReg"
