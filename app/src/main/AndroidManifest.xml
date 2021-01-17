@@ -6,43 +6,50 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/shortcut_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:hardwareAccelerated="false"
         android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.My_Future">
-        <activity android:name=".ChangeDataActivity"></activity>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".RegistrationActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <activity
             android:name=".StartScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Intro.IntroActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".FirstScreenActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".AuthorizationActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".RegistrationActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".FillingDataActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Intro.IntroActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChangeDataActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -215,6 +215,7 @@ public class ChangeDataActivity extends AppCompatActivity {
                                     mUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
+                                            alertDialog.dismiss();
                                             MyToast("Зайдите на почту");
                                             myRef.child(mAuth.getUid()).child("email").setValue(email_change.getText().toString());
                                             mAuth.signOut();
@@ -224,13 +225,11 @@ public class ChangeDataActivity extends AppCompatActivity {
                                     });
                                 } else {
                                     try {
-                                        throw Objects.requireNonNull(task.getException());
+                                        throw task.getException();
                                     } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
                                         MyToast("Неверный адрес");
-
                                     } catch (FirebaseAuthUserCollisionException existEmail) {
                                         MyToast("Данный email уже используется");
-
                                     } catch (Exception e) {
                                         MyToast(e.getMessage());
                                     }
@@ -296,9 +295,17 @@ public class ChangeDataActivity extends AppCompatActivity {
                         mUser.updatePassword(password_change.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                myRef.child(mAuth.getUid()).child("password").setValue(password_change.getText().toString());
-                                MyToast("Готово");
-                                alertDialog.dismiss();
+                                if (task.isSuccessful()) {
+                                    myRef.child(mAuth.getUid()).child("password").setValue(password_change.getText().toString());
+                                    MyToast("Готово");
+                                    alertDialog.dismiss();
+                                } else {
+                                    try {
+                                        throw task.getException();
+                                    } catch (Exception e) {
+                                        MyToast(e.getMessage());
+                                    }
+                                }
                             }
                         });
                     }
