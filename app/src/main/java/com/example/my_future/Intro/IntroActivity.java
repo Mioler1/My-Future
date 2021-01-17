@@ -54,9 +54,9 @@ public class IntroActivity extends AppCompatActivity {
         //fill list screen
         List<IntroItem> mList = new ArrayList<>();
         mList.add(new IntroItem("Выбирай тренировку и начинай работать","Каждый найдет свой путь",R.drawable.test1));
+        mList.add(new IntroItem("Спроси советов у лучших","Появился вопрос? - задай его!",R.drawable.faq));
         mList.add(new IntroItem("Следи за своим питанием","Вперед к заветному весу!",R.drawable.test2));
         mList.add(new IntroItem("Отслеживай свой прогресс","Побей свои рекорд!",R.drawable.test4));
-        mList.add(new IntroItem("Спроси советов у лучших","Появился вопрос? - задай его!",R.drawable.test3));
 
         //setup ViewPager
         screenPager = findViewById(R.id.Pager1);
@@ -107,9 +107,8 @@ public class IntroActivity extends AppCompatActivity {
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent introAct = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(introAct);
-
+                startActivity(new Intent(IntroActivity.this, MainActivity.class));
+                finish();
             }
         });
 

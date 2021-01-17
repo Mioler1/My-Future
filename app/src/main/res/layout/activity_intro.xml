@@ -20,32 +20,32 @@
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_from_intro"
-android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_from_intro"
         android:text="@string/buttonIntro"
-        android:textColor="#d7ddcf"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="#d7ddcf" />
 
-  <com.google.android.material.tabs.TabLayout
-      android:id="@+id/tab_indicator"
-      android:layout_width="match_parent"
-      app:tabIndicatorColor="#2f3136"
-      android:layout_height="5dp"
-      android:layout_centerHorizontal="true"
-      app:tabBackground="@drawable/indicator_selector">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_centerHorizontal="true"
+        app:tabBackground="@drawable/indicator_selector"
+        app:tabIndicatorColor="#2f3136">
 
-  </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
 
     <Button
         android:id="@+id/btn_get_start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/button_for_lastpage_intro"
-        android:textColor="#d7ddcf"
-        android:textAllCaps="false"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/button_for_lastpage_intro"
         android:text="@string/startProgram"
+        android:textAllCaps="false"
+        android:textColor="#d7ddcf"
         android:visibility="invisible" />
 </RelativeLayout>
