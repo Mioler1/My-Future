@@ -10,6 +10,10 @@
     <color name="custom">#2f3136</color>
     <color name="for_button">#7289d9</color>
     <color name="text">#d7ddcf</color>
+    <color name="above">#282a2e</color>
+
+    //color for background menu
+    <color name="menu">#18191d</color>
 
     //color for button "IntroActivity"
     <color name="gradient_start_color">#4c84ff</color>

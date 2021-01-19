@@ -61,7 +61,7 @@ public class FirstScreenActivity extends AppCompatActivity {
             R.drawable.page1,
             R.drawable.page4,
             R.drawable.page3,
-            R.drawable.page6,
+            R.drawable.page5,
             R.drawable.page2
     };
 

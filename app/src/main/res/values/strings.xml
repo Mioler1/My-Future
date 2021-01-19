@@ -21,5 +21,14 @@
     <string name="skipButton">Пропустить</string>
     <string name="Text_for_reg">Еще не зарегистрирован?</string>
     <string name="title">Регистрация</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     // ...
+
+    //layout
+    <string name="food">Питание</string>
+    <string name="profile">Профиль</string>
+    <string name="Train">Тренировки</string>
+    <string name="Notepad">Блокнот</string>
+    <string name="Forum">Форум</string>
 </resources>

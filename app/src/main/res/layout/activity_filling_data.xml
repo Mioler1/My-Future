@@ -25,7 +25,7 @@
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@drawable/fon" />
+            android:src="@drawable/logo_dark" />
 
         <EditText
             android:id="@+id/nickname"

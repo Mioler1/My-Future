@@ -2,6 +2,7 @@ package com.example.my_future;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
@@ -16,6 +17,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.my_future.Menu.MenuListFragment;
 import com.example.my_future.Menu.NavItemSelectedListener;
+import com.example.my_future.bottom_menu.FoodFragment;
+import com.example.my_future.bottom_menu.ForumFragment;
+import com.example.my_future.bottom_menu.NotebookFragment;
+import com.example.my_future.bottom_menu.PlanFragment;
+import com.example.my_future.bottom_menu.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,12 +42,12 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         setupMenu();
         init();
-        loadingAvatar();
     }
-
 
     private void init() {
         avatar_img = findViewById(R.id.avatar);
@@ -73,37 +80,61 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         }
     }
 
-    private void loadingAvatar() {
-        mRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot user : snapshot.getChildren()){
-                    if (user.getKey().equals(mAuth.getUid())) {
-                        for (DataSnapshot profile : user.getChildren()) {
-                            if (profile.getKey().equals("profile")) {
-                                for (DataSnapshot avatar : profile.getChildren()) {
-                                    if (avatar.getKey().equals("avatar")) {
-                                        Glide.with(avatar_img).load(avatar.getValue().toString()).error(R.drawable.chat).into(avatar_img);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                MyToast("Не загрузилось");
-            }
-        });
-    }
+//    private void loadingAvatar() {
+//        mRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot user : snapshot.getChildren()){
+//                    if (user.getKey().equals(mAuth.getUid())) {
+//                        for (DataSnapshot profile : user.getChildren()) {
+//                            if (profile.getKey().equals("profile")) {
+//                                for (DataSnapshot avatar : profile.getChildren()) {
+//                                    if (avatar.getKey().equals("avatar")) {
+//                                        Glide.with(avatar_img).load(avatar.getValue().toString()).error(R.drawable.logo_dark).into(avatar_img);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                MyToast("Не загрузилось");
+//            }
+//        });
+//    }
 
     private void MyToast(String message) {
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    public void onClickProfileActivity(View view) {
-        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-    }
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    switch (item.getItemId()){
+                        case R.id.fragment1:
+                            selectedFragment = new PlanFragment();
+                            break;
+                        case R.id.fragment2:
+                            selectedFragment = new FoodFragment();
+                            break;
+                        case R.id.fragment3:
+                            selectedFragment = new ForumFragment();
+                            break;
+                        case R.id.fragment4:
+                            selectedFragment = new NotebookFragment();
+                            break;
+                        case R.id.fragment5:
+                            selectedFragment = new ProfileFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+                    return true;
+                }
+            };
 }
