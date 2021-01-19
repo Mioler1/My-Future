@@ -37,12 +37,13 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     FirebaseDatabase db;
     DatabaseReference mRef;
     FirebaseAuth mAuth;
+    BottomNavigationView bottomNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         setupMenu();
