@@ -11,17 +11,16 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"/>
+        android:layout_above="@+id/bottom_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
+        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
         android:layout_alignParentBottom="true"
         android:background="@color/menu"
-        app:menu="@menu/bottom_navigation"
-        app:itemIconSize="28dp">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:itemIconSize="28dp"
+        app:menu="@menu/bottom_navigation" />
 
 </RelativeLayout>

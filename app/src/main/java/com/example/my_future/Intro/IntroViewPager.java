@@ -25,7 +25,6 @@ public class IntroViewPager extends PagerAdapter {
         this.mListScreen = mListScreen;
     }
 
-
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
@@ -44,7 +43,6 @@ public class IntroViewPager extends PagerAdapter {
         container.addView(layoutScreenIntro);
 
         return layoutScreenIntro;
-
     }
 
     @Override
@@ -59,8 +57,6 @@ public class IntroViewPager extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-
-        container.removeView((View)object);
-
+        container.removeView((View) object);
     }
 }

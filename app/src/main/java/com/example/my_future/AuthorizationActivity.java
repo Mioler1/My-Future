@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -113,8 +114,10 @@ public class AuthorizationActivity extends AppCompatActivity {
                                 if (profile.getKey().equals("profile")) {
                                     startActivity(new Intent(AuthorizationActivity.this, MainActivity.class));
                                     finish();
-                                } else {
+                                }
+                                if (profile.getValue().equals("none")) {
                                     startActivity(new Intent(AuthorizationActivity.this, FillingDataActivity.class));
+                                    finish();
                                 }
                             }
                         }
@@ -123,7 +126,7 @@ public class AuthorizationActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
+                    MyToast(error.getMessage());
                 }
             });
         } else {

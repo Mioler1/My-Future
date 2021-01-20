@@ -94,9 +94,10 @@ public class RegistrationActivity extends AppCompatActivity {
                             user.setEmail(email.getText().toString());
                             user.setPassword(password.getText().toString());
                             myRef.child(mAuth.getUid()).setValue(user);
+                            myRef.child(mAuth.getUid()).child("profile").setValue("none");
                             sendEmailVer();
                         } else {
-                            MyToast("Авторизация провалена");
+                            MyToast("Регистрация провалена");
                         }
                         progressBar.setVisibility(View.GONE);
                     }

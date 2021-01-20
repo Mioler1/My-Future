@@ -30,7 +30,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -166,9 +165,9 @@ public class FillingDataActivity extends AppCompatActivity {
                 }
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
-
-                comeEmailVer();
                 progressBar.setVisibility(View.GONE);
+                startActivity(new Intent(FillingDataActivity.this, IntroActivity.class));
+                finish();
             }
 
             @Override
@@ -236,15 +235,5 @@ public class FillingDataActivity extends AppCompatActivity {
         target.setOnItemSelectedListener(itemSelectedListener);
     }
 
-    public void comeEmailVer() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        assert user != null;
-        if (user.isEmailVerified()) {
-            startActivity(new Intent(FillingDataActivity.this, IntroActivity.class));
-        } else {
-            MyToast("Зайди на почту");
-            startActivity(new Intent(FillingDataActivity.this, AuthorizationActivity.class));
-        }
-        finish();
-    }
+
 }

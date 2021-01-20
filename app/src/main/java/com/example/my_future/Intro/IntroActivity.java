@@ -5,7 +5,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -39,9 +38,7 @@ public class IntroActivity extends AppCompatActivity {
 
         //make the activity on fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_intro);
 
@@ -49,18 +46,18 @@ public class IntroActivity extends AppCompatActivity {
         btnNext = findViewById(R.id.btn_next);
         tabIndicator = findViewById(R.id.tab_indicator);
         btnGetStarted = findViewById(R.id.btn_get_start);
-        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.button_anim);
+        btnAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_anim);
 
         //fill list screen
         List<IntroItem> mList = new ArrayList<>();
-        mList.add(new IntroItem("Выбирай тренировку и начинай работать","Каждый найдет свой путь",R.drawable.test1));
-        mList.add(new IntroItem("Спроси советов у лучших","Появился вопрос? - задай его!",R.drawable.faq));
-        mList.add(new IntroItem("Следи за своим питанием","Вперед к заветному весу!",R.drawable.test2));
-        mList.add(new IntroItem("Отслеживай свой прогресс","Побей свои рекорд!",R.drawable.test4));
+        mList.add(new IntroItem("Выбирай тренировку и начинай работать", "Каждый найдет свой путь", R.drawable.test1));
+        mList.add(new IntroItem("Спроси советов у лучших", "Появился вопрос? - задай его!", R.drawable.faq));
+        mList.add(new IntroItem("Следи за своим питанием", "Вперед к заветному весу!", R.drawable.test2));
+        mList.add(new IntroItem("Отслеживай свой прогресс", "Побей свои рекорд!", R.drawable.test4));
 
         //setup ViewPager
         screenPager = findViewById(R.id.Pager1);
-        introViewPager = new IntroViewPager(this,mList);
+        introViewPager = new IntroViewPager(this, mList);
         screenPager.setAdapter(introViewPager);
         screenPager.setBackgroundColor(Color.GRAY);
 
@@ -77,18 +74,17 @@ public class IntroActivity extends AppCompatActivity {
                     position++;
                     screenPager.setCurrentItem(position);
                 }
-                    if (position == mList.size()-1) {
-                        LoadLastScreen();
-                    }
+                if (position == mList.size() - 1) {
+                    LoadLastScreen();
+                }
             }
         });
 
         //solve the problem
-
         tabIndicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if (tab.getPosition() == mList.size()-1) {
+                if (tab.getPosition() == mList.size() - 1) {
                     LoadLastScreen();
                 }
             }

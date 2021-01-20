@@ -37,7 +37,6 @@ public class FirstScreenActivity extends AppCompatActivity {
         });
 
         init();
-
     }
 
     private void init() {

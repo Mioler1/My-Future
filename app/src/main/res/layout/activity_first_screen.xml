@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:animateOnBoundary="false"
+        app:indicatorVisibility="gone"
         app:pageTransformInterval="2200"
         app:pageTransformer="zoom"
-        app:slideInterval="7000"
-        app:indicatorVisibility= "gone"/>
+        app:slideInterval="7000" />
 
     <TextView
         android:id="@+id/NameProject"

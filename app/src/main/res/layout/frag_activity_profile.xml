@@ -4,27 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity"
-    android:background="@color/custom">
+    android:background="@color/custom"
+    tools:context=".ProfileActivity">
 
     <TextView
         android:id="@+id/f1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:gravity="center|start"
-        android:text="@string/profile"
-        android:fontFamily="@font/roboto"
-        android:paddingStart="15dp"
-        android:textSize="26sp"
-        android:textColor="#ffffff"
         android:layout_centerHorizontal="true"
-        android:background="@color/above"/>
+        android:background="@color/above"
+        android:fontFamily="@font/roboto"
+        android:gravity="center|start"
+        android:paddingStart="15dp"
+        android:text="@string/profile"
+        android:textColor="#ffffff"
+        android:textSize="26sp" />
 
     <Button
         android:id="@+id/click"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Изменить данные"
-        android:layout_below="@+id/f1"/>
+        android:layout_below="@+id/f1"
+        android:text="Изменить данные" />
 
 </RelativeLayout>

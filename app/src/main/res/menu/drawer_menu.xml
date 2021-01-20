@@ -24,14 +24,4 @@
         android:icon="@drawable/settings"
         android:title="Выход" />
 
-    <!--    <item android:title="@string/fancy">-->
-    <!--        <menu>-->
-    <!--            <item-->
-    <!--                android:id="@+id/id_nlo"-->
-    <!--                android:title="@string/nlo" />-->
-    <!--            <item-->
-    <!--                android:id="@+id/id_casts"-->
-    <!--                android:title="@string/casts" />-->
-    <!--        </menu>-->
-    <!--    </item>-->
 </menu>
