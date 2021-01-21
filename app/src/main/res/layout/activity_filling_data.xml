@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FillingDataActivity">
+    tools:context=".FillingDataActivity"
+    android:background="@color/white">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,13 +20,15 @@
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/avatar"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:src="@drawable/standart_avatar"
+            app:civ_border_width="1dp"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
             android:layout_gravity="center"
-            android:scaleType="centerCrop"
-            android:src="@drawable/logo_dark" />
+            android:scaleType="centerCrop" />
 
         <EditText
             android:id="@+id/nickname"

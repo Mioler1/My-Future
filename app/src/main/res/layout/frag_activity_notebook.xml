@@ -8,13 +8,21 @@
     <TextView
         android:id="@+id/f1"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center|start"
-        android:text="@string/Notepad"
-        android:paddingStart="15dp"
-        android:fontFamily="@font/roboto"
-        android:textSize="26sp"
-        android:textColor="#ffffff"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:background="@color/above"/>
+        android:fontFamily="@font/yanone_kaffeesatz"
+        android:gravity="center|start"
+        android:paddingStart="15dp"
+        android:text="@string/Forum"
+        android:textColor="#ffffff"
+        android:textSize="34sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/f1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/tab_indicator_gray" />
+
 </RelativeLayout>
