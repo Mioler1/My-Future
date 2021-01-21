@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ChangeDataActivity extends AppCompatActivity {
 
     TextView textNoVisibleTargetChange;
@@ -69,23 +72,12 @@ public class ChangeDataActivity extends AppCompatActivity {
 
     private void init() {
         progressBar = findViewById(R.id.progressBar);
-        avatar_img_change = findViewById(R.id.avatar_change);
 
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
         mUser = mAuth.getCurrentUser();
-
-        avatar_img_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent uploadIntent = new Intent();
-                uploadIntent.setType("image/*");
-                uploadIntent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(uploadIntent, 1);
-            }
-        });
     }
 
     private void MyToast(String message) {
@@ -95,6 +87,7 @@ public class ChangeDataActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        openAlertDialog();
         if (requestCode == 1 && data != null && data.getData() != null) {
             if (resultCode == RESULT_OK) {
                 avatar_img_change.setImageURI(data.getData());
@@ -129,7 +122,6 @@ public class ChangeDataActivity extends AppCompatActivity {
     }
 
     private void targetSelection() {
-
         textNoVisibleTargetChange = viewAlert.findViewById(R.id.visible_text_target_change);
         String[] targets = {"Выбрать новую цель", "Похудеть", "Рельеф", "Мышечная масса", "Сила"};
 
@@ -172,6 +164,7 @@ public class ChangeDataActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(ChangeDataActivity.this, R.style.Theme_AppCompat_Light_Dialog_Alert);
         LayoutInflater inflater = getLayoutInflater();
         viewAlert = inflater.inflate(R.layout.alert_dialog_change_data, null);
+        avatar_img_change = viewAlert.findViewById(R.id.avatar_change);
         builder.setView(viewAlert).setCancelable(false);
         alertDialog = builder.create();
 
@@ -182,6 +175,15 @@ public class ChangeDataActivity extends AppCompatActivity {
             }
         });
 
+        avatar_img_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent uploadIntent = new Intent();
+                uploadIntent.setType("image/*");
+                uploadIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(uploadIntent, 1);
+            }
+        });
         alertDialog.show();
     }
 
@@ -376,6 +378,31 @@ public class ChangeDataActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         myRef.child(mAuth.getUid()).child("profile").child("target").setValue(textNoVisibleTargetChange.getText().toString());
+                        MyToast("Готово");
+                        alertDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        MyToast("Не сменил");
+                    }
+                });
+            }
+        });
+    }
+
+    public void openChangeAvatar(View view) {
+        openAlertDialog();
+        avatar_img_change.setVisibility(View.VISIBLE);
+
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("MyLog", String.valueOf(uploadUri));
+                        myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
                         MyToast("Готово");
                         alertDialog.dismiss();
                     }

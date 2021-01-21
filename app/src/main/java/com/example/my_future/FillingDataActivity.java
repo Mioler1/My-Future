@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -41,6 +40,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class FillingDataActivity extends AppCompatActivity {
 
     EditText nickname, weight;
@@ -49,7 +50,7 @@ public class FillingDataActivity extends AppCompatActivity {
     TextView textNoVisibleGender;
     TextView textNoVisibleTarget;
     ProgressBar progressBar;
-    ImageView avatar_img;
+    CircleImageView avatar_img;
 
     FirebaseDatabase db;
     FirebaseAuth mAuth;
@@ -234,6 +235,4 @@ public class FillingDataActivity extends AppCompatActivity {
         };
         target.setOnItemSelectedListener(itemSelectedListener);
     }
-
-
 }

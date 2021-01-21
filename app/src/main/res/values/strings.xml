@@ -2,28 +2,27 @@
     <string name="app_name">My Future</string>
     <string name="font">JetBrainsMono-VariableFont_wght.ttf</string>
     <string name="cyberfall">19700.ttf</string>
+    // Первый экран
+    <string name="start">Погнали!</string>
+    <string name="Already">Уже зарегистрирован?</string>
+    <string name="Come">Войти</string>
     // Авторизация
     <string name="Email">Email</string>
     <string name="Password">Password</string>
-    <string name="RepeatPassword">Повторите пароль</string>
-    <string name="Authorization">Авторизоваться</string>
-    <string name="Register">Зарегистрироваться</string>
-    <string name="Registration">Зарегистрироваться</string>
-    <string name="Come">Войти</string>
     <string name="changePassword">Забыли пароль?</string>
-    <string name="start">Погнали!</string>
-    <string name="Already">Уже зарегистрирован?</string>
-    <string name="Aut">Войти</string>
-    <string name="ProjectName">My Future</string>
-    <string name="quote">Победит не тот, кто сильнее, а тот, кто готов идти до конца.</string>
+    <string name="Registration">Регистрация</string>
+    <string name="already_reg">Уже зарегистрированы?</string>
+    // Регистрация
+    <string name="RepeatPassword">Повторите пароль</string>
+    // Дополнительные данные
+        // ТУТ filling_data
+    // Основы приложения
     <string name="buttonIntro">Дальше</string>
     <string name="startProgram">Начинаем!</string>
-    <string name="skipButton">Пропустить</string>
-    <string name="Text_for_reg">Еще не зарегистрирован?</string>
-    <string name="title">Регистрация</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    // ...
+    // Меню FlowingDrawer
+        // ТУТ левое меню
+    // Изменение данных
+
 
     //layout
     <string name="food">Питание</string>
