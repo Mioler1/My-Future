@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/custom"
-    tools:context=".ProfileActivity">
+    android:background="@color/custom">
 
     <TextView
         android:id="@+id/f1"
@@ -31,7 +30,47 @@
         android:id="@+id/click"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/f1"
+        android:layout_below="@+id/profileRel"
         android:text="Изменить данные" />
+
+    <RelativeLayout
+        android:id="@+id/profileRel"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/f1">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/standart_avatar"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:id="@+id/nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/avatar" />
+
+        <TextView
+            android:id="@+id/target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nickname"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/avatar" />
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/target"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/avatar" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -46,9 +46,6 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ChangeDataActivity"
             android:screenOrientation="portrait" />
     </application>
