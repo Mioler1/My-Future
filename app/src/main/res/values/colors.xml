@@ -20,7 +20,7 @@
     <color name="gradient_end_color">#18a3fe</color>
 
     //color forindicator
-    <color name="tab_indicator_gray">#c0c0c0</color>
+    <color name="tab_indicator_gray">#5b5b5b</color>
     <color name="intro_title">#000000</color>
     <color name="intro_description">#656565</color>
 </resources>

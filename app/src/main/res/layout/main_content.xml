@@ -21,6 +21,6 @@
         android:layout_alignParentBottom="true"
         android:background="@color/menu"
         app:itemIconSize="28dp"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu"/>
 
 </RelativeLayout>
