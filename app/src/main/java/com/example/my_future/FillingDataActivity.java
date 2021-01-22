@@ -93,46 +93,6 @@ public class FillingDataActivity extends AppCompatActivity {
         });
     }
 
-    private void MyToast(String message) {
-        Toast.makeText(FillingDataActivity.this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && data != null && data.getData() != null) {
-            if (resultCode == RESULT_OK) {
-                avatar_img.setImageURI(data.getData());
-                uploadImage();
-            }
-        }
-    }
-
-    private void uploadImage() {
-        Bitmap bitmap = ((BitmapDrawable) avatar_img.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] byteArray = baos.toByteArray();
-        final StorageReference myStorage = mStorageRef.child(System.currentTimeMillis() + "my_avatar");
-        UploadTask uploadTask = myStorage.putBytes(byteArray);
-        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                return myStorage.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                uploadUri = task.getResult();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                MyToast("Картинка не загрузилась");
-            }
-        });
-    }
-
     public void onClickSaveFillingData(View view) {
         if (nickname.getText().toString().isEmpty()) {
             MyToast("Поле никнейм пустое");
@@ -193,6 +153,46 @@ public class FillingDataActivity extends AppCompatActivity {
                         textNoVisibleGender.setText("Женский");
                         break;
                 }
+            }
+        });
+    }
+
+    private void MyToast(String message) {
+        Toast.makeText(FillingDataActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && data != null && data.getData() != null) {
+            if (resultCode == RESULT_OK) {
+                avatar_img.setImageURI(data.getData());
+                uploadImage();
+            }
+        }
+    }
+
+    private void uploadImage() {
+        Bitmap bitmap = ((BitmapDrawable) avatar_img.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] byteArray = baos.toByteArray();
+        final StorageReference myStorage = mStorageRef.child(System.currentTimeMillis() + "my_avatar");
+        UploadTask uploadTask = myStorage.putBytes(byteArray);
+        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                return myStorage.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                uploadUri = task.getResult();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                MyToast("Картинка не загрузилась");
             }
         });
     }

@@ -37,13 +37,13 @@
             android:name=".RegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".StartScreenActivity"
+            android:name=".FillingDataActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Intro.IntroActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FillingDataActivity"
+            android:name=".StartScreenActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChangeDataActivity"
