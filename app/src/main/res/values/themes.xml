@@ -19,4 +19,8 @@
         <item name="backgroundColor">@color/custom</item>
     </style>
 
+    <style name="MyRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/for_button</item>
+    </style>
+
 </resources>

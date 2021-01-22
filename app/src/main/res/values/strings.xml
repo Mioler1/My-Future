@@ -15,7 +15,8 @@
     // Регистрация
     <string name="RepeatPassword">Повторите пароль</string>
     // Дополнительные данные
-        // ТУТ filling_data
+    <string name="titleFilling">Заполнение данных</string>
+    <string name="save">Сохранить</string>
     // Основы приложения
     <string name="buttonIntro">Дальше</string>
     <string name="startProgram">Начинаем!</string>
