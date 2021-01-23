@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -62,42 +64,52 @@ public class RegistrationActivity extends AppCompatActivity {
         email = findViewById(R.id.email_registration);
         password = findViewById(R.id.password_registration);
         repeatPassword = findViewById(R.id.repeat_password_registration);
+        String email_text = email.getText().toString();
+        String password_text = password.getText().toString();
 
-        if (email.getText().toString().isEmpty()) {
+        if (email_text.isEmpty()) {
             MyToast("Поле email пустое!");
             return;
         }
-        if (password.getText().toString().isEmpty()) {
+        if (password_text.isEmpty()) {
             MyToast("Поле пароль пустое!");
             return;
         }
-        if (password.getText().toString().length() < 6) {
+        if (password_text.length() < 6) {
             MyToast("Поле пароль должно содержать не менее 6 символов!");
             return;
         }
-        if (password.getText().toString().isEmpty()) {
+        if (password_text.isEmpty()) {
             MyToast("Поле повторный пароль пустое!");
             return;
         }
-        if (!password.getText().toString().equals(repeatPassword.getText().toString())) {
+        if (!password_text.equals(repeatPassword.getText().toString())) {
             MyToast("Повторный пароль введен неверно!");
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+        mAuth.createUserWithEmailAndPassword(email_text, password_text)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressBar.setVisibility(View.VISIBLE);
                         if (task.isSuccessful()) {
                             User user = new User();
-                            user.setEmail(email.getText().toString());
-                            user.setPassword(password.getText().toString());
+                            user.setEmail(email_text);
+                            user.setPassword(password_text);
                             myRef.child(mAuth.getUid()).setValue(user);
                             myRef.child(mAuth.getUid()).child("profile").setValue("none");
                             sendEmailVer();
                         } else {
-                            MyToast("Регистрация провалена");
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
+                                MyToast("Неверный адрес");
+                            } catch (FirebaseAuthUserCollisionException existEmail) {
+                                MyToast("Данный email уже используется");
+                            } catch (Exception e) {
+                                MyToast(e.getMessage());
+                            }
                         }
                         progressBar.setVisibility(View.GONE);
                     }

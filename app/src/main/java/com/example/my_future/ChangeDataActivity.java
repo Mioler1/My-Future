@@ -200,7 +200,7 @@ public class ChangeDataActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String passwordOld = snapshot.child(mAuth.getUid()).child("password").getValue().toString();
                         if (!old_password.getText().toString().equals(passwordOld)) {
-                            MyToast("Старый пароль введен");
+                            MyToast("Неправильный старый пароль");
                             return;
                         }
                         if (password_change.getText().toString().equals(passwordOld)) {
@@ -241,14 +241,29 @@ public class ChangeDataActivity extends AppCompatActivity {
         viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nickname_change.getText().toString().isEmpty()) {
-                    MyToast("Введите новый никнейм");
+                String nickname_text = nickname_change.getText().toString();
+                boolean check;
+                if (nickname_text.isEmpty()) {
+                    MyToast("Поле никнейм пустое");
+                    return;
+                }
+                if (nickname_text.length() < 3) {
+                    MyToast("Никнейм короткий");
+                }
+                if (nickname_text.matches("[a-zA-Zа-яА-Я0-9_-]+")) {
+                    check = true;
+                } else {
+                    MyToast("Некоректный никнейм");
+                    return;
+                }
+                if (!check) {
+                    MyToast("Некоректный никнейм");
                     return;
                 }
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        myRef.child(mAuth.getUid()).child("profile").child("nickname").setValue(nickname_change.getText().toString());
+                        myRef.child(mAuth.getUid()).child("profile").child("nickname").setValue(nickname_text);
                         MyToast("Готово");
                         alertDialog.dismiss();
                     }
@@ -270,22 +285,18 @@ public class ChangeDataActivity extends AppCompatActivity {
         viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String s = weight_change.getText().toString();
-                double d = Double.parseDouble(s);
+                String weight_text = weight_change.getText().toString();
+                double weight_num = Double.parseDouble(weight_text);
                 if (weight_change.getText().toString().isEmpty()) {
                     MyToast("Введите новый вес");
                     return;
                 }
-                if (weight_change.getText().toString().length() < 2) {
-                    MyToast("Наврятли ты столько весишь");
+                if (weight_num > 300) {
+                    MyToast("Наврятли ты такой толстый");
                     return;
                 }
-                if (weight_change.getText().toString().length() > 3) {
-                    MyToast("Наврятли ты столько весишь");
-                    return;
-                }
-                if (d > 300) {
-                    MyToast("Наврятли ты столько весишь");
+                if (weight_num < 30) {
+                    MyToast("Наврятли ты такой дрыщ");
                     return;
                 }
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {

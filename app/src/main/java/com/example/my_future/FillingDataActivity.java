@@ -94,12 +94,38 @@ public class FillingDataActivity extends AppCompatActivity {
     }
 
     public void onClickSaveFillingData(View view) {
-        if (nickname.getText().toString().isEmpty()) {
+        String nickname_text = nickname.getText().toString();
+        boolean check;
+        String weight_text = weight.getText().toString();
+        double weight_num = Double.parseDouble(weight_text);
+
+        if (nickname_text.isEmpty()) {
             MyToast("Поле никнейм пустое");
+            return;
+        }
+        if (nickname_text.length() < 3) {
+            MyToast("Никнейм короткий");
+        }
+        if (nickname_text.matches("[a-zA-Zа-яА-Я0-9_-]+")) {
+            check = true;
+        } else {
+            MyToast("Некоректный никнейм");
+            return;
+        }
+        if (!check) {
+            MyToast("Некоректный никнейм");
             return;
         }
         if (weight.getText().toString().isEmpty()) {
             MyToast("Поле вес пустое");
+            return;
+        }
+        if (weight_num > 300) {
+            MyToast("Наврятли ты такой толстый");
+            return;
+        }
+        if (weight_num < 30) {
+            MyToast("Наврятли ты такой дрыщ");
             return;
         }
         if (textNoVisibleGender.getText().toString().isEmpty()) {
@@ -115,7 +141,7 @@ public class FillingDataActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 progressBar.setVisibility(View.VISIBLE);
                 User user = new User();
-                user.setNickname(nickname.getText().toString());
+                user.setNickname(nickname_text);
                 user.setWeight(weight.getText().toString());
                 user.setGender(textNoVisibleGender.getText().toString());
                 user.setTarget(textNoVisibleTarget.getText().toString());

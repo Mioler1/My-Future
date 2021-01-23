@@ -19,7 +19,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".StartScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +43,7 @@
             android:name=".Intro.IntroActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".StartScreenActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ChangeDataActivity"
