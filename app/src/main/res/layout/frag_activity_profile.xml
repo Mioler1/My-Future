@@ -60,7 +60,7 @@
                 android:layout_marginStart="30dp"
                 android:scaleType="centerCrop"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/standart_avatar"/>
+                android:src="@drawable/default_avatar"/>
 
             <TextView
                 android:id="@+id/nickname"

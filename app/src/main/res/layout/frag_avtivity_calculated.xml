@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,14 +8,15 @@
         android:id="@+id/genderRel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/text_title_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выберите пол:"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:text="Выберите пол:" />
 
         <LinearLayout
             android:id="@+id/genderLin"
@@ -42,7 +44,7 @@
                     android:layout_height="90dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="60dp"
-                    android:background="@color/black" />
+                    android:src="@drawable/default_avatar" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -73,7 +75,7 @@
                     android:layout_height="90dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="60dp"
-                    android:background="@color/black" />
+                    android:src="@drawable/default_avatar" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -101,7 +103,327 @@
             android:id="@+id/visible_text_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/activityRel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text_title_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Выберите уровень ужедневной активности" />
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_below="@+id/text_title_activity">
+
+            <LinearLayout
+                android:id="@+id/activityLin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/activityRel_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_activity_1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/default_avatar" />
+
+                    <TextView
+                        android:id="@+id/text_num_activity_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/img_activity_1"
+                        android:text="1.200" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_num_activity_1"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/img_activity_1"
+                        android:text="Для малоподвижных людей, тренировок мало или они отсутствуют." />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/activityRel_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_activity_2"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/default_avatar" />
+
+                    <TextView
+                        android:id="@+id/text_num_activity_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/img_activity_2"
+                        android:text="1.375" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_num_activity_2"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/img_activity_2"
+                        android:text="Для людей с низкой активностью, легкие тренировки 1-3 раза в неделю или в виде эквивалента другой активности." />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/activityRel_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_activity_3"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/default_avatar" />
+
+                    <TextView
+                        android:id="@+id/text_num_activity_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/img_activity_3"
+                        android:text="1.550" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_num_activity_3"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/img_activity_3"
+                        android:text="Для умеренно активных людей: физическая работа средней тяжести или регулярные тренировки 3-5 дней в неделю." />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/activityRel_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_activity_4"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/default_avatar" />
+
+                    <TextView
+                        android:id="@+id/text_num_activity_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/img_activity_4"
+                        android:text="1.725" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_num_activity_4"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/img_activity_4"
+                        android:text="Для очень активных людей: физическая работа полный день или интенсивные тренировки 6-7 раз в неделю." />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/activityRel_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_activity_5"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:src="@drawable/default_avatar" />
+
+                    <TextView
+                        android:id="@+id/text_num_activity_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_toEndOf="@id/img_activity_5"
+                        android:text="1.900" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/text_num_activity_5"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/img_activity_5"
+                        android:text="Для предельно активных людей: тяжелая физическая работа и интенсивные тренировки/занятия спортом." />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/but_activity_nextClick"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/scrollView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="Продолжить" />
+
+        <!--НЕВИДИМЫЙ ТЕКСТ-->
+        <TextView
+            android:id="@+id/visible_text_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dataRel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/text_title_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Введите свои данные:" />
+
+        <LinearLayout
+            android:id="@+id/dataLin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_title_data"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Введите свой возраст"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/growth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Введите свой рост"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Введите свой вес"
+                android:inputType="numberDecimal" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/but_data_nextClick"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dataLin"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="Продолжить" />
+
+        <!--НЕВИДИМЫЙ ТЕКСТ-->
+        <TextView
+            android:id="@+id/visible_text_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
