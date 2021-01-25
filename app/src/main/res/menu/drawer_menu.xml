@@ -6,22 +6,26 @@
     <item
         android:id="@+id/id_progress"
         android:icon="@drawable/settings"
-        android:title="Прогресс" />
+        android:title="@string/progress" />
     <item
         android:id="@+id/id_license"
         android:icon="@drawable/settings"
-        android:title="Лицензия" />
+        android:title="@string/license" />
     <item
         android:id="@+id/id_help"
         android:icon="@drawable/settings"
-        android:title="Помощь" />
+        android:title="@string/help" />
+    <item
+        android:id="@+id/id_calculate"
+        android:icon="@drawable/settings"
+        android:title="@string/calculate" />
     <item
         android:id="@+id/id_settings"
         android:icon="@drawable/settings"
-        android:title="Настройки" />
+        android:title="@string/settings" />
     <item
         android:id="@+id/id_out"
         android:icon="@drawable/settings"
-        android:title="Выход" />
+        android:title="@string/out" />
 
 </menu>

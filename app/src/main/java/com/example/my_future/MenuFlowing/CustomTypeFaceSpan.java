@@ -1,4 +1,4 @@
-package com.example.my_future.Menu;
+package com.example.my_future.MenuFlowing;
 
 import android.graphics.Paint;
 import android.graphics.Typeface;

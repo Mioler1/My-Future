@@ -21,7 +21,12 @@
     <string name="buttonIntro">Дальше</string>
     <string name="startProgram">Начинаем!</string>
     // Меню FlowingDrawer
-        // ТУТ левое меню
+    <string name="progress">Прогресс</string>
+    <string name="license">Лицензия</string>
+    <string name="help">Помощь</string>
+    <string name="calculate">Калькуляторы</string>
+    <string name="settings">Настройки</string>
+    <string name="out">Выход</string>
     // Изменение данных
 
 

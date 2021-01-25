@@ -8,12 +8,12 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.my_future.Menu.MenuListFragment;
-import com.example.my_future.Menu.NavItemSelectedListener;
+import com.example.my_future.MenuFlowing.CalculatedFragment;
+import com.example.my_future.MenuFlowing.MenuListFragment;
+import com.example.my_future.MenuFlowing.NavItemSelectedListener;
 import com.example.my_future.MenuBottom.FoodFragment;
 import com.example.my_future.MenuBottom.ForumFragment;
 import com.example.my_future.MenuBottom.NotebookFragment;
@@ -21,12 +21,8 @@ import com.example.my_future.MenuBottom.PlanFragment;
 import com.example.my_future.MenuBottom.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
 
@@ -68,13 +64,18 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     @Override
     public void onNavItemSelectedListener(MenuItem item) {
         Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+        Fragment selectedFragment = null;
         switch (item.getItemId()) {
+            case R.id.id_calculate:
+                selectedFragment = new CalculatedFragment();
+                break;
             case R.id.id_out:
                 mAuth.signOut();
                 startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
                 finish();
                 break;
         }
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
     }
 
     private void MyToast(String message) {
