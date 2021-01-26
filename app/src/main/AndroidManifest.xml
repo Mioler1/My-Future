@@ -13,6 +13,7 @@
         android:roundIcon="@drawable/logo_dark"
         android:supportsRtl="true"
         android:theme="@style/Theme.My_Future">
+        <activity android:name=".CalculetedActivity.CalculetedMifflinActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
@@ -23,10 +24,10 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".FirstScreenActivity"
             android:screenOrientation="portrait" />
