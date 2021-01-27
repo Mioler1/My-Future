@@ -153,22 +153,22 @@ public class CalculatedKetchActivity extends AppCompatActivity {
 
                 double activity = Double.parseDouble(text_activity_noVisible.getText().toString());
                 double weight = Double.parseDouble(weight_text.getText().toString());
-                int growth = Integer.parseInt(growth_text.getText().toString());
+                double growth = Double.parseDouble(growth_text.getText().toString());
                 int age = Integer.parseInt(age_text.getText().toString());
 
                 if (text_gender_noVisible.getText().toString().equals("Мужской")) {
-                    double imt = weight / (growth * growth);
+                    double imt = weight / ((growth / 100) * (growth / 100));
                     double fat = (1.2 * imt) + (0.23 * age) - (10.8 * 1) - 5.4;
                     double lbm = (weight * (100 - fat)) / 100;
-                    double bmr = 370 + (21.6 * lbm) * activity;
+                    double bmr = (370 + (21.6 * lbm)) * activity;
 
                     result_text.setText(bmr + " калорий");
                 }
                 if (text_gender_noVisible.getText().toString().equals("Женский")) {
-                    double imt = weight / (growth * growth);
+                    double imt = weight / ((growth / 100) * (growth / 100));
                     double fat = (1.2 * imt) + (0.23 * age) - (10.8 * 0) - 5.4;
                     double lbm = (weight * (100 - fat)) / 100;
-                    double bmr = 370 + (21.6 * lbm) * activity;
+                    double bmr = (370 + (21.6 * lbm)) * activity;
 
                     result_text.setText(bmr + " калорий");
                 }
