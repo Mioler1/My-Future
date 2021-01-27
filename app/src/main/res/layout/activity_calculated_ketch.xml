@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CalculetedActivity.CalculetedMifflinActivity">
+    tools:context=".CalculetedActivity.CalculatedKetchActivity">
 
     <RelativeLayout
         android:id="@+id/genderRel"
@@ -400,7 +400,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Введите свой рост"
-                android:inputType="number" />
+                android:inputType="numberDecimal" />
 
             <EditText
                 android:id="@+id/weight"

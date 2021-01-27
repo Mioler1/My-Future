@@ -71,15 +71,12 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 break;
             case R.id.id_out:
                 mAuth.signOut();
+                selectedFragment = new Fragment();
                 startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
                 finish();
                 break;
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-    }
-
-    private void MyToast(String message) {
-        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener =

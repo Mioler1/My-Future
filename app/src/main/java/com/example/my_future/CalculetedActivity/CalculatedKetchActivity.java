@@ -1,3 +1,4 @@
+
 package com.example.my_future.CalculetedActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,13 +15,13 @@ import android.widget.Toast;
 
 import com.example.my_future.R;
 
-public class CalculetedMifflinActivity extends AppCompatActivity {
+public class CalculatedKetchActivity extends AppCompatActivity {
     TextView text_gender_noVisible, text_activity_noVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculete_mifflin);
+        setContentView(R.layout.activity_calculated_ketch);
 
         genderSelected();
         activitySelected();
@@ -37,21 +38,21 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_gender_noVisible.setText("Мужской");
-                Toast.makeText(CalculetedMifflinActivity.this, "Мужской", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CalculatedKetchActivity.this, "Мужской", Toast.LENGTH_SHORT).show();
             }
         });
         but_girl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 text_gender_noVisible.setText("Женский");
-                Toast.makeText(CalculetedMifflinActivity.this, "Женский", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CalculatedKetchActivity.this, "Женский", Toast.LENGTH_SHORT).show();
             }
         });
         next_gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (text_gender_noVisible.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Выберите пол", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalculatedKetchActivity.this, "Выберите пол", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 RelativeLayout relativeGender = findViewById(R.id.genderRel);
@@ -109,7 +110,7 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (text_activity_noVisible.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Выберите свою активность", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalculatedKetchActivity.this, "Выберите свою активность", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -132,15 +133,15 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (age_text.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Введите свой возраст", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalculatedKetchActivity.this, "Введите свой возраст", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (growth_text.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Введите свой рост", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalculatedKetchActivity.this, "Введите свой рост", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (weight_text.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Введите свой вес", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalculatedKetchActivity.this, "Введите свой вес", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -154,15 +155,22 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
                 double weight = Double.parseDouble(weight_text.getText().toString());
                 int growth = Integer.parseInt(growth_text.getText().toString());
                 int age = Integer.parseInt(age_text.getText().toString());
-                double result;
 
                 if (text_gender_noVisible.getText().toString().equals("Мужской")) {
-                    result = (10 * weight + 6.25 * growth - 5 * age + 5) * activity;
-                    result_text.setText(result + " калорий");
+                    double imt = weight / (growth * growth);
+                    double fat = (1.2 * imt) + (0.23 * age) - (10.8 * 1) - 5.4;
+                    double lbm = (weight * (100 - fat)) / 100;
+                    double bmr = 370 + (21.6 * lbm) * activity;
+
+                    result_text.setText(bmr + " калорий");
                 }
                 if (text_gender_noVisible.getText().toString().equals("Женский")) {
-                    result = (10 * weight + 6.25 * growth - 5 * age - 161) * activity;
-                    result_text.setText(result + " калорий");
+                    double imt = weight / (growth * growth);
+                    double fat = (1.2 * imt) + (0.23 * age) - (10.8 * 0) - 5.4;
+                    double lbm = (weight * (100 - fat)) / 100;
+                    double bmr = 370 + (21.6 * lbm) * activity;
+
+                    result_text.setText(bmr + " калорий");
                 }
             }
         });
