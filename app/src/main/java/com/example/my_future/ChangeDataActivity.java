@@ -22,6 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.my_future.MenuBottom.FoodFragment;
+import com.example.my_future.MenuBottom.ProfileFragment;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -445,5 +447,10 @@ public class ChangeDataActivity extends AppCompatActivity {
 
     private void MyToast(String message) {
         Toast.makeText(ChangeDataActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void OnClickBack(View view) {
+        startActivity(new Intent(ChangeDataActivity.this, MainActivity.class));
+        finish();
     }
 }

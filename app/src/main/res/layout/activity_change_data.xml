@@ -4,60 +4,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/custom"
     tools:context=".ChangeDataActivity">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/exit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ic_baseline_keyboard_backspace_24"
+            android:onClick="OnClickBack" />
+
+        <TextView
+            android:id="@+id/f1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:text="@string/ChangeData"
+            android:textColor="#ffffff"
+            android:textSize="34sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/f1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/tab_indicator_gray" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:layout_below="@+id/header"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:id="@+id/BecomeSponsor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/crown"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_baseline_emoji_events_24"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Sponsor"
+                android:textSize="26sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="25dp"
+                android:layout_centerHorizontal="true"
+                android:layout_toRightOf="@id/crown"/>
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#aaa"
             android:onClick="openChangeEmail"
             android:text="Изменить email"
-            android:textSize="30sp" />
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white"
+            android:textSize="26sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#aaa"
+            android:layout_marginTop="10dp"
             android:onClick="openChangePassword"
             android:text="Изменить пароль"
-            android:textSize="30sp" />
+            android:textColor="@color/white"
+            android:textSize="26sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#aaa"
+            android:layout_marginTop="10dp"
             android:onClick="openChangeNickname"
             android:text="Изменить никнейм"
-            android:textSize="30sp" />
+            android:textColor="@color/white"
+            android:textSize="26sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#aaa"
+            android:layout_marginTop="10dp"
             android:onClick="openChangeAvatar"
             android:text="Изменить аватар"
-            android:textSize="30sp" />
+            android:textColor="@color/white"
+            android:textSize="26sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#aaa"
+            android:layout_marginTop="10dp"
             android:onClick="openChangeWeight"
             android:text="Изменить вес"
-            android:textSize="30sp" />
+            android:textColor="@color/white"
+            android:textSize="26sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#aaa"
+            android:layout_marginTop="10dp"
             android:onClick="openChangeTarget"
             android:text="Изменить цель"
-            android:textSize="30sp" />
+            android:textColor="@color/white"
+            android:textSize="26sp"/>
 
     </LinearLayout>
 

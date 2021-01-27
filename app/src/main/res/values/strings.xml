@@ -28,7 +28,11 @@
     <string name="settings">Настройки</string>
     <string name="out">Выход</string>
     // Изменение данных
-
+    <string name="ChangeData">Изменение данных</string>
+    //Профиль
+    <string name="ButtonChangeData">Изменить данные</string>
+    <string name="weight">Вес:</string>
+    <string name="Sponsor">Стать спонсором</string>
 
     //layout
     <string name="food">Питание</string>
