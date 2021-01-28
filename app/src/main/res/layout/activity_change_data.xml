@@ -12,14 +12,13 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/exit"
+            android:id="@+id/OnClickBack"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="10dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/ic_baseline_keyboard_backspace_24"
-            android:onClick="OnClickBack" />
+            android:background="@drawable/ic_baseline_keyboard_backspace_24" />
 
         <TextView
             android:id="@+id/f1"
@@ -59,73 +58,73 @@
                 android:id="@+id/crown"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_baseline_emoji_events_24"/>
+                android:background="@drawable/ic_baseline_emoji_events_24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Sponsor"
-                android:textSize="26sp"
-                android:textColor="@color/white"
-                android:layout_marginStart="25dp"
                 android:layout_centerHorizontal="true"
-                android:layout_toRightOf="@id/crown"/>
+                android:layout_marginStart="25dp"
+                android:layout_toRightOf="@id/crown"
+                android:text="@string/Sponsor"
+                android:textColor="@color/white"
+                android:textSize="26sp" />
 
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/openChangeEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="openChangeEmail"
-            android:text="Изменить email"
             android:layout_marginTop="20dp"
+            android:text="Изменить email"
             android:textColor="@color/white"
             android:textSize="26sp" />
 
         <TextView
+            android:id="@+id/openChangePassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:onClick="openChangePassword"
             android:text="Изменить пароль"
             android:textColor="@color/white"
-            android:textSize="26sp"/>
+            android:textSize="26sp" />
 
         <TextView
+            android:id="@+id/openChangeNickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:onClick="openChangeNickname"
             android:text="Изменить никнейм"
             android:textColor="@color/white"
-            android:textSize="26sp"/>
+            android:textSize="26sp" />
 
         <TextView
+            android:id="@+id/openChangeAvatar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:onClick="openChangeAvatar"
             android:text="Изменить аватар"
             android:textColor="@color/white"
-            android:textSize="26sp"/>
+            android:textSize="26sp" />
 
         <TextView
+            android:id="@+id/openChangeWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:onClick="openChangeWeight"
             android:text="Изменить вес"
             android:textColor="@color/white"
-            android:textSize="26sp"/>
+            android:textSize="26sp" />
 
         <TextView
+            android:id="@+id/openChangeTarget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:onClick="openChangeTarget"
             android:text="Изменить цель"
             android:textColor="@color/white"
-            android:textSize="26sp"/>
+            android:textSize="26sp" />
 
     </LinearLayout>
 

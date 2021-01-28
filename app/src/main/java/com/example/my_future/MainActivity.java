@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.my_future.Fragments.BackPressed;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
 import com.example.my_future.MenuFlowing.NavItemSelectedListener;
@@ -78,6 +79,14 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 break;
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (!(fragment instanceof BackPressed) || !((BackPressed) fragment).onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
