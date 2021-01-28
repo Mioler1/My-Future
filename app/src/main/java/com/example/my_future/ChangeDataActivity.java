@@ -450,7 +450,7 @@ public class ChangeDataActivity extends AppCompatActivity {
     }
 
     public void OnClickBack(View view) {
-        startActivity(new Intent(ChangeDataActivity.this, MainActivity.class));
+        onBackPressed();
         finish();
     }
 }

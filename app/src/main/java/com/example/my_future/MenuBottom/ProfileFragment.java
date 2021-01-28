@@ -1,6 +1,5 @@
 package com.example.my_future.MenuBottom;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
-import com.example.my_future.ChangeDataActivity;
+import com.example.my_future.Fragments.ChangeDataFragment;
+import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,7 +36,7 @@ public class ProfileFragment extends Fragment {
         Button button = (Button) v.findViewById(R.id.click);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), ChangeDataActivity.class));
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeDataFragment()).commit();
             }
         });
         CircleImageView avatar = (CircleImageView) v.findViewById(R.id.avatar);
