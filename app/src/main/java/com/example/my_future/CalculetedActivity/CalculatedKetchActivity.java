@@ -149,28 +149,37 @@ public class CalculatedKetchActivity extends AppCompatActivity {
                 relativeData.setVisibility(View.GONE);
                 RelativeLayout relativeResult = findViewById(R.id.resultRel);
                 relativeResult.setVisibility(View.VISIBLE);
-                TextView result_text = findViewById(R.id.result);
+                TextView result_norm_text = findViewById(R.id.result_norm);
+                TextView result_kit_text = findViewById(R.id.result_kit);
+                TextView result_slimming_text = findViewById(R.id.result_slimming);
 
                 double activity = Double.parseDouble(text_activity_noVisible.getText().toString());
                 double weight = Double.parseDouble(weight_text.getText().toString());
                 double growth = Double.parseDouble(growth_text.getText().toString());
                 int age = Integer.parseInt(age_text.getText().toString());
 
+                double imt = weight / ((growth / 100) * (growth / 100));
                 if (text_gender_noVisible.getText().toString().equals("Мужской")) {
-                    double imt = weight / ((growth / 100) * (growth / 100));
                     double fat = (1.2 * imt) + (0.23 * age) - (10.8 * 1) - 5.4;
                     double lbm = (weight * (100 - fat)) / 100;
                     double bmr = (370 + (21.6 * lbm)) * activity;
 
-                    result_text.setText(bmr + " калорий");
+                    result_norm_text.setText(Math.round(bmr) + " калорий");
+                    double kit = bmr + (bmr * 20 / 100);
+                    result_kit_text.setText(Math.round(kit) + " калорий");
+                    double slimming = bmr - (bmr * 20 / 100);
+                    result_slimming_text.setText(Math.round(slimming) + " калорий");
                 }
                 if (text_gender_noVisible.getText().toString().equals("Женский")) {
-                    double imt = weight / ((growth / 100) * (growth / 100));
                     double fat = (1.2 * imt) + (0.23 * age) - (10.8 * 0) - 5.4;
                     double lbm = (weight * (100 - fat)) / 100;
                     double bmr = (370 + (21.6 * lbm)) * activity;
 
-                    result_text.setText(bmr + " калорий");
+                    result_norm_text.setText(Math.round(bmr) + " калорий");
+                    double kit = bmr + (bmr * 20 / 100);
+                    result_kit_text.setText(Math.round(kit) + " калорий");
+                    double slimming = bmr - (bmr * 20 / 100);
+                    result_slimming_text.setText(Math.round(slimming) + " калорий");
                 }
             }
         });

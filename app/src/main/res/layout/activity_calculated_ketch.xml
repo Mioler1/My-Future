@@ -425,7 +425,7 @@
     <RelativeLayout
         android:id="@+id/resultRel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:visibility="gone">
 
@@ -433,26 +433,73 @@
             android:id="@+id/text_title_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="Ваш результат" />
+            android:text="Ваши результаты" />
 
-        <TextView
-            android:id="@+id/result"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_title_result"
-            android:layout_centerHorizontal="true"
-            android:textSize="25sp" />
+            android:layout_centerInParent="true">
 
-        <Button
-            android:id="@+id/but_result_close"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/result"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:onClick="onClickBack"
-            android:text="Назад" />
+            <TextView
+                android:id="@+id/text_norm_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Суточная норма калорий:" />
+
+            <TextView
+                android:id="@+id/result_norm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_norm_result"
+                android:layout_centerHorizontal="true"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/text_kit_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/result_norm"
+                android:layout_centerHorizontal="true"
+                android:text="Суточная норма калорий для набора массы:" />
+
+            <TextView
+                android:id="@+id/result_kit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_kit_result"
+                android:layout_centerHorizontal="true"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/text_slimming_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/result_kit"
+                android:layout_centerHorizontal="true"
+                android:text="Суточная норма калорий для похудения:" />
+
+            <TextView
+                android:id="@+id/result_slimming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_slimming_result"
+                android:layout_centerHorizontal="true"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/but_result_close"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/result_slimming"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:onClick="onClickBack"
+                android:text="Назад" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

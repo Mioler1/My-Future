@@ -148,7 +148,7 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
                 relativeData.setVisibility(View.GONE);
                 RelativeLayout relativeResult = findViewById(R.id.resultRel);
                 relativeResult.setVisibility(View.VISIBLE);
-                TextView result_text = findViewById(R.id.result);
+                TextView result_norm_text = findViewById(R.id.result_norm);
 
                 double activity = Double.parseDouble(text_activity_noVisible.getText().toString());
                 double weight = Double.parseDouble(weight_text.getText().toString());
@@ -158,11 +158,11 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
 
                 if (text_gender_noVisible.getText().toString().equals("Мужской")) {
                     result = (10 * weight + 6.25 * growth - 5 * age + 5) * activity;
-                    result_text.setText(result + " калорий");
+                    result_norm_text.setText(result + " калорий");
                 }
                 if (text_gender_noVisible.getText().toString().equals("Женский")) {
                     result = (10 * weight + 6.25 * growth - 5 * age - 161) * activity;
-                    result_text.setText(result + " калорий");
+                    result_norm_text.setText(result + " калорий");
                 }
             }
         });
