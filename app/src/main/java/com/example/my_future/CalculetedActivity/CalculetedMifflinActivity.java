@@ -149,6 +149,8 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
                 RelativeLayout relativeResult = findViewById(R.id.resultRel);
                 relativeResult.setVisibility(View.VISIBLE);
                 TextView result_norm_text = findViewById(R.id.result_norm);
+                TextView result_kit_text = findViewById(R.id.result_kit);
+                TextView result_slimming_text = findViewById(R.id.result_slimming);
 
                 double activity = Double.parseDouble(text_activity_noVisible.getText().toString());
                 double weight = Double.parseDouble(weight_text.getText().toString());
@@ -158,11 +160,21 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
 
                 if (text_gender_noVisible.getText().toString().equals("Мужской")) {
                     result = (10 * weight + 6.25 * growth - 5 * age + 5) * activity;
-                    result_norm_text.setText(result + " калорий");
+
+                    result_norm_text.setText(Math.round(result) + " калорий");
+                    double kit = result + (result * 20 / 100);
+                    result_kit_text.setText(Math.round(kit) + " калорий");
+                    double slimming = result - (result * 20 / 100);
+                    result_slimming_text.setText(Math.round(slimming) + " калорий");
                 }
                 if (text_gender_noVisible.getText().toString().equals("Женский")) {
                     result = (10 * weight + 6.25 * growth - 5 * age - 161) * activity;
-                    result_norm_text.setText(result + " калорий");
+
+                    result_norm_text.setText(Math.round(result) + " калорий");
+                    double kit = result + (result * 20 / 100);
+                    result_kit_text.setText(Math.round(kit) + " калорий");
+                    double slimming = result - (result * 20 / 100);
+                    result_slimming_text.setText(Math.round(slimming) + " калорий");
                 }
             }
         });

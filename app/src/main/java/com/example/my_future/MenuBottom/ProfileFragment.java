@@ -1,5 +1,7 @@
 package com.example.my_future.MenuBottom;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.my_future.Fragments.ChangeDataFragment;
-import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,20 +29,40 @@ public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Users");
+
+    public static final String APP_PREFERENCES = "saveDataUser";
+    public static final String APP_PREFERENCES_NAME = "Nickname";
+    SharedPreferences mSettings;
+
+    View v;
+    TextView nickname;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.frag_activity_profile, container, false);
-        Button button = (Button) v.findViewById(R.id.click);
+        v = inflater.inflate(R.layout.frag_activity_profile, container, false);
+
+        init();
+        return v;
+    }
+
+    private void init() {
+        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
+        Button button = v.findViewById(R.id.click);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeDataFragment()).commit();
             }
         });
-        CircleImageView avatar = (CircleImageView) v.findViewById(R.id.avatar);
-        TextView nickname = (TextView) v.findViewById(R.id.nickname);
-        TextView target = (TextView) v.findViewById(R.id.target);
-        TextView weight = (TextView) v.findViewById(R.id.weight);
+
+        CircleImageView avatar = v.findViewById(R.id.avatar);
+        nickname = v.findViewById(R.id.nickname);
+        TextView target = v.findViewById(R.id.target);
+        TextView weight = v.findViewById(R.id.weight);
+        if (mSettings.contains(APP_PREFERENCES_NAME)) {
+            nickname.setText(mSettings.getString(APP_PREFERENCES_NAME, ""));
+        }
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -57,7 +77,13 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+    }
 
-        return v;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putString(APP_PREFERENCES_NAME, nickname.getText().toString());
+        editor.apply();
     }
 }
