@@ -82,8 +82,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        String string = nickname.getText().toString();
         SharedPreferences.Editor editor = mSettings.edit();
-        editor.putString(APP_PREFERENCES_NAME, nickname.getText().toString());
+        editor.putString(APP_PREFERENCES_NAME, string);
         editor.apply();
     }
 }
