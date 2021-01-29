@@ -1,6 +1,8 @@
 package com.example.my_future.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -47,6 +49,11 @@ import java.io.ByteArrayOutputStream;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.my_future.Variables.APP_PREFERENCES;
+import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
+import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
+import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
+import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class ChangeDataFragment extends Fragment implements BackPressed {
     TextView textNoVisibleTargetChange;
@@ -63,6 +70,8 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     AlertDialog alertDialog;
     Uri uploadUri;
 
+    EditText nickname_change;
+    SharedPreferences mSettings;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,6 +82,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     }
 
     private void init() {
+        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -247,7 +257,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
 
     public void openChangeNickname() {
         openAlertDialog();
-        EditText nickname_change = viewAlert.findViewById(R.id.nickname_change);
+        nickname_change = viewAlert.findViewById(R.id.nickname_change);
         nickname_change.setVisibility(View.VISIBLE);
         viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,6 +285,9 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         myRef.child(mAuth.getUid()).child("profile").child("nickname").setValue(nickname_text);
+                        SharedPreferences.Editor editor = mSettings.edit();
+                        editor.putString(APP_PREFERENCES_NICKNAME, nickname_text);
+                        editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
                     }
@@ -314,6 +327,9 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         myRef.child(mAuth.getUid()).child("profile").child("weight").setValue(weight_change.getText().toString());
+                        SharedPreferences.Editor editor = mSettings.edit();
+                        editor.putString(APP_PREFERENCES_WEIGHT, weight_change.getText().toString());
+                        editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
                     }
@@ -343,6 +359,9 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         myRef.child(mAuth.getUid()).child("profile").child("target").setValue(textNoVisibleTargetChange.getText().toString());
+                        SharedPreferences.Editor editor = mSettings.edit();
+                        editor.putString(APP_PREFERENCES_TARGET, textNoVisibleTargetChange.getText().toString());
+                        editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
                     }
@@ -366,6 +385,9 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+                        SharedPreferences.Editor editor = mSettings.edit();
+                        editor.putString(APP_PREFERENCES_AVATAR, String.valueOf(uploadUri));
+                        editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
                     }
