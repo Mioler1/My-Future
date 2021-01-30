@@ -14,5 +14,4 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/drawer_menu" />
-
 </RelativeLayout>

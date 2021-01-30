@@ -40,4 +40,7 @@
     <string name="Train">Тренировки</string>
     <string name="Notepad">Блокнот</string>
     <string name="Forum">Форум</string>
+
+    //food
+    <string name="Calculator">Рассчитать каллории</string>
 </resources>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/custom"
     tools:context=".CalculetedActivity.CalculatedKetchActivity">
 
     <RelativeLayout
@@ -18,7 +19,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Выберите пол:" />
+            android:layout_marginBottom="5dp"
+            android:text="Выберите пол:"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:id="@+id/genderLin"
@@ -36,16 +40,16 @@
                 <ImageButton
                     android:id="@+id/image_click_man"
                     android:layout_width="150dp"
-                    android:layout_height="200dp"
+                    android:layout_height="180dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/white" />
+                    android:background="@drawable/click_effect" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_man"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="60dp"
+                    android:layout_marginTop="30dp"
                     android:src="@drawable/default_avatar" />
 
                 <TextView
@@ -54,7 +58,9 @@
                     android:layout_below="@+id/img_man"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="Мужской" />
+                    android:text="Мужской"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
             </RelativeLayout>
 
@@ -67,17 +73,18 @@
                 <ImageButton
                     android:id="@+id/image_click_girl"
                     android:layout_width="150dp"
-                    android:layout_height="200dp"
+                    android:layout_height="180dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/white" />
+                    android:background="@drawable/click_effect" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_girl"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="60dp"
-                    android:src="@drawable/default_avatar" />
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/default_avatar"
+                    app:civ_border_color="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -85,7 +92,9 @@
                     android:layout_below="@+id/img_girl"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="Женский" />
+                    android:text="Женский"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
             </RelativeLayout>
 
@@ -94,11 +103,13 @@
         <Button
             android:id="@+id/but_gender_nextClick"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_below="@+id/genderLin"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:text="Продолжить" />
+            android:layout_marginTop="30dp"
+            android:background="@drawable/btn_setting"
+            android:text="Продолжить"
+            android:textColor="@color/white" />
 
         <!--НЕВИДИМЫЙ ТЕКСТ-->
         <TextView
@@ -121,7 +132,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Выберите уровень ужедневной активности" />
+            android:gravity="center"
+            android:text="Выберите уровень ежедневной активности"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -146,7 +160,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/white" />
+                        android:background="#202225" />
+
+                    <View
+                        android:id="@+id/line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/image_click_activity_1"
+                        android:background="@color/tab_indicator_gray" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_activity_1"
@@ -164,7 +185,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_toEndOf="@id/img_activity_1"
-                        android:text="1.200" />
+                        android:text="1.200"
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -173,22 +195,29 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/img_activity_1"
-                        android:text="Для малоподвижных людей, тренировок мало или они отсутствуют." />
+                        android:text="Для малоподвижных людей, тренировок мало или они отсутствуют."
+                        android:textColor="@color/white" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/activityRel_2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="wrap_content">
 
                     <ImageButton
                         android:id="@+id/image_click_activity_2"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/white" />
+                        android:background="#202225" />
+
+                    <View
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/image_click_activity_2"
+                        android:background="@color/tab_indicator_gray" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_activity_2"
@@ -206,7 +235,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_toEndOf="@id/img_activity_2"
-                        android:text="1.375" />
+                        android:text="1.375"
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -215,22 +245,29 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/img_activity_2"
-                        android:text="Для людей с низкой активностью, легкие тренировки 1-3 раза в неделю или в виде эквивалента другой активности." />
+                        android:text="Для людей с низкой активностью, легкие тренировки 1-3 раза в неделю или в виде эквивалента другой активности."
+                        android:textColor="@color/white" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/activityRel_3"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="wrap_content">
 
                     <ImageButton
                         android:id="@+id/image_click_activity_3"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/white" />
+                        android:background="#202225" />
+
+                    <View
+                        android:id="@+id/line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/image_click_activity_3"
+                        android:background="@color/tab_indicator_gray" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_activity_3"
@@ -248,7 +285,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_toEndOf="@id/img_activity_3"
-                        android:text="1.550" />
+                        android:text="1.550"
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -257,22 +295,29 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/img_activity_3"
-                        android:text="Для умеренно активных людей: физическая работа средней тяжести или регулярные тренировки 3-5 дней в неделю." />
+                        android:text="Для умеренно активных людей: физическая работа средней тяжести или регулярные тренировки 3-5 дней в неделю."
+                        android:textColor="@color/white" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/activityRel_4"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="wrap_content">
 
                     <ImageButton
                         android:id="@+id/image_click_activity_4"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/white" />
+                        android:background="#202225" />
+
+                    <View
+                        android:id="@+id/line4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/image_click_activity_4"
+                        android:background="@color/tab_indicator_gray" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_activity_4"
@@ -290,7 +335,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_toEndOf="@id/img_activity_4"
-                        android:text="1.725" />
+                        android:text="1.725"
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -299,22 +345,29 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/img_activity_4"
-                        android:text="Для очень активных людей: физическая работа полный день или интенсивные тренировки 6-7 раз в неделю." />
+                        android:text="Для очень активных людей: физическая работа полный день или интенсивные тренировки 6-7 раз в неделю."
+                        android:textColor="@color/white" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/activityRel_5"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="wrap_content">
 
                     <ImageButton
                         android:id="@+id/image_click_activity_5"
                         android:layout_width="match_parent"
                         android:layout_height="110dp"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/white" />
+                        android:background="#202225" />
+
+                    <View
+                        android:id="@+id/line5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/image_click_activity_5"
+                        android:background="@color/tab_indicator_gray" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_activity_5"
@@ -332,7 +385,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_toEndOf="@id/img_activity_5"
-                        android:text="1.900" />
+                        android:text="1.900"
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -341,7 +395,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/img_activity_5"
-                        android:text="Для предельно активных людей: тяжелая физическая работа и интенсивные тренировки/занятия спортом." />
+                        android:text="Для предельно активных людей: тяжелая физическая работа и интенсивные тренировки/занятия спортом."
+                        android:textColor="@color/white" />
 
                 </RelativeLayout>
 
@@ -356,7 +411,9 @@
             android:layout_below="@+id/scrollView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Продолжить" />
+            android:background="@drawable/btn_setting"
+            android:text="Продолжить"
+            android:textColor="@color/white" />
 
         <!--НЕВИДИМЫЙ ТЕКСТ-->
         <TextView
@@ -379,7 +436,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Введите свои данные:" />
+            android:text="Введите свои данные:"
+            android:textColor="@color/white"
+            android:textSize="19sp" />
 
         <LinearLayout
             android:id="@+id/dataLin"
@@ -391,23 +450,44 @@
             <EditText
                 android:id="@+id/age"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/border_for_edittext"
                 android:hint="Введите свой возраст"
-                android:inputType="number" />
+                android:inputType="number"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <EditText
                 android:id="@+id/growth"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/border_for_edittext"
                 android:hint="Введите свой рост"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <EditText
                 android:id="@+id/weight"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/border_for_edittext"
                 android:hint="Введите свой вес"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
         </LinearLayout>
 
@@ -418,7 +498,9 @@
             android:layout_below="@+id/dataLin"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="Рассчитать" />
+            android:background="@drawable/btn_setting"
+            android:text="Рассчитать"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
@@ -435,7 +517,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="Ваши результаты" />
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:text="Ваши результаты"
+            android:textColor="@color/white"
+            android:textSize="34sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -447,7 +532,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Суточная норма калорий:" />
+                android:text="Суточная норма калорий:"
+                android:textColor="@color/white"
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/result_norm"
@@ -455,6 +542,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_norm_result"
                 android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <TextView
@@ -463,7 +551,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/result_norm"
                 android:layout_centerHorizontal="true"
-                android:text="Суточная норма калорий для набора массы:" />
+                android:layout_marginTop="10dp"
+                android:text="Суточная норма калорий для набора массы:"
+                android:textColor="@color/white"
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/result_kit"
@@ -471,6 +562,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_kit_result"
                 android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <TextView
@@ -479,7 +571,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/result_kit"
                 android:layout_centerHorizontal="true"
-                android:text="Суточная норма калорий для похудения:" />
+                android:layout_marginTop="10dp"
+                android:text="Суточная норма калорий для похудения:"
+                android:textColor="@color/white"
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/result_slimming"
@@ -487,6 +582,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_slimming_result"
                 android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
                 android:textSize="25sp" />
 
             <Button
@@ -496,8 +592,10 @@
                 android:layout_below="@+id/result_slimming"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/btn_setting"
                 android:onClick="onClickBack"
-                android:text="Назад" />
+                android:text="Назад"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 

@@ -104,15 +104,8 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         LayoutInflater inflater = getLayoutInflater();
         viewAlert = inflater.inflate(R.layout.alert_dialog_change_data, null);
         avatar_img_change = viewAlert.findViewById(R.id.avatar_change);
-        builder.setView(viewAlert).setCancelable(false);
+        builder.setView(viewAlert).setCancelable(true);
         alertDialog = builder.create();
-
-        viewAlert.findViewById(R.id.butCloseAlertDialog).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-            }
-        });
 
         avatar_img_change.setOnClickListener(new View.OnClickListener() {
             @Override
