@@ -2,10 +2,13 @@ package com.example.my_future.MenuBottom;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.File;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -63,8 +68,10 @@ public class ProfileFragment extends Fragment { // https://progi.pro/sohranit-iz
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (mSettings.contains(APP_PREFERENCES_AVATAR)) {
-                    String mImageUri = mSettings.getString("Avatar", "");
-                    Glide.with(avatar).load(Uri.parse(mImageUri)).error(R.drawable.default_avatar).into(avatar);
+                String mImageUri = mSettings.getString("Avatar", "");
+                byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
+                avatar.setImageBitmap(bitmap);
                 } else {
                     Glide.with(avatar).load(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue()).error(R.drawable.default_avatar).into(avatar);
                 }

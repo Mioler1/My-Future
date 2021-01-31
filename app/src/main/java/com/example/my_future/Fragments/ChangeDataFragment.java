@@ -4,10 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +31,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.my_future.AuthorizationActivity;
+import com.example.my_future.FirstScreenActivity;
 import com.example.my_future.MenuBottom.ProfileFragment;
 import com.example.my_future.R;
+import com.example.my_future.StartScreenActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,10 +53,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.MODE_PRIVATE;
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
@@ -72,6 +83,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
 
     EditText nickname_change;
     SharedPreferences mSettings;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -82,7 +94,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     }
 
     private void init() {
-        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -377,10 +389,29 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+                        if (String.valueOf(uploadUri).equals("null")) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Log.d("MyLog", String.valueOf(uploadUri));
+                                    myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+                                }
+                            }, 6000);
+                        } else {
+                            Log.d("MyLog", String.valueOf(uploadUri));
+                            myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+                        }
+
+                        Bitmap bitmap = ((BitmapDrawable) avatar_img_change.getDrawable()).getBitmap();
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] byteArray = baos.toByteArray();
+                        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_AVATAR, String.valueOf(uploadUri));
+                        editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
                         editor.apply();
+
                         MyToast("Готово");
                         alertDialog.dismiss();
                     }
