@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -384,36 +385,40 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         openAlertDialog();
         avatar_img_change.setVisibility(View.VISIBLE);
         viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                ProgressBar progressBar = viewAlert.findViewById(R.id.progressBar);
+                progressBar.setVisibility(View.VISIBLE);
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (String.valueOf(uploadUri).equals("null")) {
+                        for (int i = 1000; ; i = i + 1000) {
+                        // THREADER
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Log.d("MyLog", String.valueOf(uploadUri));
-                                    myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+                                    if (!String.valueOf(uploadUri).equals("null")) {
+                                        Log.d("MyLog", String.valueOf(uploadUri));
+                                        myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+
+                                        Bitmap bitmap = ((BitmapDrawable) avatar_img_change.getDrawable()).getBitmap();
+                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                        byte[] byteArray = baos.toByteArray();
+                                        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                                        SharedPreferences.Editor editor = mSettings.edit();
+                                        editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
+                                        editor.apply();
+
+                                        MyToast("Готово");
+                                        alertDialog.dismiss();
+                                    }
                                 }
-                            }, 6000);
-                        } else {
-                            Log.d("MyLog", String.valueOf(uploadUri));
-                            myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+                            }, i);
+                            break;
                         }
-
-                        Bitmap bitmap = ((BitmapDrawable) avatar_img_change.getDrawable()).getBitmap();
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byte[] byteArray = baos.toByteArray();
-                        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-                        SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
-                        editor.apply();
-
-                        MyToast("Готово");
-                        alertDialog.dismiss();
                     }
 
                     @Override

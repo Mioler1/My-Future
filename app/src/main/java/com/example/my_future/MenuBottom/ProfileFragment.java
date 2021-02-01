@@ -4,12 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +26,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
@@ -39,8 +33,8 @@ import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
-// https://www.cyberforum.ru/android-dev/thread1506497.html НУЖНО ИЗУЧИТЬ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-public class ProfileFragment extends Fragment { // https://progi.pro/sohranit-izobrazhenie-kak-stroku-s-sharedpreferences-9788506 НУЖНО ИЗУЧИТЬ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Users");
