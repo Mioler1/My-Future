@@ -24,8 +24,11 @@ import com.example.my_future.MenuBottom.PlanFragment;
 import com.example.my_future.MenuBottom.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
 
@@ -51,6 +54,31 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         db = FirebaseDatabase.getInstance();
         mRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
+
+        checkProfile();
+    }
+
+    private void checkProfile() {
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot user : snapshot.getChildren()) {
+                    if (user.getKey().equals(mAuth.getUid())) {
+                        for (DataSnapshot profile : user.getChildren()) {
+                            if (profile.getValue().equals("none")) {
+                                startActivity(new Intent(MainActivity.this, FillingDataActivity.class));
+                                finish();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                MyToast(error.getMessage());
+            }
+        });
     }
 
     private void setupMenu() {
@@ -122,5 +150,9 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         mAuth.signOut();
         startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
         finish();
+    }
+
+    private void MyToast(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.my_future.Intro.IntroActivity;
+import com.example.my_future.MenuBottom.SharedPrefferences.SaveDataUser;
 import com.example.my_future.Models.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,8 +42,17 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.example.my_future.Variables.APP_PREFERENCES;
+import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
+import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
+import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
+import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class FillingDataActivity extends AppCompatActivity {
 
@@ -55,8 +67,9 @@ public class FillingDataActivity extends AppCompatActivity {
     FirebaseDatabase db;
     FirebaseAuth mAuth;
     DatabaseReference myRef;
-    StorageReference mStorageRef;
 
+    StorageReference mStorageRef;
+    SharedPreferences mSettings;
     Uri uploadUri;
 
     @Override
@@ -70,6 +83,8 @@ public class FillingDataActivity extends AppCompatActivity {
     }
 
     private void init() {
+        FillingDataActivity fillingDataActivityClass = FillingDataActivity.this;
+        mSettings = fillingDataActivityClass.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         nickname = findViewById(R.id.nickname);
         weight = findViewById(R.id.weight);
         gender = findViewById(R.id.gender);
@@ -136,6 +151,7 @@ public class FillingDataActivity extends AppCompatActivity {
             MyToast("Выберите цель");
             return;
         }
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -151,8 +167,20 @@ public class FillingDataActivity extends AppCompatActivity {
                     user.setAvatar("default");
                 }
 
+                Bitmap bitmap = ((BitmapDrawable) avatar_img.getDrawable()).getBitmap();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] byteArray = baos.toByteArray();
+                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString(APP_PREFERENCES_NICKNAME, nickname_text);
+                editor.putString(APP_PREFERENCES_WEIGHT, weight_text);
+                editor.putString(APP_PREFERENCES_TARGET, textNoVisibleTarget.getText().toString());
+                editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
+                editor.apply();
+
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
-                progressBar.setVisibility(View.GONE);
                 startActivity(new Intent(FillingDataActivity.this, IntroActivity.class));
                 finish();
             }

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,30 +63,24 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (mSettings.contains(APP_PREFERENCES_AVATAR)) {
-                String mImageUri = mSettings.getString("Avatar", "");
-                byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
-                avatar.setImageBitmap(bitmap);
+                    String mImageUri = mSettings.getString("Avatar", "");
+                    byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
+                    avatar.setImageBitmap(bitmap);
                 } else {
                     Glide.with(avatar).load(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue()).error(R.drawable.default_avatar).into(avatar);
                 }
 
                 if (mSettings.contains(APP_PREFERENCES_NICKNAME)) {
                     nickname.setText(mSettings.getString(APP_PREFERENCES_NICKNAME, ""));
-                } else {
-                    nickname.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("nickname").getValue()));
                 }
 
                 if (mSettings.contains(APP_PREFERENCES_WEIGHT)) {
                     weight.setText(mSettings.getString(APP_PREFERENCES_WEIGHT, ""));
-                } else {
-                    weight.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("weight").getValue()));
                 }
 
                 if (mSettings.contains(APP_PREFERENCES_TARGET)) {
                     target.setText(mSettings.getString(APP_PREFERENCES_TARGET, ""));
-                } else {
-                    target.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("target").getValue()));
                 }
             }
 

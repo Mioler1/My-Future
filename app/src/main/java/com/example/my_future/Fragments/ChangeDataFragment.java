@@ -1,17 +1,13 @@
 package com.example.my_future.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,10 +28,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.my_future.AuthorizationActivity;
-import com.example.my_future.FirstScreenActivity;
 import com.example.my_future.MenuBottom.ProfileFragment;
 import com.example.my_future.R;
-import com.example.my_future.StartScreenActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -54,8 +48,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -80,10 +72,8 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     FirebaseUser mUser;
 
     AlertDialog alertDialog;
-    Uri uploadUri;
-
-    EditText nickname_change;
     SharedPreferences mSettings;
+    Uri uploadUri;
 
     @Nullable
     @Override
@@ -263,7 +253,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
 
     public void openChangeNickname() {
         openAlertDialog();
-        nickname_change = viewAlert.findViewById(R.id.nickname_change);
+        EditText nickname_change = viewAlert.findViewById(R.id.nickname_change);
         nickname_change.setVisibility(View.VISIBLE);
         viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -394,7 +384,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (int i = 1000; ; i = i + 1000) {
-                        // THREADER
+                            // THREADER
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
