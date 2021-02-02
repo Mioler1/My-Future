@@ -20,12 +20,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.my_future.Intro.IntroActivity;
-import com.example.my_future.MenuBottom.SharedPrefferences.SaveDataUser;
 import com.example.my_future.Models.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,27 +41,35 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
+import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
+import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
+import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
 import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
+import static com.example.my_future.Variables.APP_PREFERENCES_HIP;
+import static com.example.my_future.Variables.APP_PREFERENCES_NECK;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
+import static com.example.my_future.Variables.APP_PREFERENCES_SHIN;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
+import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class FillingDataActivity extends AppCompatActivity {
 
+    // Окно с данными пользователя
     EditText nickname, weight, growth;
     RadioGroup gender;
     Spinner target;
     TextView textNoVisibleGender, textNoVisibleTarget;
     ProgressBar progressBar;
     CircleImageView avatar_img;
+
+    // Окно с объёмами тела
+    EditText waist, neck, chest, biceps, forearm, hip, shin;
 
     FirebaseDatabase db;
     FirebaseAuth mAuth;
@@ -85,18 +92,28 @@ public class FillingDataActivity extends AppCompatActivity {
     private void init() {
         FillingDataActivity fillingDataActivityClass = FillingDataActivity.this;
         mSettings = fillingDataActivityClass.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        db = FirebaseDatabase.getInstance();
+        myRef = db.getReference("Users");
+        mAuth = FirebaseAuth.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
+
+        // Иннициализация в окне данные пользователя
         nickname = findViewById(R.id.nickname);
         weight = findViewById(R.id.weight);
         growth = findViewById(R.id.growth);
         gender = findViewById(R.id.gender);
         target = findViewById(R.id.target);
-        progressBar = findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBarUser);
         avatar_img = findViewById(R.id.avatar);
 
-        db = FirebaseDatabase.getInstance();
-        myRef = db.getReference("Users");
-        mAuth = FirebaseAuth.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
+        // Иннициализация в окне объёмы пользователя
+        waist = findViewById(R.id.waist);
+        neck = findViewById(R.id.neck);
+        chest = findViewById(R.id.chest);
+        biceps = findViewById(R.id.biceps);
+        forearm = findViewById(R.id.forearm);
+        hip = findViewById(R.id.hip);
+        shin = findViewById(R.id.shin);
 
         avatar_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,11 +126,11 @@ public class FillingDataActivity extends AppCompatActivity {
         });
     }
 
-    public void onClickSaveFillingData(View view) {
+    public void onClickSaveDataUser(View view) {
         String nickname_text = nickname.getText().toString();
         boolean check;
         String weight_text = weight.getText().toString();
-        double weight_num = Double.parseDouble(weight_text);
+        String growth_text = growth.getText().toString();
 
         if (nickname_text.isEmpty()) {
             MyToast("Поле никнейм пустое");
@@ -132,10 +149,12 @@ public class FillingDataActivity extends AppCompatActivity {
             MyToast("Некоректный никнейм");
             return;
         }
+
         if (weight.getText().toString().isEmpty()) {
             MyToast("Поле вес пустое");
             return;
         }
+        double weight_num = Double.parseDouble(weight_text);
         if (weight_num > 300) {
             MyToast("Наврятли ты такой толстый");
             return;
@@ -144,18 +163,21 @@ public class FillingDataActivity extends AppCompatActivity {
             MyToast("Наврятли ты такой дрыщ");
             return;
         }
-        if (growth.getText().toString().isEmpty()) {
+
+        if (growth_text.isEmpty()) {
             MyToast("Поле рост пустое");
             return;
         }
-        if (weight_num > 300) {
+        double growth_num = Double.parseDouble(growth_text);
+        if (growth_num > 300) {
             MyToast("Наврятли ты такой высокий");
             return;
         }
-        if (weight_num < 50) {
+        if (growth_num < 50) {
             MyToast("Наврятли ты такой карлик");
             return;
         }
+
         if (textNoVisibleGender.getText().toString().isEmpty()) {
             MyToast("Выберите пол");
             return;
@@ -196,8 +218,13 @@ public class FillingDataActivity extends AppCompatActivity {
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
-                startActivity(new Intent(FillingDataActivity.this, IntroActivity.class));
-                finish();
+                RelativeLayout relativeDataUser = findViewById(R.id.AutoLayout);
+                RelativeLayout relativeDataVolume = findViewById(R.id.AutoLayout2);
+                relativeDataUser.setVisibility(View.GONE);
+                avatar_img.setVisibility(View.GONE);
+                relativeDataVolume.setVisibility(View.VISIBLE);
+//                startActivity(new Intent(FillingDataActivity.this, IntroActivity.class));
+//                finish();
             }
 
             @Override
@@ -205,6 +232,69 @@ public class FillingDataActivity extends AppCompatActivity {
                 MyToast("Данные не добавились");
             }
         });
+    }
+
+    public void onClickSaveDataVolume(View view) {
+        String waist_text = waist.getText().toString();
+        String neck_text = neck.getText().toString();
+        String chest_text = chest.getText().toString();
+        String biceps_text = biceps.getText().toString();
+        String forearm_text = forearm.getText().toString();
+        String hip_text = hip.getText().toString();
+        String shin_text = shin.getText().toString();
+
+        SharedPreferences.Editor editor = mSettings.edit();
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!waist_text.isEmpty()) {
+                    myRef.child(mAuth.getUid()).child("volume").child("waist").setValue(waist_text);
+                    editor.putString(APP_PREFERENCES_WAIST, waist_text);
+                }
+
+                if (!neck_text.isEmpty()) {
+                    myRef.child(mAuth.getUid()).child("volume").child("neck").setValue(neck_text);
+                    editor.putString(APP_PREFERENCES_NECK, neck_text);
+                }
+
+                if (!chest_text.isEmpty()) {
+                    myRef.child(mAuth.getUid()).child("volume").child("chest").setValue(chest_text);
+                    editor.putString(APP_PREFERENCES_CHEST, chest_text);
+                }
+
+                if (!biceps_text.isEmpty()) {
+                    myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue(biceps_text);
+                    editor.putString(APP_PREFERENCES_BICEPS, biceps_text);
+                }
+
+                if (!forearm_text.isEmpty()) {
+                    myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue(forearm_text);
+                    editor.putString(APP_PREFERENCES_FOREARM, forearm_text);
+                }
+
+                if (!hip_text.isEmpty()) {
+                    myRef.child(mAuth.getUid()).child("volume").child("hip").setValue(hip_text);
+                    editor.putString(APP_PREFERENCES_HIP, hip_text);
+                }
+
+                if (!shin_text.isEmpty()) {
+                    myRef.child(mAuth.getUid()).child("volume").child("shin").setValue(shin_text);
+                    editor.putString(APP_PREFERENCES_SHIN, shin_text);
+                }
+
+                editor.apply();
+
+                RelativeLayout relativeDataVolume = findViewById(R.id.AutoLayout2);
+                relativeDataVolume.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                MyToast("Данные не добавились");
+            }
+        });
+
     }
 
     private void genderSelection() {

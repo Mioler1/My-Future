@@ -16,6 +16,7 @@
     <string name="RepeatPassword">Повторите пароль</string>
     // Дополнительные данные
     <string name="titleFilling">Заполнение данных</string>
+    <string name="onward">Далее</string>
     <string name="save">Сохранить</string>
     // Основы приложения
     <string name="buttonIntro">Дальше</string>
