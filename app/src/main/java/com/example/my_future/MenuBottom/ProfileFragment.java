@@ -73,14 +73,20 @@ public class ProfileFragment extends Fragment {
 
                 if (mSettings.contains(APP_PREFERENCES_NICKNAME)) {
                     nickname.setText(mSettings.getString(APP_PREFERENCES_NICKNAME, ""));
+                } else {
+                    nickname.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("nickname").getValue()));
                 }
 
                 if (mSettings.contains(APP_PREFERENCES_WEIGHT)) {
                     weight.setText(mSettings.getString(APP_PREFERENCES_WEIGHT, ""));
+                } else {
+                    weight.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("weight").getValue()));
                 }
 
                 if (mSettings.contains(APP_PREFERENCES_TARGET)) {
                     target.setText(mSettings.getString(APP_PREFERENCES_TARGET, ""));
+                } else {
+                    target.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("target").getValue()));
                 }
             }
 

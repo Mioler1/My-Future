@@ -2,7 +2,7 @@ package com.example.my_future.Models;
 
 public class User {
     private String email, password;
-    private String nickname, weight, gender, target;
+    private String nickname, weight, growth, gender, target;
     private String avatar;
 
     public User() {
@@ -38,6 +38,14 @@ public class User {
 
     public void setWeight(String weight) {
         this.weight = weight;
+    }
+
+    public String getGrowth() {
+        return growth;
+    }
+
+    public void setGrowth(String growth) {
+        this.growth = growth;
     }
 
     public String getGender() {

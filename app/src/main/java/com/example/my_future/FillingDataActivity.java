@@ -50,17 +50,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
+import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class FillingDataActivity extends AppCompatActivity {
 
-    EditText nickname, weight;
+    EditText nickname, weight, growth;
     RadioGroup gender;
     Spinner target;
-    TextView textNoVisibleGender;
-    TextView textNoVisibleTarget;
+    TextView textNoVisibleGender, textNoVisibleTarget;
     ProgressBar progressBar;
     CircleImageView avatar_img;
 
@@ -87,6 +87,7 @@ public class FillingDataActivity extends AppCompatActivity {
         mSettings = fillingDataActivityClass.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         nickname = findViewById(R.id.nickname);
         weight = findViewById(R.id.weight);
+        growth = findViewById(R.id.growth);
         gender = findViewById(R.id.gender);
         target = findViewById(R.id.target);
         progressBar = findViewById(R.id.progressBar);
@@ -143,6 +144,18 @@ public class FillingDataActivity extends AppCompatActivity {
             MyToast("Наврятли ты такой дрыщ");
             return;
         }
+        if (growth.getText().toString().isEmpty()) {
+            MyToast("Поле рост пустое");
+            return;
+        }
+        if (weight_num > 300) {
+            MyToast("Наврятли ты такой высокий");
+            return;
+        }
+        if (weight_num < 50) {
+            MyToast("Наврятли ты такой карлик");
+            return;
+        }
         if (textNoVisibleGender.getText().toString().isEmpty()) {
             MyToast("Выберите пол");
             return;
@@ -158,7 +171,8 @@ public class FillingDataActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 User user = new User();
                 user.setNickname(nickname_text);
-                user.setWeight(weight.getText().toString());
+                user.setWeight(weight_text);
+                user.setGrowth(growth.getText().toString());
                 user.setGender(textNoVisibleGender.getText().toString());
                 user.setTarget(textNoVisibleTarget.getText().toString());
                 if (uploadUri != null) {
@@ -176,6 +190,7 @@ public class FillingDataActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString(APP_PREFERENCES_NICKNAME, nickname_text);
                 editor.putString(APP_PREFERENCES_WEIGHT, weight_text);
+                editor.putString(APP_PREFERENCES_GROWTH, growth.getText().toString());
                 editor.putString(APP_PREFERENCES_TARGET, textNoVisibleTarget.getText().toString());
                 editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
                 editor.apply();
