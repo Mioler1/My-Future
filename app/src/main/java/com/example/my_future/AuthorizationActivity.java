@@ -94,8 +94,8 @@ public class AuthorizationActivity extends AppCompatActivity {
                             comeEmailVer();
                         } else {
                             MyToast("Авторизация провалена");
+                            progressBar.setVisibility(View.GONE);
                         }
-                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -104,30 +104,8 @@ public class AuthorizationActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;
         if (user.isEmailVerified()) {
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot user : snapshot.getChildren()) {
-                        if (user.getKey().equals(mAuth.getUid())) {
-                            for (DataSnapshot profile : user.getChildren()) {
-                                if (profile.getKey().equals("profile")) {
-                                    startActivity(new Intent(AuthorizationActivity.this, MainActivity.class));
-                                    finish();
-                                }
-                                if (profile.getValue().equals("none")) {
-                                    startActivity(new Intent(AuthorizationActivity.this, FillingDataUserActivity.class));
-                                    finish();
-                                }
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    MyToast(error.getMessage());
-                }
-            });
+            startActivity(new Intent(AuthorizationActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            finish();
         } else {
             MyToast("Зайди на почту");
         }

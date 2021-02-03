@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -55,7 +54,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filling_data2);
+        setContentView(R.layout.activity_filling_data_health);
 
         relativeDataHealth = findViewById(R.id.AutoLayout3);
         relativeDataActivity = findViewById(R.id.AutoLayout4);
@@ -111,7 +110,6 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
 
                 editor.apply();
                 myRef.child(mAuth.getUid()).child("health").setValue(user);
-
                 relativeDataHealth.setVisibility(View.GONE);
                 relativeDataActivity.setVisibility(View.VISIBLE);
             }

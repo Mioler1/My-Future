@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,15 +80,12 @@ public class FillingDataUserActivity extends AppCompatActivity {
     SharedPreferences mSettings;
     Uri uploadUri;
 
-    RelativeLayout relativeDataUser;
-    RelativeLayout relativeDataVolume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filling_data);
-        relativeDataUser = findViewById(R.id.AutoLayout);
-        relativeDataVolume = findViewById(R.id.AutoLayout2);
+        setContentView(R.layout.activity_filling_data_user);
+
 
         init();
         genderSelection();
@@ -198,7 +194,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
             progressBarDataUser.setVisibility(View.VISIBLE);
         }
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -229,13 +225,12 @@ public class FillingDataUserActivity extends AppCompatActivity {
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
-                myRef.child(mAuth.getUid()).child("health").setValue("none");
-                myRef.child(mAuth.getUid()).child("volume").setValue("none");
 
+                RelativeLayout relativeDataUser = findViewById(R.id.AutoLayout);
+                RelativeLayout relativeDataVolume = findViewById(R.id.AutoLayout2);
                 relativeDataUser.setVisibility(View.GONE);
                 avatar_img.setVisibility(View.GONE);
                 relativeDataVolume.setVisibility(View.VISIBLE);
-
             }
 
             @Override

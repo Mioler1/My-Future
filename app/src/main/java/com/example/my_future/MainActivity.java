@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -33,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
 
     FirebaseDatabase db;
-    DatabaseReference mRef;
+    DatabaseReference myRef;
     FirebaseAuth mAuth;
     BottomNavigationView bottomNav;
 
@@ -52,35 +51,25 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlanFragment()).commit();
 
         db = FirebaseDatabase.getInstance();
-        mRef = db.getReference("Users");
+        myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
 
         checkProfile();
     }
 
     private void checkProfile() {
-        mRef.addValueEventListener(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot user : snapshot.getChildren()) {
-                    if (user.getKey().equals(mAuth.getUid())) {
-                        for (DataSnapshot profile : user.getChildren()) {
-                            if (profile.getKey().equals("profile")) {
-                                if (profile.getValue().equals("none")) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    if (snapshot.getKey().equals(mAuth.getUid())) {
+                        for (DataSnapshot s : snapshot.getChildren()) {
+                            if (s.getKey().equals("profile")) {
+                                if (s.getValue().equals("none")) {
                                     startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
                                     finish();
-                                }
-                            }
-                        }
-                    }
-                }
-                for (DataSnapshot user : snapshot.getChildren()) {
-                    if (user.getKey().equals(mAuth.getUid())) {
-                        for (DataSnapshot health : user.getChildren()) {
-                            if (health.getKey().equals("health")) {
-                                if (health.getValue().equals("none")) {
-                                    startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class));
-                                    finish();
+                                } else {
+                                    break;
                                 }
                             }
                         }
@@ -89,8 +78,8 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                MyToast(error.getMessage());
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                MyToast(databaseError.getMessage());
             }
         });
     }

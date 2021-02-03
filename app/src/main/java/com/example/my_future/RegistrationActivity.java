@@ -101,6 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             myRef.child(mAuth.getUid()).child("profile").setValue("none");
                             sendEmailVer();
                         } else {
+                            progressBar.setVisibility(View.GONE);
                             try {
                                 throw task.getException();
                             } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
@@ -111,7 +112,6 @@ public class RegistrationActivity extends AppCompatActivity {
                                 MyToast(e.getMessage());
                             }
                         }
-                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
