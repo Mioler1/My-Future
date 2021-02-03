@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/custom"
-    tools:context=".FillingDataActivity">
+    tools:context=".FillingDataUserActivity">
 
     <TextView
         android:id="@+id/f1"
@@ -104,6 +104,7 @@
                         android:inputType="numberDecimal" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -124,9 +125,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Введите ваш рост"
-                        android:inputType="number" />
+                        android:inputType="numberDecimal" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
             </RelativeLayout>
 
             <LinearLayout
@@ -176,7 +178,8 @@
                 <Spinner
                     android:id="@+id/target"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dialog" />
 
                 <Button
                     android:layout_width="250dp"
@@ -328,23 +331,24 @@
             android:layout_centerInParent="true"
             android:visibility="gone" />
 
+        <!--  Невидимый текст  -->
+        <TextView
+            android:id="@+id/visible_text_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/visible_text_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone" />
+
     </RelativeLayout>
 
-    <!--  Невидимый текст  -->
-    <TextView
-        android:id="@+id/visible_text_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/visible_text_target"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:visibility="gone" />
 
 </RelativeLayout>

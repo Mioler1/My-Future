@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.my_future.CalculetedActivity.CalculatedKetchActivity;
 import com.example.my_future.Fragments.BackPressed;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                     if (user.getKey().equals(mAuth.getUid())) {
                         for (DataSnapshot profile : user.getChildren()) {
                             if (profile.getValue().equals("none")) {
-                                startActivity(new Intent(MainActivity.this, FillingDataActivity.class));
+                                startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
                                 finish();
                             }
                         }

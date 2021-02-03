@@ -3,8 +3,9 @@ package com.example.my_future.Models;
 public class User {
     // Данные пользователя
     private String email, password, avatar, nickname, weight, growth, gender, target;
-    // Объёмы пользователя
-    private String waist, neck, chest, biceps, forearm, hip, shin;
+
+    // Данные о здоровье пользователя
+    private String pressure, diseases, experience;
 
     public User() {
     }
@@ -74,61 +75,29 @@ public class User {
         this.avatar = avatar;
     }
 
-    // Объёмы пользователя
+    // Данные о здоровье пользователя
 
-    public String getWaist() {
-        return waist;
+    public String getPressure() {
+        return pressure;
     }
 
-    public void setWaist(String waist) {
-        this.waist = waist;
+    public void setPressure(String pressure) {
+        this.pressure = pressure;
     }
 
-    public String getNeck() {
-        return neck;
+    public String getDiseases() {
+        return diseases;
     }
 
-    public void setNeck(String neck) {
-        this.neck = neck;
+    public void setDiseases(String diseases) {
+        this.diseases = diseases;
     }
 
-    public String getChest() {
-        return chest;
+    public String getExperience() {
+        return experience;
     }
 
-    public void setChest(String chest) {
-        this.chest = chest;
-    }
-
-    public String getBiceps() {
-        return biceps;
-    }
-
-    public void setBiceps(String biceps) {
-        this.biceps = biceps;
-    }
-
-    public String getForearm() {
-        return forearm;
-    }
-
-    public void setForearm(String forearm) {
-        this.forearm = forearm;
-    }
-
-    public String getHip() {
-        return hip;
-    }
-
-    public void setHip(String hip) {
-        this.hip = hip;
-    }
-
-    public String getShin() {
-        return shin;
-    }
-
-    public void setShin(String shin) {
-        this.shin = shin;
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
 }

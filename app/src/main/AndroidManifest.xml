@@ -13,7 +13,8 @@
         android:roundIcon="@drawable/logo_dark"
         android:supportsRtl="true"
         android:theme="@style/Theme.My_Future">
-        <activity android:name=".CalculetedActivity.CalculatedKetchActivity"></activity>
+
+        <activity android:name=".CalculetedActivity.CalculatedKetchActivity" />
         <activity android:name=".CalculetedActivity.CalculetedMifflinActivity" />
 
         <meta-data
@@ -23,7 +24,11 @@
         <activity
             android:name=".StartScreenActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".FirstScreenActivity"
@@ -35,22 +40,16 @@
             android:name=".RegistrationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FillingDataActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".FillingDataUserActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FillingDataUserHealthActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Intro.IntroActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ChangeDataActivity"
             android:screenOrientation="portrait" />
     </application>
 

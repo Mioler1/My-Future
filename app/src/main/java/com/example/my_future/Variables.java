@@ -18,4 +18,10 @@ public class Variables {
     public static final String APP_PREFERENCES_FOREARM = "Forearm";
     public static final String APP_PREFERENCES_HIP = "Hip";
     public static final String APP_PREFERENCES_SHIN = "Shin";
+
+    // Переменные данных здоровья пользователя
+    public static final String APP_PREFERENCES_PRESSURE = "Pressure";
+    public static final String APP_PREFERENCES_DISEASES = "Diseases";
+    public static final String APP_PREFERENCES_EXPERIENCE = "Experience";
+    public static final String APP_PREFERENCES_ACTIVITY = "Activity";
 }

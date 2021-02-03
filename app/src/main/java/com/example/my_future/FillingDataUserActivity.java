@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,14 +59,15 @@ import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
 import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
-public class FillingDataActivity extends AppCompatActivity {
+public class FillingDataUserActivity extends AppCompatActivity {
 
     // Окно с данными пользователя
     EditText nickname, weight, growth;
     RadioGroup gender;
     Spinner target;
     TextView textNoVisibleGender, textNoVisibleTarget;
-    ProgressBar progressBar;
+    ProgressBar progressBarDataUser;
+    ProgressBar progressBarDataVolume;
     CircleImageView avatar_img;
 
     // Окно с объёмами тела
@@ -79,10 +81,15 @@ public class FillingDataActivity extends AppCompatActivity {
     SharedPreferences mSettings;
     Uri uploadUri;
 
+    RelativeLayout relativeDataUser;
+    RelativeLayout relativeDataVolume;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filling_data);
+        relativeDataUser = findViewById(R.id.AutoLayout);
+        relativeDataVolume = findViewById(R.id.AutoLayout2);
 
         init();
         genderSelection();
@@ -90,8 +97,8 @@ public class FillingDataActivity extends AppCompatActivity {
     }
 
     private void init() {
-        FillingDataActivity fillingDataActivityClass = FillingDataActivity.this;
-        mSettings = fillingDataActivityClass.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        FillingDataUserActivity fillingDataUserActivityClass = FillingDataUserActivity.this;
+        mSettings = fillingDataUserActivityClass.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -103,7 +110,7 @@ public class FillingDataActivity extends AppCompatActivity {
         growth = findViewById(R.id.growth);
         gender = findViewById(R.id.gender);
         target = findViewById(R.id.target);
-        progressBar = findViewById(R.id.progressBarUser);
+        progressBarDataUser = findViewById(R.id.progressBarUser);
         avatar_img = findViewById(R.id.avatar);
 
         // Иннициализация в окне объёмы пользователя
@@ -114,6 +121,7 @@ public class FillingDataActivity extends AppCompatActivity {
         forearm = findViewById(R.id.forearm);
         hip = findViewById(R.id.hip);
         shin = findViewById(R.id.shin);
+        progressBarDataVolume = findViewById(R.id.progressBarVolume);
 
         avatar_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,11 +194,14 @@ public class FillingDataActivity extends AppCompatActivity {
             MyToast("Выберите цель");
             return;
         }
+        if (!nickname_text.isEmpty() && !weight.getText().toString().isEmpty() && !growth_text.isEmpty() && !textNoVisibleGender.getText().toString().isEmpty() && !textNoVisibleTarget.getText().toString().isEmpty()) {
+            progressBarDataUser.setVisibility(View.VISIBLE);
+        }
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                progressBar.setVisibility(View.VISIBLE);
+
                 User user = new User();
                 user.setNickname(nickname_text);
                 user.setWeight(weight_text);
@@ -218,13 +229,14 @@ public class FillingDataActivity extends AppCompatActivity {
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
-                RelativeLayout relativeDataUser = findViewById(R.id.AutoLayout);
-                RelativeLayout relativeDataVolume = findViewById(R.id.AutoLayout2);
-                relativeDataUser.setVisibility(View.GONE);
-                avatar_img.setVisibility(View.GONE);
-                relativeDataVolume.setVisibility(View.VISIBLE);
-//                startActivity(new Intent(FillingDataActivity.this, IntroActivity.class));
-//                finish();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        relativeDataUser.setVisibility(View.GONE);
+                        avatar_img.setVisibility(View.GONE);
+                        relativeDataVolume.setVisibility(View.VISIBLE);
+                    }
+                }, 1000);
             }
 
             @Override
@@ -244,6 +256,9 @@ public class FillingDataActivity extends AppCompatActivity {
         String shin_text = shin.getText().toString();
 
         SharedPreferences.Editor editor = mSettings.edit();
+        if (!waist_text.isEmpty() && !neck_text.isEmpty() && !chest_text.isEmpty() && !biceps_text.isEmpty() && !forearm_text.isEmpty() && !hip_text.isEmpty() && !shin_text.isEmpty()) {
+            progressBarDataVolume.setVisibility(View.VISIBLE);
+        }
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -282,11 +297,15 @@ public class FillingDataActivity extends AppCompatActivity {
                     myRef.child(mAuth.getUid()).child("volume").child("shin").setValue(shin_text);
                     editor.putString(APP_PREFERENCES_SHIN, shin_text);
                 }
-
                 editor.apply();
 
-                RelativeLayout relativeDataVolume = findViewById(R.id.AutoLayout2);
-                relativeDataVolume.setVisibility(View.GONE);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(new Intent(FillingDataUserActivity.this, FillingDataUserHealthActivity.class));
+                        finish();
+                    }
+                }, 1000);
             }
 
             @Override
@@ -294,7 +313,6 @@ public class FillingDataActivity extends AppCompatActivity {
                 MyToast("Данные не добавились");
             }
         });
-
     }
 
     private void genderSelection() {
@@ -317,7 +335,7 @@ public class FillingDataActivity extends AppCompatActivity {
     }
 
     private void MyToast(String message) {
-        Toast.makeText(FillingDataActivity.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(FillingDataUserActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
