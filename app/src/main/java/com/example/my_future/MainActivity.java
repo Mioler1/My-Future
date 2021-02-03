@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -64,9 +65,23 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 for (DataSnapshot user : snapshot.getChildren()) {
                     if (user.getKey().equals(mAuth.getUid())) {
                         for (DataSnapshot profile : user.getChildren()) {
-                            if (profile.getValue().equals("none")) {
-                                startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
-                                finish();
+                            if (profile.getKey().equals("profile")) {
+                                if (profile.getValue().equals("none")) {
+                                    startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
+                                    finish();
+                                }
+                            }
+                        }
+                    }
+                }
+                for (DataSnapshot user : snapshot.getChildren()) {
+                    if (user.getKey().equals(mAuth.getUid())) {
+                        for (DataSnapshot health : user.getChildren()) {
+                            if (health.getKey().equals("health")) {
+                                if (health.getValue().equals("none")) {
+                                    startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class));
+                                    finish();
+                                }
                             }
                         }
                     }

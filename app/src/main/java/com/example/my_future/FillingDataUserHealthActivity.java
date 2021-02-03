@@ -112,13 +112,8 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
                 editor.apply();
                 myRef.child(mAuth.getUid()).child("health").setValue(user);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        relativeDataHealth.setVisibility(View.GONE);
-                        relativeDataActivity.setVisibility(View.VISIBLE);
-                    }
-                }, 1000);
+                relativeDataHealth.setVisibility(View.GONE);
+                relativeDataActivity.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -183,15 +178,10 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString(APP_PREFERENCES_PRESSURE, text_activity);
                 editor.apply();
-                myRef.child(mAuth.getUid()).child("health").child("activity").setValue(text_activity);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(FillingDataUserHealthActivity.this, IntroActivity.class));
-                        finish();
-                    }
-                }, 1000);
+                myRef.child(mAuth.getUid()).child("health").child("activity").setValue(text_activity);
+                startActivity(new Intent(FillingDataUserHealthActivity.this, IntroActivity.class));
+                finish();
             }
         });
     }
@@ -202,7 +192,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
 
     private void pressureSelection() {
         textNoVisiblePressure = findViewById(R.id.visible_text_pressure);
-        String[] pressures = {"Выберите давление", "Гепотания", "Оптимальное", "Повышенное", "Гепертония легкая", "Гепертония легкая", "Гепертония умеренная", "Гепертония тяжёлая"};
+        String[] pressures = {"Выберите давление", "Гепотания", "Оптимальное", "Повышенное", "Гепертония легкая", "Гепертония умеренная", "Гепертония тяжёлая"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, pressures) {
             @Override

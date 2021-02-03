@@ -229,14 +229,13 @@ public class FillingDataUserActivity extends AppCompatActivity {
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        relativeDataUser.setVisibility(View.GONE);
-                        avatar_img.setVisibility(View.GONE);
-                        relativeDataVolume.setVisibility(View.VISIBLE);
-                    }
-                }, 1000);
+                myRef.child(mAuth.getUid()).child("health").setValue("none");
+                myRef.child(mAuth.getUid()).child("volume").setValue("none");
+
+                relativeDataUser.setVisibility(View.GONE);
+                avatar_img.setVisibility(View.GONE);
+                relativeDataVolume.setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -297,15 +296,10 @@ public class FillingDataUserActivity extends AppCompatActivity {
                     myRef.child(mAuth.getUid()).child("volume").child("shin").setValue(shin_text);
                     editor.putString(APP_PREFERENCES_SHIN, shin_text);
                 }
-                editor.apply();
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        startActivity(new Intent(FillingDataUserActivity.this, FillingDataUserHealthActivity.class));
-                        finish();
-                    }
-                }, 1000);
+                editor.apply();
+                startActivity(new Intent(FillingDataUserActivity.this, FillingDataUserHealthActivity.class));
+                finish();
             }
 
             @Override
