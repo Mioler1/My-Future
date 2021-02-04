@@ -2,13 +2,16 @@
 package com.example.my_future.CalculetedActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import com.example.my_future.R;
 
 public class CalculatedKetchActivity extends AppCompatActivity {
     TextView text_gender_noVisible, text_activity_noVisible;
+    ImageView activity1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +42,17 @@ public class CalculatedKetchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_gender_noVisible.setText("Мужской");
-                Toast.makeText(CalculatedKetchActivity.this, "Мужской", Toast.LENGTH_SHORT).show();
+                but_man.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_girl.setBackgroundResource(R.color.custom);
+
             }
         });
         but_girl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 text_gender_noVisible.setText("Женский");
-                Toast.makeText(CalculatedKetchActivity.this, "Женский", Toast.LENGTH_SHORT).show();
+                but_girl.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_man.setBackgroundResource(R.color.custom);
             }
         });
         next_gender.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +83,11 @@ public class CalculatedKetchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.2");
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         but_activity_2.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +95,11 @@ public class CalculatedKetchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.375");
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         but_activity_3.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +107,11 @@ public class CalculatedKetchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.55");
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         but_activity_4.setOnClickListener(new View.OnClickListener() {
@@ -98,12 +120,22 @@ public class CalculatedKetchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.725");
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         but_activity_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.9");
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         next_activity.setOnClickListener(new View.OnClickListener() {
@@ -188,4 +220,5 @@ public class CalculatedKetchActivity extends AppCompatActivity {
     public void onClickBack(View view) {
         onBackPressed();
     }
+
 }

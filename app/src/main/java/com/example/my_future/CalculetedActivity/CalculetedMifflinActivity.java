@@ -37,14 +37,16 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_gender_noVisible.setText("Мужской");
-                Toast.makeText(CalculetedMifflinActivity.this, "Мужской", Toast.LENGTH_SHORT).show();
+                but_man.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_girl.setBackgroundResource(R.color.custom);
             }
         });
         but_girl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 text_gender_noVisible.setText("Женский");
-                Toast.makeText(CalculetedMifflinActivity.this, "Женский", Toast.LENGTH_SHORT).show();
+                but_girl.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_man.setBackgroundResource(R.color.custom);
             }
         });
         next_gender.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +77,11 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.2");
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         but_activity_2.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +89,11 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.375");
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         but_activity_3.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +101,11 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.55");
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         but_activity_4.setOnClickListener(new View.OnClickListener() {
@@ -97,12 +114,22 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.725");
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         but_activity_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 text_activity_noVisible.setText("1.9");
+                but_activity_5.setBackgroundResource(R.drawable.border_for_calc_active);
+                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
             }
         });
         next_activity.setOnClickListener(new View.OnClickListener() {
