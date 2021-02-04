@@ -19,8 +19,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -99,6 +102,8 @@ public class RegistrationActivity extends AppCompatActivity {
                             user.setPassword(password_text);
                             myRef.child(mAuth.getUid()).setValue(user);
                             myRef.child(mAuth.getUid()).child("profile").setValue("none");
+                            myRef.child(mAuth.getUid()).child("health").setValue("none");
+                            myRef.child(mAuth.getUid()).child("volume").setValue("none");
                             sendEmailVer();
                         } else {
                             progressBar.setVisibility(View.GONE);

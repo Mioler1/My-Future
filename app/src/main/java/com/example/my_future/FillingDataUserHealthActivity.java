@@ -48,17 +48,21 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
     StorageReference mStorageRef;
     SharedPreferences mSettings;
 
-    RelativeLayout relativeDataHealth;
-    RelativeLayout relativeDataActivity;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filling_data_health);
 
-        relativeDataHealth = findViewById(R.id.AutoLayout3);
-        relativeDataActivity = findViewById(R.id.AutoLayout4);
         init();
+        Intent intent = getIntent();
+        if (intent.getStringExtra("openActivity") != null) {
+            if (intent.getStringExtra("openActivity").equals("false")) {
+                RelativeLayout relativeDataHealth = findViewById(R.id.AutoLayout3);
+                RelativeLayout relativeDataActivity = findViewById(R.id.AutoLayout4);
+                relativeDataHealth.setVisibility(View.GONE);
+                relativeDataActivity.setVisibility(View.VISIBLE);
+            }
+        }
         pressureSelection();
         diseasesSelection();
         experienceSelection();
@@ -110,6 +114,10 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
 
                 editor.apply();
                 myRef.child(mAuth.getUid()).child("health").setValue(user);
+                myRef.child(mAuth.getUid()).child("health").child("activity").setValue("none");
+
+                RelativeLayout relativeDataHealth = findViewById(R.id.AutoLayout3);
+                RelativeLayout relativeDataActivity = findViewById(R.id.AutoLayout4);
                 relativeDataHealth.setVisibility(View.GONE);
                 relativeDataActivity.setVisibility(View.VISIBLE);
             }
@@ -178,7 +186,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("health").child("activity").setValue(text_activity);
-                startActivity(new Intent(FillingDataUserHealthActivity.this, IntroActivity.class));
+                startActivity(new Intent(FillingDataUserHealthActivity.this, IntroActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 finish();
             }
         });

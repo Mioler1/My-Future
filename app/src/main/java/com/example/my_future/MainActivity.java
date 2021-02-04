@@ -58,18 +58,60 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     }
 
     private void checkProfile() {
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean profileBool = false;
+                boolean healthBool = false;
+                boolean activityBool = false;
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     if (snapshot.getKey().equals(mAuth.getUid())) {
                         for (DataSnapshot s : snapshot.getChildren()) {
                             if (s.getKey().equals("profile")) {
                                 if (s.getValue().equals("none")) {
-                                    startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
+                                    startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                                     finish();
                                 } else {
+                                    profileBool = true;
                                     break;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (profileBool) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (snapshot.getKey().equals(mAuth.getUid())) {
+                            for (DataSnapshot s : snapshot.getChildren()) {
+                                if (s.getKey().equals("health")) {
+                                    if (s.getValue().equals("none")) {
+                                        startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class));
+                                        finish();
+                                    } else {
+                                        healthBool = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (healthBool) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (snapshot.getKey().equals(mAuth.getUid())) {
+                            for (DataSnapshot s : snapshot.getChildren()) {
+                                if (s.getKey().equals("health")) {
+                                    for (DataSnapshot health : s.getChildren()) {
+                                        if (health.getKey().equals("activity")) {
+                                            if (health.getValue().equals("none")) {
+                                                startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class).putExtra("openActivity", "false"));
+                                                finish();
+                                            } else {
+                                                activityBool = true;
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

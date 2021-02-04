@@ -9,7 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +24,6 @@ public class FirstScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_screen);
 
-        //animation for button all activity
         final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.button_for_activity);
         Button btnAlpha = findViewById(R.id.buttonReg);
         btnAlpha.setOnClickListener(new Button.OnClickListener(){
@@ -82,9 +80,5 @@ public class FirstScreenActivity extends AppCompatActivity {
             startActivity(new Intent(FirstScreenActivity.this, AuthorizationActivity.class));
         }
         finish();
-    }
-
-    private void MyToast(String message) {
-        Toast.makeText(FirstScreenActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

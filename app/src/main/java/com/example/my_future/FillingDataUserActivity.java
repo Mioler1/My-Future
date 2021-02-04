@@ -75,17 +75,15 @@ public class FillingDataUserActivity extends AppCompatActivity {
     FirebaseDatabase db;
     FirebaseAuth mAuth;
     DatabaseReference myRef;
-
     StorageReference mStorageRef;
+
     SharedPreferences mSettings;
     Uri uploadUri;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filling_data_user);
-
 
         init();
         genderSelection();
@@ -132,9 +130,9 @@ public class FillingDataUserActivity extends AppCompatActivity {
 
     public void onClickSaveDataUser(View view) {
         String nickname_text = nickname.getText().toString();
-        boolean check;
         String weight_text = weight.getText().toString();
         String growth_text = growth.getText().toString();
+        boolean check;
 
         if (nickname_text.isEmpty()) {
             MyToast("Поле никнейм пустое");
@@ -190,6 +188,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
             MyToast("Выберите цель");
             return;
         }
+
         if (!nickname_text.isEmpty() && !weight.getText().toString().isEmpty() && !growth_text.isEmpty() && !textNoVisibleGender.getText().toString().isEmpty() && !textNoVisibleTarget.getText().toString().isEmpty()) {
             progressBarDataUser.setVisibility(View.VISIBLE);
         }
@@ -197,7 +196,6 @@ public class FillingDataUserActivity extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 User user = new User();
                 user.setNickname(nickname_text);
                 user.setWeight(weight_text);
@@ -260,40 +258,61 @@ public class FillingDataUserActivity extends AppCompatActivity {
                 if (!waist_text.isEmpty()) {
                     myRef.child(mAuth.getUid()).child("volume").child("waist").setValue(waist_text);
                     editor.putString(APP_PREFERENCES_WAIST, waist_text);
+                } else {
+                    myRef.child(mAuth.getUid()).child("volume").child("waist").setValue("—");
+                    editor.putString(APP_PREFERENCES_WAIST, "—");
                 }
 
                 if (!neck_text.isEmpty()) {
                     myRef.child(mAuth.getUid()).child("volume").child("neck").setValue(neck_text);
                     editor.putString(APP_PREFERENCES_NECK, neck_text);
+                } else {
+                    myRef.child(mAuth.getUid()).child("volume").child("neck").setValue("—");
+                    editor.putString(APP_PREFERENCES_NECK, "—");
                 }
 
                 if (!chest_text.isEmpty()) {
                     myRef.child(mAuth.getUid()).child("volume").child("chest").setValue(chest_text);
                     editor.putString(APP_PREFERENCES_CHEST, chest_text);
+                } else {
+                    myRef.child(mAuth.getUid()).child("volume").child("chest").setValue("—");
+                    editor.putString(APP_PREFERENCES_CHEST, "—");
                 }
 
                 if (!biceps_text.isEmpty()) {
                     myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue(biceps_text);
                     editor.putString(APP_PREFERENCES_BICEPS, biceps_text);
+                } else {
+                    myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue("—");
+                    editor.putString(APP_PREFERENCES_BICEPS, "—");
                 }
 
                 if (!forearm_text.isEmpty()) {
                     myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue(forearm_text);
                     editor.putString(APP_PREFERENCES_FOREARM, forearm_text);
+                } else {
+                    myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue("—");
+                    editor.putString(APP_PREFERENCES_FOREARM, "—");
                 }
 
                 if (!hip_text.isEmpty()) {
                     myRef.child(mAuth.getUid()).child("volume").child("hip").setValue(hip_text);
                     editor.putString(APP_PREFERENCES_HIP, hip_text);
+                } else {
+                    myRef.child(mAuth.getUid()).child("volume").child("hip").setValue("—");
+                    editor.putString(APP_PREFERENCES_HIP, "—");
                 }
 
                 if (!shin_text.isEmpty()) {
                     myRef.child(mAuth.getUid()).child("volume").child("shin").setValue(shin_text);
                     editor.putString(APP_PREFERENCES_SHIN, shin_text);
+                } else {
+                    myRef.child(mAuth.getUid()).child("volume").child("shin").setValue("—");
+                    editor.putString(APP_PREFERENCES_SHIN, "—");
                 }
 
                 editor.apply();
-                startActivity(new Intent(FillingDataUserActivity.this, FillingDataUserHealthActivity.class));
+                startActivity(new Intent(FillingDataUserActivity.this, FillingDataUserHealthActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 finish();
             }
 
