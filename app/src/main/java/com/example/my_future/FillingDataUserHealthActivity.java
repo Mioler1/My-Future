@@ -31,6 +31,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
+import static com.example.my_future.Variables.APP_PREFERENCES_ACTIVITY;
 import static com.example.my_future.Variables.APP_PREFERENCES_DISEASES;
 import static com.example.my_future.Variables.APP_PREFERENCES_EXPERIENCE;
 import static com.example.my_future.Variables.APP_PREFERENCES_PRESSURE;
@@ -70,8 +71,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
     }
 
     private void init() {
-        FillingDataUserHealthActivity fillingDataUserHealthActivityClass = FillingDataUserHealthActivity.this;
-        mSettings = fillingDataUserHealthActivityClass.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -182,7 +182,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
                     return;
                 }
                 SharedPreferences.Editor editor = mSettings.edit();
-                editor.putString(APP_PREFERENCES_PRESSURE, text_activity);
+                editor.putString(APP_PREFERENCES_ACTIVITY, text_activity);
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("health").child("activity").setValue(text_activity);
@@ -198,7 +198,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
 
     private void pressureSelection() {
         textNoVisiblePressure = findViewById(R.id.visible_text_pressure);
-        String[] pressures = {"Выберите давление", "Гепотания", "Оптимальное", "Повышенное", "Гепертония легкая", "Гепертония умеренная", "Гепертония тяжёлая"};
+        String[] pressures = getResources().getStringArray(R.array.pressure);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, pressures) {
             @Override
@@ -237,7 +237,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
 
     private void diseasesSelection() {
         textNoVisibleDiseases = findViewById(R.id.visible_text_diseases);
-        String[] diseasesS = {"Выберите заболевание", "Нет заболеваний"};
+        String[] diseasesS = getResources().getStringArray(R.array.diseases);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, diseasesS) {
             @Override
@@ -276,7 +276,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
 
     private void experienceSelection() {
         textNoVisibleExperience = findViewById(R.id.visible_text_experience);
-        String[] experiences = {"Выберите стаж", "Новичок", "Любитель", "Продвинутый", "Профи"};
+        String[] experiences = getResources().getStringArray(R.array.experience);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, experiences) {
             @Override

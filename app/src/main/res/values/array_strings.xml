@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pressure">
+        <item>Выберите давление</item>
+        <item>Гипотания</item>
+        <item>Оптимальное</item>
+        <item>Повышенное</item>
+        <item>Гипертония легкая</item>
+        <item>Гипертония умеренная</item>
+        <item>Гипертония тяжёлая</item>
+    </string-array>
+
+    <string-array name="diseases">
+        <item>Выберите заболевание</item>
+        <item>Нет заболеваний</item>
+        <item>Нарушение осанки</item>
+        <item>Варикоз</item>
+        <item>Артроз</item>
+        <item>Лордоз</item>
+        <item>Кифоз</item>
+        <item>Грыжи</item>
+    </string-array>
+
+    <string-array name="experience">
+        <item>Выберите стаж</item>
+        <item>Новичок</item>
+        <item>Любитель</item>
+        <item>Продвинутый</item>
+        <item>Профи</item>
+    </string-array>
+</resources>

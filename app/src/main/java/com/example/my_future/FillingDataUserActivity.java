@@ -91,8 +91,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
     }
 
     private void init() {
-        FillingDataUserActivity fillingDataUserActivityClass = FillingDataUserActivity.this;
-        mSettings = fillingDataUserActivityClass.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();

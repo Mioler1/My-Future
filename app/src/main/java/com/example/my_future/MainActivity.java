@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,12 +30,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.example.my_future.Variables.APP_PREFERENCES;
+import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_ACTIVITY;
+import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_HEALTH;
+import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_PROFILE;
+
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
 
     FirebaseDatabase db;
     DatabaseReference myRef;
     FirebaseAuth mAuth;
+
     BottomNavigationView bottomNav;
+    SharedPreferences mSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
 
+        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
         checkProfile();
     }
 
@@ -61,34 +70,18 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                boolean profileBool = false;
-                boolean healthBool = false;
-                boolean activityBool = false;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    if (snapshot.getKey().equals(mAuth.getUid())) {
-                        for (DataSnapshot s : snapshot.getChildren()) {
-                            if (s.getKey().equals("profile")) {
-                                if (s.getValue().equals("none")) {
-                                    startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                    finish();
-                                } else {
-                                    profileBool = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                if (profileBool) {
+                SharedPreferences.Editor editor = mSettings.edit();
+                if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_PROFILE)).equals("true")) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         if (snapshot.getKey().equals(mAuth.getUid())) {
                             for (DataSnapshot s : snapshot.getChildren()) {
-                                if (s.getKey().equals("health")) {
+                                if (s.getKey().equals("profile")) {
                                     if (s.getValue().equals("none")) {
-                                        startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class));
+                                        startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
                                         finish();
                                     } else {
-                                        healthBool = true;
+                                        editor.putString(APP_PREFERENCES_BOOLEAN_PROFILE, "true");
+                                        editor.apply();
                                         break;
                                     }
                                 }
@@ -96,19 +89,42 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                         }
                     }
                 }
-                if (healthBool) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (snapshot.getKey().equals(mAuth.getUid())) {
-                            for (DataSnapshot s : snapshot.getChildren()) {
-                                if (s.getKey().equals("health")) {
-                                    for (DataSnapshot health : s.getChildren()) {
-                                        if (health.getKey().equals("activity")) {
-                                            if (health.getValue().equals("none")) {
-                                                startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class).putExtra("openActivity", "false"));
-                                                finish();
-                                            } else {
-                                                activityBool = true;
-                                                break;
+                if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_PROFILE)).equals("true")) {
+                    if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_HEALTH)).equals("true")) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            if (snapshot.getKey().equals(mAuth.getUid())) {
+                                for (DataSnapshot s : snapshot.getChildren()) {
+                                    if (s.getKey().equals("health")) {
+                                        if (s.getValue().equals("none")) {
+                                            startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class));
+                                            finish();
+                                        } else {
+                                            editor.putString(APP_PREFERENCES_BOOLEAN_HEALTH, "true");
+                                            editor.apply();
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_HEALTH)).equals("true")) {
+                    if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_ACTIVITY)).equals("true")) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            if (snapshot.getKey().equals(mAuth.getUid())) {
+                                for (DataSnapshot s : snapshot.getChildren()) {
+                                    if (s.getKey().equals("health")) {
+                                        for (DataSnapshot health : s.getChildren()) {
+                                            if (health.getKey().equals("activity")) {
+                                                if (health.getValue().equals("none")) {
+                                                    startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class).putExtra("openActivity", "false"));
+                                                    finish();
+                                                } else {
+                                                    editor.putString(APP_PREFERENCES_BOOLEAN_ACTIVITY, "true");
+                                                    editor.apply();
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
