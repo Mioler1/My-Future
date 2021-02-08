@@ -472,6 +472,12 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         TextView clickGrowth = v.findViewById(R.id.openChangeGrowth);
         TextView clickTarget = v.findViewById(R.id.openChangeTarget);
 
+        TextView clickDiseases = v.findViewById(R.id.openChangeDiseases);
+        TextView clickActivity = v.findViewById(R.id.openChangeActivity);
+        TextView clickPressure = v.findViewById(R.id.openChangePressure);
+        TextView clickExperience = v.findViewById(R.id.openChangeExperience);
+        TextView clickVolume = v.findViewById(R.id.openChangeVolume);
+
         clickEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
