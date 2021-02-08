@@ -383,7 +383,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
 
     private void targetSelection() {
         textNoVisibleTarget = findViewById(R.id.visible_text_target);
-        String[] targets = {"Выберите цель", "Похудеть", "Рельеф", "Мышечная масса", "Сила"};
+        String[] targets = getResources().getStringArray(R.array.target);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, targets) {
             @Override

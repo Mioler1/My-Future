@@ -19,11 +19,13 @@ public class PressureAdapter extends RecyclerView.Adapter<PressureAdapter.Pressu
     LayoutInflater layoutInflater;
     List<Pressure> pressureList;
     Context context;
+    private OnUserClickListener onUserClickListener;
 
-    public PressureAdapter(Context context, List<Pressure> pressureList) {
+    public PressureAdapter(Context context, List<Pressure> pressureList, OnUserClickListener onUserClickListener) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.pressureList = pressureList;
+        this.onUserClickListener = onUserClickListener;
     }
 
     @NonNull
@@ -54,15 +56,18 @@ public class PressureAdapter extends RecyclerView.Adapter<PressureAdapter.Pressu
             sis = itemView.findViewById(R.id.text_sis);
             dis = itemView.findViewById(R.id.text_dis);
 
-            View view = LayoutInflater.from(context).inflate(R.layout.activity_filling_data_health, null);
-            TextView textPressure = (TextView) view.findViewById(R.id.visible_text_pressure);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    textPressure.setText("fwfwf");
+                    Pressure user = pressureList.get(getLayoutPosition());
+                    onUserClickListener.onUserClick(user);
                     Toast.makeText(context, namePressure.getText().toString(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
+    }
+
+    public interface OnUserClickListener {
+        void onUserClick(Pressure pressure);
     }
 }

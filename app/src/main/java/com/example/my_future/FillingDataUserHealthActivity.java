@@ -221,8 +221,14 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
         pressureArrayList.add(new Pressure("Гипертония умеренная", "160-179", "100-109"));
         pressureArrayList.add(new Pressure("Гипертония тяжёлая", "≥180", "≥110"));
 
-        PressureAdapter pressureAdapter = new PressureAdapter(this, pressureArrayList);
+        PressureAdapter.OnUserClickListener onUserClickListener = new PressureAdapter.OnUserClickListener() {
+            @Override
+            public void onUserClick(Pressure pressure) {
+                textNoVisiblePressure.setText(pressure.getNamePressure());
+            }
+        };
 
+        PressureAdapter pressureAdapter = new PressureAdapter(this, pressureArrayList, onUserClickListener);
         recyclerPressure.setAdapter(pressureAdapter);
     }
 
