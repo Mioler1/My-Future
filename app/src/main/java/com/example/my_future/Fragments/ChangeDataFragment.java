@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -97,7 +98,6 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-
             }
         });
     }
@@ -125,13 +125,19 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     public void openChangeEmail() {
         openAlertDialog();
         EditText email_change = viewAlert.findViewById(R.id.email_change);
+        EditText old_password = viewAlert.findViewById(R.id.old_password);
         email_change.setVisibility(View.VISIBLE);
+        old_password.setVisibility(View.VISIBLE);
 
         viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (email_change.getText().toString().isEmpty()) {
                     MyToast("Введите email");
+                    return;
+                }
+                if (old_password.getText().toString().isEmpty()) {
+                    MyToast("Введите старый пароль");
                     return;
                 }
                 if (mAuth.getUid().equals(email_change.getText().toString())) {
@@ -141,6 +147,11 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String passwordOld = snapshot.child(mAuth.getUid()).child("password").getValue().toString();
+                        if (!old_password.getText().toString().equals(passwordOld)) {
+                            MyToast("Неправильный старый пароль");
+                            return;
+                        }
                         mUser.updateEmail(email_change.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -172,7 +183,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        MyToast("Не сменил");
                     }
                 });
             }
@@ -307,7 +318,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
             public void onClick(View v) {
                 String weight_text = weight_change.getText().toString();
                 double weight_num = Double.parseDouble(weight_text);
-                if (weight_change.getText().toString().isEmpty()) {
+                if (weight_text.isEmpty()) {
                     MyToast("Введите новый вес");
                     return;
                 }
@@ -322,9 +333,49 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        myRef.child(mAuth.getUid()).child("profile").child("weight").setValue(weight_change.getText().toString());
+                        myRef.child(mAuth.getUid()).child("profile").child("weight").setValue(weight_text);
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_WEIGHT, weight_change.getText().toString());
+                        editor.putString(APP_PREFERENCES_WEIGHT, weight_text);
+                        editor.apply();
+                        MyToast("Готово");
+                        alertDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        MyToast("Не сменил");
+                    }
+                });
+            }
+        });
+    }
+
+    public void openChangeGrowth() {
+        openAlertDialog();
+        EditText growth_change = viewAlert.findViewById(R.id.growth_change);
+        growth_change.setVisibility(View.VISIBLE);
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String growth_text = growth_change.getText().toString();
+                int growth_num = Integer.parseInt(growth_text);
+                if (growth_text.isEmpty()) {
+                    MyToast("Введите новый вес");
+                }
+                if (growth_num > 300) {
+                    MyToast("Наврятли ты такой высокий");
+                    return;
+                }
+                if (growth_num < 50) {
+                    MyToast("Наврятли ты такой карлик");
+                    return;
+                }
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        myRef.child(mAuth.getUid()).child("profile").child("growth").setValue(growth_text);
+                        SharedPreferences.Editor editor = mSettings.edit();
+                        editor.putString(APP_PREFERENCES_WEIGHT, growth_text);
                         editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
@@ -374,8 +425,11 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     public void openChangeAvatar() {
         openAlertDialog();
         avatar_img_change.setVisibility(View.VISIBLE);
-        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+        Button butSave = viewAlert.findViewById(R.id.butSaveChangeDate);
+        butSave.setBackgroundResource(R.drawable.btn_save_disabled);
+        butSave.setEnabled(false);
 
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ProgressBar progressBar = viewAlert.findViewById(R.id.progressBar);
@@ -383,32 +437,21 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                 myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (int i = 1000; ; i = i + 1000) {
-                            // THREADER
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (!String.valueOf(uploadUri).equals("null")) {
-                                        Log.d("MyLog", String.valueOf(uploadUri));
-                                        myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+                        Log.d("MyLog", String.valueOf(uploadUri));
+                        myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
 
-                                        Bitmap bitmap = ((BitmapDrawable) avatar_img_change.getDrawable()).getBitmap();
-                                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                                        byte[] byteArray = baos.toByteArray();
-                                        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                        Bitmap bitmap = ((BitmapDrawable) avatar_img_change.getDrawable()).getBitmap();
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                        byte[] byteArray = baos.toByteArray();
+                        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-                                        SharedPreferences.Editor editor = mSettings.edit();
-                                        editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
-                                        editor.apply();
+                        SharedPreferences.Editor editor = mSettings.edit();
+                        editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
+                        editor.apply();
 
-                                        MyToast("Готово");
-                                        alertDialog.dismiss();
-                                    }
-                                }
-                            }, i);
-                            break;
-                        }
+                        MyToast("Готово");
+                        alertDialog.dismiss();
                     }
 
                     @Override
@@ -416,6 +459,59 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                         MyToast("Не сменил");
                     }
                 });
+            }
+        });
+    }
+
+    private void clickOpenAlert() {
+        TextView clickEmail = v.findViewById(R.id.openChangeEmail);
+        TextView clickPassword = v.findViewById(R.id.openChangePassword);
+        TextView clickNickname = v.findViewById(R.id.openChangeNickname);
+        TextView clickAvatar = v.findViewById(R.id.openChangeAvatar);
+        TextView clickWight = v.findViewById(R.id.openChangeWeight);
+        TextView clickGrowth = v.findViewById(R.id.openChangeGrowth);
+        TextView clickTarget = v.findViewById(R.id.openChangeTarget);
+
+        clickEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChangeEmail();
+            }
+        });
+        clickPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChangePassword();
+            }
+        });
+        clickNickname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChangeNickname();
+            }
+        });
+        clickAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChangeAvatar();
+            }
+        });
+        clickWight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChangeWeight();
+            }
+        });
+        clickGrowth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChangeGrowth();
+            }
+        });
+        clickTarget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChangeTarget();
             }
         });
     }
@@ -432,6 +528,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     }
 
     private void uploadImage() {
+        MyToast("Подождите...");
         Bitmap bitmap = ((BitmapDrawable) avatar_img_change.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -446,7 +543,11 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                uploadUri = task.getResult();
+                if (task.isSuccessful()) {
+                    uploadUri = task.getResult();
+                    viewAlert.findViewById(R.id.butSaveChangeDate).setEnabled(true);
+                    viewAlert.findViewById(R.id.butSaveChangeDate).setBackgroundResource(R.drawable.btn_save_actived);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -497,52 +598,6 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
 
     private void MyToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void clickOpenAlert() {
-        TextView clickEmail = v.findViewById(R.id.openChangeEmail);
-        TextView clickPassword = v.findViewById(R.id.openChangePassword);
-        TextView clickNickname = v.findViewById(R.id.openChangeNickname);
-        TextView clickAvatar = v.findViewById(R.id.openChangeAvatar);
-        TextView clickWight = v.findViewById(R.id.openChangeWeight);
-        TextView clickTarget = v.findViewById(R.id.openChangeTarget);
-
-        clickEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openChangeEmail();
-            }
-        });
-        clickPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openChangePassword();
-            }
-        });
-        clickNickname.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openChangeNickname();
-            }
-        });
-        clickAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openChangeAvatar();
-            }
-        });
-        clickWight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openChangeWeight();
-            }
-        });
-        clickTarget.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openChangeTarget();
-            }
-        });
     }
 
     @Override

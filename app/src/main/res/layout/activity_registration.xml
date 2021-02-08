@@ -127,7 +127,7 @@
             android:layout_below="@id/label3"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:background="@drawable/btn_setting"
+            android:background="@drawable/btn_save_actived"
             android:fontFamily="@font/roboto"
             android:text="@string/Registration"
             android:textColor="@color/white" />

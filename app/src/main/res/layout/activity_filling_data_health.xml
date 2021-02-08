@@ -92,7 +92,9 @@
                 android:id="@+id/pressureList"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:layout_marginTop="5dp"
                 android:layout_below="@id/pressureLinerLayout"
+                android:scrollbars="vertical"
                 android:orientation="vertical" />
 
             <Spinner
@@ -117,7 +119,7 @@
                 android:layout_below="@id/experience"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/btn_setting"
+                android:background="@drawable/btn_save_actived"
                 android:fontFamily="@font/roboto"
                 android:onClick="onClickSaveDataHealth"
                 android:text="@string/onward"
@@ -440,7 +442,7 @@
             android:layout_below="@+id/scrollView"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_setting"
+            android:background="@drawable/btn_save_actived"
             android:text="Продолжить"
             android:textColor="@color/white" />
 

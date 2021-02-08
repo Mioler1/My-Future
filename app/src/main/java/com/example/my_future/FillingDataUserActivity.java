@@ -170,7 +170,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
             return;
         }
         double growth_num = Double.parseDouble(growth_text);
-        if (growth_num > 300) {
+        if (growth_num > 400) {
             MyToast("Наврятли ты такой высокий");
             return;
         }

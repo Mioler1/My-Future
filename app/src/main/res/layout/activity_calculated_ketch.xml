@@ -108,7 +108,7 @@
             android:layout_below="@+id/genderLin"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:background="@drawable/btn_setting"
+            android:background="@drawable/btn_save_actived"
             android:text="Продолжить"
             android:textColor="@color/white" />
 
@@ -421,7 +421,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_setting"
+            android:background="@drawable/btn_save_actived"
             android:text="Продолжить"
             android:textColor="@color/white" />
 
@@ -508,7 +508,7 @@
             android:layout_below="@+id/dataLin"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:background="@drawable/btn_setting"
+            android:background="@drawable/btn_save_actived"
             android:text="Рассчитать"
             android:textColor="@color/white" />
 
@@ -609,7 +609,7 @@
                 android:layout_below="@+id/result_slimming"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/btn_setting"
+                android:background="@drawable/btn_save_actived"
                 android:onClick="onClickBack"
                 android:text="Назад"
                 android:textColor="@color/white" />
