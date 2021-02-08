@@ -2,12 +2,16 @@ package com.example.my_future;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,7 +23,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.my_future.Adapters.PressureAdapter;
 import com.example.my_future.Intro.IntroActivity;
+import com.example.my_future.Models.Pressure;
 import com.example.my_future.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +35,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_ACTIVITY;
@@ -40,7 +49,8 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
 
     // Окно с данными о здоровье пользователя
     TextView textNoVisiblePressure, textNoVisibleDiseases, textNoVisibleExperience;
-    Spinner pressure, diseases, experience;
+    Spinner diseases, experience;
+    RecyclerView recyclerPressure;
 
     FirebaseDatabase db;
     FirebaseAuth mAuth;
@@ -78,7 +88,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
 
         // Окно с данными о здоровье пользователя
-        pressure = findViewById(R.id.pressure);
+        recyclerPressure = findViewById(R.id.pressureList);
         diseases = findViewById(R.id.diseases);
         experience = findViewById(R.id.experience);
     }
@@ -87,7 +97,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
         String text_pressure = textNoVisiblePressure.getText().toString();
         String text_diseases = textNoVisibleDiseases.getText().toString();
         String text_experience = textNoVisibleExperience.getText().toString();
-        if (text_pressure.equals("Выберите давление")) {
+        if (text_pressure.isEmpty()) {
             MyToast("Выберите давление");
             return;
         }
@@ -198,41 +208,22 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
 
     private void pressureSelection() {
         textNoVisiblePressure = findViewById(R.id.visible_text_pressure);
-        String[] pressures = getResources().getStringArray(R.array.pressure);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, pressures) {
-            @Override
-            public boolean isEnabled(int position) {
-                return position != 0;
-            }
+        recyclerPressure.setLayoutManager(new LinearLayoutManager(this));
+        recyclerPressure.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0) {
-                    tv.setTextColor(Color.GRAY);
-                } else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        pressure.setAdapter(adapter);
+        ArrayList<Pressure> pressureArrayList = new ArrayList<>();
+        pressureArrayList.add(new Pressure("Гипотания", "<100", "<60"));
+        pressureArrayList.add(new Pressure("Оптимальное", "<120", "<80"));
+        pressureArrayList.add(new Pressure("Нормальное", "<130", "<85"));
+        pressureArrayList.add(new Pressure("Повышенное", "130-139", "85-89"));
+        pressureArrayList.add(new Pressure("Гипертония легкая", "140-159", "90-99"));
+        pressureArrayList.add(new Pressure("Гипертония умеренная", "160-179", "100-109"));
+        pressureArrayList.add(new Pressure("Гипертония тяжёлая", "≥180", "≥110"));
 
-        AdapterView.OnItemSelectedListener itemSelectedListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                textNoVisiblePressure.setText((CharSequence) parent.getItemAtPosition(position));
-            }
+        PressureAdapter pressureAdapter = new PressureAdapter(this, pressureArrayList);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        };
-        pressure.setOnItemSelectedListener(itemSelectedListener);
+        recyclerPressure.setAdapter(pressureAdapter);
     }
 
     private void diseasesSelection() {

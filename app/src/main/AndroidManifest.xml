@@ -24,11 +24,7 @@
         <activity
             android:name=".StartScreenActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".FirstScreenActivity"
@@ -44,7 +40,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".FillingDataUserHealthActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Intro.IntroActivity"
             android:screenOrientation="portrait" />
