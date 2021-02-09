@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.example.my_future.AuthorizationActivity;
+import com.example.my_future.FragmentActivity;
 import com.example.my_future.MenuBottom.ProfileFragment;
 import com.example.my_future.R;
 import com.google.android.gms.tasks.Continuation;
@@ -534,7 +534,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     }
 
     public void openChangeActivity() {
-        openAlertDialog();
+        startActivity(new Intent(getContext(), FragmentActivity.class));
     }
 
     public void openChangePressure() {
@@ -676,8 +676,13 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && data != null && data.getData() != null) {
             if (resultCode == RESULT_OK) {
+//                avatar_img_change.setVisibility(View.GONE);
                 avatar_img_change.setImageURI(data.getData());
-                progressBar.setVisibility(View.VISIBLE);
+//                progressBar.setVisibility(View.VISIBLE);
+//                ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(avatar_img_change.getLayoutParams());
+//                marginParams.setMargins(0, 0, 0, 20);
+//                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
+//                avatar_img_change.setLayoutParams(layoutParams);
                 uploadImage();
             }
         }
@@ -702,6 +707,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     uploadUri = task.getResult();
                     viewAlert.findViewById(R.id.butSaveChangeDate).setEnabled(true);
                     viewAlert.findViewById(R.id.butSaveChangeDate).setBackgroundResource(R.drawable.btn_save_actived);
+//                    avatar_img_change.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                 }
             }

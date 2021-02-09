@@ -44,15 +44,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".FillingDataUserHealthActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Intro.IntroActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FragmentActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
