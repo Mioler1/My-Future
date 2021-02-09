@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,8 +28,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.example.my_future.Additionally.FragmentActivityPressure;
 import com.example.my_future.AuthorizationActivity;
-import com.example.my_future.FragmentActivity;
+import com.example.my_future.Additionally.FragmentActivityActivism;
 import com.example.my_future.MenuBottom.ProfileFragment;
 import com.example.my_future.R;
 import com.google.android.gms.tasks.Continuation;
@@ -64,7 +64,7 @@ import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class ChangeDataFragment extends Fragment implements BackPressed {
-    TextView textNoVisibleTargetChange, textNoVisiblePressure, textNoVisibleDiseases, textNoVisibleExperience;
+    TextView textNoVisibleTargetChange, textNoVisibleDiseases, textNoVisibleExperience;
     CircleImageView avatar_img_change;
     Spinner target_change, diseases_change, experience_change;
     View v, viewAlert;
@@ -534,11 +534,11 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     }
 
     public void openChangeActivity() {
-        startActivity(new Intent(getContext(), FragmentActivity.class));
+        startActivity(new Intent(getContext(), FragmentActivityActivism.class));
     }
 
     public void openChangePressure() {
-        openAlertDialog();
+        startActivity(new Intent(getContext(), FragmentActivityPressure.class));
     }
 
     public void openChangeExperience() {

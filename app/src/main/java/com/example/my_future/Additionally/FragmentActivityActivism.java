@@ -1,4 +1,4 @@
-package com.example.my_future;
+package com.example.my_future.Additionally;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.my_future.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_ACTIVITY;
 
-public class FragmentActivity extends AppCompatActivity {
+public class FragmentActivityActivism extends AppCompatActivity {
     TextView text_activity_noVisible;
     ImageButton but_activity_1;
     ImageButton but_activity_2;
@@ -42,7 +43,7 @@ public class FragmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_activity);
+        setContentView(R.layout.fragment_activity_activisim);
 
         init();
         click();
