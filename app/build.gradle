@@ -48,7 +48,6 @@ dependencies {
     implementation 'com.nineoldandroids:library:2.4.0'
         //  Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
         //  CarouselView
     implementation 'com.synnapps:carouselview:0.1.5'

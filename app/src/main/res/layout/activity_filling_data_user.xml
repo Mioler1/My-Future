@@ -228,7 +228,7 @@
                 android:id="@+id/text_no_add_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Эти данные можно заполнить позднее" />
+                android:text="Эти данные можно заполнить по отдельности или позднее" />
 
             <LinearLayout
                 android:id="@+id/Liner2"

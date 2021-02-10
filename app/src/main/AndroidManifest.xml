@@ -13,7 +13,7 @@
         android:roundIcon="@drawable/logo_dark"
         android:supportsRtl="true"
         android:theme="@style/Theme.My_Future">
-        <activity android:name=".Additionally.FragmentActivityPressure"></activity>
+
         <activity android:name=".CalculetedActivity.CalculatedKetchActivity" />
         <activity android:name=".CalculetedActivity.CalculetedMifflinActivity" />
 
@@ -53,6 +53,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Additionally.FragmentActivityActivism"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Additionally.FragmentActivityPressure"
             android:screenOrientation="portrait" />
     </application>
 

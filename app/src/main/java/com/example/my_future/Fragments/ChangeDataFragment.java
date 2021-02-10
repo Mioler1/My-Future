@@ -58,9 +58,16 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
+import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
+import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
+import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
 import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
+import static com.example.my_future.Variables.APP_PREFERENCES_HIP;
+import static com.example.my_future.Variables.APP_PREFERENCES_NECK;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
+import static com.example.my_future.Variables.APP_PREFERENCES_SHIN;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
+import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class ChangeDataFragment extends Fragment implements BackPressed {
@@ -579,6 +586,156 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
 
     public void openChangeVolume() {
         openAlertDialog();
+        EditText waist = viewAlert.findViewById(R.id.waist);
+        EditText neck = viewAlert.findViewById(R.id.neck);
+        EditText chest = viewAlert.findViewById(R.id.chest);
+        EditText biceps = viewAlert.findViewById(R.id.biceps);
+        EditText forearm = viewAlert.findViewById(R.id.forearm);
+        EditText hip = viewAlert.findViewById(R.id.hip);
+        EditText shin = viewAlert.findViewById(R.id.shin);
+
+        waist.setVisibility(View.VISIBLE);
+        neck.setVisibility(View.VISIBLE);
+        chest.setVisibility(View.VISIBLE);
+        biceps.setVisibility(View.VISIBLE);
+        forearm.setVisibility(View.VISIBLE);
+        hip.setVisibility(View.VISIBLE);
+        shin.setVisibility(View.VISIBLE);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (mSettings.contains(APP_PREFERENCES_WAIST)) {
+                    waist.setText(mSettings.getString(APP_PREFERENCES_WAIST, ""));
+                } else {
+                    waist.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("waist").getValue()));
+                }
+                if (mSettings.contains(APP_PREFERENCES_NECK)) {
+                    neck.setText(mSettings.getString(APP_PREFERENCES_NECK, ""));
+                } else {
+                    neck.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("neck").getValue()));
+                }
+                if (mSettings.contains(APP_PREFERENCES_CHEST)) {
+                    chest.setText(mSettings.getString(APP_PREFERENCES_CHEST, ""));
+                } else {
+                    chest.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("chest").getValue()));
+                }
+                if (mSettings.contains(APP_PREFERENCES_BICEPS)) {
+                    biceps.setText(mSettings.getString(APP_PREFERENCES_BICEPS, ""));
+                } else {
+                    biceps.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("biceps").getValue()));
+                }
+                if (mSettings.contains(APP_PREFERENCES_FOREARM)) {
+                    forearm.setText(mSettings.getString(APP_PREFERENCES_FOREARM, ""));
+                } else {
+                    forearm.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("forearm").getValue()));
+                }
+                if (mSettings.contains(APP_PREFERENCES_HIP)) {
+                    hip.setText(mSettings.getString(APP_PREFERENCES_HIP, ""));
+                } else {
+                    hip.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("hip").getValue()));
+                }
+                if (mSettings.contains(APP_PREFERENCES_SHIN)) {
+                    shin.setText(mSettings.getString(APP_PREFERENCES_SHIN, ""));
+                } else {
+                    shin.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("shin").getValue()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                MyToast("Что то не загрузилось");
+            }
+        });
+
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String waist_text = waist.getText().toString();
+                String neck_text = neck.getText().toString();
+                String chest_text = chest.getText().toString();
+                String biceps_text = biceps.getText().toString();
+                String forearm_text = forearm.getText().toString();
+                String hip_text = hip.getText().toString();
+                String shin_text = shin.getText().toString();
+
+                SharedPreferences.Editor editor = mSettings.edit();
+                if (!waist_text.isEmpty() && !neck_text.isEmpty() && !chest_text.isEmpty() && !biceps_text.isEmpty() && !forearm_text.isEmpty() && !hip_text.isEmpty() && !shin_text.isEmpty()) {
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!waist_text.isEmpty()) {
+                            myRef.child(mAuth.getUid()).child("volume").child("waist").setValue(waist_text);
+                            editor.putString(APP_PREFERENCES_WAIST, waist_text);
+                        } else {
+                            myRef.child(mAuth.getUid()).child("volume").child("waist").setValue("—");
+                            editor.putString(APP_PREFERENCES_WAIST, "—");
+                        }
+
+                        if (!neck_text.isEmpty()) {
+                            myRef.child(mAuth.getUid()).child("volume").child("neck").setValue(neck_text);
+                            editor.putString(APP_PREFERENCES_NECK, neck_text);
+                        } else {
+                            myRef.child(mAuth.getUid()).child("volume").child("neck").setValue("—");
+                            editor.putString(APP_PREFERENCES_NECK, "—");
+                        }
+
+                        if (!chest_text.isEmpty()) {
+                            myRef.child(mAuth.getUid()).child("volume").child("chest").setValue(chest_text);
+                            editor.putString(APP_PREFERENCES_CHEST, chest_text);
+                        } else {
+                            myRef.child(mAuth.getUid()).child("volume").child("chest").setValue("—");
+                            editor.putString(APP_PREFERENCES_CHEST, "—");
+                        }
+
+                        if (!biceps_text.isEmpty()) {
+                            myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue(biceps_text);
+                            editor.putString(APP_PREFERENCES_BICEPS, biceps_text);
+                        } else {
+                            myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue("—");
+                            editor.putString(APP_PREFERENCES_BICEPS, "—");
+                        }
+
+                        if (!forearm_text.isEmpty()) {
+                            myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue(forearm_text);
+                            editor.putString(APP_PREFERENCES_FOREARM, forearm_text);
+                        } else {
+                            myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue("—");
+                            editor.putString(APP_PREFERENCES_FOREARM, "—");
+                        }
+
+                        if (!hip_text.isEmpty()) {
+                            myRef.child(mAuth.getUid()).child("volume").child("hip").setValue(hip_text);
+                            editor.putString(APP_PREFERENCES_HIP, hip_text);
+                        } else {
+                            myRef.child(mAuth.getUid()).child("volume").child("hip").setValue("—");
+                            editor.putString(APP_PREFERENCES_HIP, "—");
+                        }
+
+                        if (!shin_text.isEmpty()) {
+                            myRef.child(mAuth.getUid()).child("volume").child("shin").setValue(shin_text);
+                            editor.putString(APP_PREFERENCES_SHIN, shin_text);
+                        } else {
+                            myRef.child(mAuth.getUid()).child("volume").child("shin").setValue("—");
+                            editor.putString(APP_PREFERENCES_SHIN, "—");
+                        }
+
+                        editor.apply();
+                        MyToast("Готово");
+                        alertDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        MyToast("Данные не добавились");
+                        alertDialog.dismiss();
+                    }
+                });
+            }
+        });
     }
 
     //  Методы...

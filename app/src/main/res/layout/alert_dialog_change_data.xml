@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="320dp"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@color/custom">
 
@@ -129,7 +129,7 @@
             android:paddingStart="10dp"
             android:spinnerMode="dialog"
             android:textColor="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <Spinner
             android:id="@+id/experience_change"
@@ -138,7 +138,97 @@
             android:paddingStart="10dp"
             android:spinnerMode="dialog"
             android:textColor="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/waist"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border_for_edittext"
+            android:hint="Введите объем талии"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/neck"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border_for_edittext"
+            android:hint="Введите объем шеи"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/chest"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border_for_edittext"
+            android:hint="Введите объем груди"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/biceps"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border_for_edittext"
+            android:hint="Введите объем бицепса"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/forearm"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border_for_edittext"
+            android:hint="Введите объем предплечья"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/hip"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border_for_edittext"
+            android:hint="Введите объем бедра"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/shin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/border_for_edittext"
+            android:hint="Введите объем голени"
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/butSaveChangeDate"
@@ -146,7 +236,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_save_actived"
-            android:text="Сохранить"
+            android:text="@string/save"
             android:textColor="@color/white" />
 
     </LinearLayout>

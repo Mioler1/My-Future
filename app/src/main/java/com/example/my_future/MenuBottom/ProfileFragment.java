@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (mSettings.contains(APP_PREFERENCES_AVATAR)) {
-                    String mImageUri = mSettings.getString("Avatar", "");
+                    String mImageUri = mSettings.getString(APP_PREFERENCES_AVATAR, "");
                     byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
                     avatar.setImageBitmap(bitmap);

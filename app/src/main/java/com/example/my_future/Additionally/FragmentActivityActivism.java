@@ -43,7 +43,7 @@ public class FragmentActivityActivism extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_activity_activisim);
+        setContentView(R.layout.activity_fragment_activisim);
 
         init();
         click();
