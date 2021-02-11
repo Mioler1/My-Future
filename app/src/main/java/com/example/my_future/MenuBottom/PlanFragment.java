@@ -9,13 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.my_future.Interface.BackPressed;
 import com.example.my_future.R;
 
-public class PlanFragment extends Fragment {
+public class PlanFragment extends Fragment implements BackPressed {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.frag_activity_training, container, false);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        getFragmentManager().popBackStack();
+        return true;
     }
 }

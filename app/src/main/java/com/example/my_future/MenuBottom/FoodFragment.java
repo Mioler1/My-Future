@@ -11,10 +11,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.my_future.Fragments.ChangeDataFragment;
+import com.example.my_future.Interface.BackPressed;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.R;
 
-public class FoodFragment extends Fragment {
+public class FoodFragment extends Fragment implements BackPressed {
 
     View v;
 
@@ -37,5 +38,10 @@ public class FoodFragment extends Fragment {
     }
 
 
+    @Override
+    public boolean onBackPressed() {
+        getFragmentManager().popBackStack();
+        return true;
+    }
 }
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.my_future.Fragments.BackPressed;
+import com.example.my_future.Interface.BackPressed;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
 import com.example.my_future.MenuFlowing.NavItemSelectedListener;
@@ -179,32 +180,29 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @SuppressLint("NonConstantResourceId")
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
-                    switch (item.getItemId()) {
-                        case R.id.fragment1:
-                            selectedFragment = new PlanFragment();
-                            break;
-                        case R.id.fragment2:
-                            selectedFragment = new FoodFragment();
-                            break;
-                        case R.id.fragment3:
-                            selectedFragment = new ForumFragment();
-                            break;
-                        case R.id.fragment4:
-                            selectedFragment = new NotebookFragment();
-                            break;
-                        case R.id.fragment5:
-                            selectedFragment = new ProfileFragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-                    return true;
+            item -> {
+                Fragment selectedFragment = null;
+                switch (item.getItemId()) {
+                    case R.id.fragment1:
+                        selectedFragment = new PlanFragment();
+                        break;
+                    case R.id.fragment2:
+                        selectedFragment = new FoodFragment();
+                        break;
+                    case R.id.fragment3:
+                        selectedFragment = new ForumFragment();
+                        break;
+                    case R.id.fragment4:
+                        selectedFragment = new NotebookFragment();
+                        break;
+                    case R.id.fragment5:
+                        selectedFragment = new ProfileFragment();
+                        break;
                 }
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("back").commit();
+                return true;
             };
 
     public void OnClickExit(View view) {

@@ -82,8 +82,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
-                app:passwordToggleEnabled="true">
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Small">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password_registration"
