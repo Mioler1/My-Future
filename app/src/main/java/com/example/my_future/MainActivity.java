@@ -175,8 +175,13 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (!(fragment instanceof BackPressed) || !((BackPressed) fragment).onBackPressed()) {
-            super.onBackPressed();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() <= 0) {
+            finish();
+        } else {
+            if (!(fragment instanceof BackPressed) || !((BackPressed) fragment).onBackPressed()) {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -200,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                     case R.id.fragment5:
                         selectedFragment = new ProfileFragment();
                         break;
+
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("back").commit();
                 return true;
