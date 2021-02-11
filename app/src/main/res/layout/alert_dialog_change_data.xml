@@ -22,9 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
             android:src="@drawable/logo_dark"
-            android:visibility="gone"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="1dp" />
+            android:visibility="gone"/>
 
         <EditText
             android:id="@+id/email_change"
