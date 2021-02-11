@@ -104,6 +104,9 @@ public class RegistrationActivity extends AppCompatActivity {
                             myRef.child(mAuth.getUid()).child("profile").setValue("none");
                             myRef.child(mAuth.getUid()).child("health").setValue("none");
                             myRef.child(mAuth.getUid()).child("volume").setValue("none");
+                            myRef.child(mAuth.getUid()).child("Administration").child("ban").setValue("false");
+                            myRef.child(mAuth.getUid()).child("Administration").child("role").setValue("user");
+                            myRef.child(mAuth.getUid()).child("Administration").child("subscription").setValue("false");
                             sendEmailVer();
                         } else {
                             progressBar.setVisibility(View.GONE);

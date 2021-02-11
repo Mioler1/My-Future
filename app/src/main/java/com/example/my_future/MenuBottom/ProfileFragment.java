@@ -31,6 +31,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
+import static com.example.my_future.Variables.APP_PREFERENCES_GENDER;
+import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
@@ -57,6 +59,8 @@ public class ProfileFragment extends Fragment {
         TextView nickname = v.findViewById(R.id.nickname);
         TextView target = v.findViewById(R.id.target);
         TextView weight = v.findViewById(R.id.weight);
+        TextView growth = v.findViewById(R.id.growth);
+        TextView gender = v.findViewById(R.id.gender);
         Button button = v.findViewById(R.id.click);
 
         myRef.addValueEventListener(new ValueEventListener() {
@@ -81,6 +85,18 @@ public class ProfileFragment extends Fragment {
                     weight.setText(mSettings.getString(APP_PREFERENCES_WEIGHT, ""));
                 } else {
                     weight.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("weight").getValue()));
+                }
+
+                if (mSettings.contains(APP_PREFERENCES_GROWTH)) {
+                    growth.setText(mSettings.getString(APP_PREFERENCES_GROWTH, ""));
+                } else {
+                    growth.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("growth").getValue()));
+                }
+
+                if (mSettings.contains(APP_PREFERENCES_GENDER)) {
+                    gender.setText(mSettings.getString(APP_PREFERENCES_GENDER, ""));
+                } else {
+                    gender.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("gender").getValue()));
                 }
 
                 if (mSettings.contains(APP_PREFERENCES_TARGET)) {

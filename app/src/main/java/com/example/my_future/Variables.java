@@ -7,6 +7,7 @@ public class Variables {
     public static final String APP_PREFERENCES_NICKNAME = "Nickname";
     public static final String APP_PREFERENCES_WEIGHT = "Weight";
     public static final String APP_PREFERENCES_GROWTH = "Growth";
+    public static final String APP_PREFERENCES_GENDER = "Gender";
     public static final String APP_PREFERENCES_TARGET = "Target";
     public static final String APP_PREFERENCES_AVATAR = "Avatar";
 

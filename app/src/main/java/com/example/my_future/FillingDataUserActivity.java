@@ -49,6 +49,7 @@ import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
 import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
 import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
 import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
+import static com.example.my_future.Variables.APP_PREFERENCES_GENDER;
 import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_HIP;
 import static com.example.my_future.Variables.APP_PREFERENCES_NECK;
@@ -217,6 +218,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
                 editor.putString(APP_PREFERENCES_NICKNAME, nickname_text);
                 editor.putString(APP_PREFERENCES_WEIGHT, weight_text);
                 editor.putString(APP_PREFERENCES_GROWTH, growth.getText().toString());
+                editor.putString(APP_PREFERENCES_GENDER, textNoVisibleGender.getText().toString());
                 editor.putString(APP_PREFERENCES_TARGET, textNoVisibleTarget.getText().toString());
                 editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
                 editor.apply();
