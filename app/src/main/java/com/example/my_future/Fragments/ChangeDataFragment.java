@@ -105,7 +105,6 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
         mUser = mAuth.getCurrentUser();
 
-
         ImageView back = v.findViewById(R.id.OnClickBack);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -834,13 +833,8 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && data != null && data.getData() != null) {
             if (resultCode == RESULT_OK) {
-//                avatar_img_change.setVisibility(View.GONE);
                 avatar_img_change.setImageURI(data.getData());
-//                progressBar.setVisibility(View.VISIBLE);
-//                ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(avatar_img_change.getLayoutParams());
-//                marginParams.setMargins(0, 0, 0, 20);
-//                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(marginParams);
-//                avatar_img_change.setLayoutParams(layoutParams);
+                progressBar.setVisibility(View.VISIBLE);
                 uploadImage();
             }
         }
@@ -865,7 +859,6 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     uploadUri = task.getResult();
                     viewAlert.findViewById(R.id.butSaveChangeDate).setEnabled(true);
                     viewAlert.findViewById(R.id.butSaveChangeDate).setBackgroundResource(R.drawable.btn_save_actived);
-//                    avatar_img_change.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
                 }
             }

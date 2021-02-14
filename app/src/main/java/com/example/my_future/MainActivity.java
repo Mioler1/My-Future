@@ -2,14 +2,20 @@ package com.example.my_future;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +30,7 @@ import com.example.my_future.MenuBottom.NotebookFragment;
 import com.example.my_future.MenuBottom.PlanFragment;
 import com.example.my_future.MenuBottom.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     private void init() {
         bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.setOnNavigationItemReselectedListener(onNavigationItemReselectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlanFragment()).commit();
 
         db = FirebaseDatabase.getInstance();
@@ -186,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     }
 
     @SuppressLint("NonConstantResourceId")
-    private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()) {
@@ -205,11 +213,15 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                     case R.id.fragment5:
                         selectedFragment = new ProfileFragment();
                         break;
-
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("back").commit();
+
                 return true;
             };
+
+    private final BottomNavigationView.OnNavigationItemReselectedListener onNavigationItemReselectedListener
+            = item -> {
+    };
 
     public void OnClickExit(View view) {
         mAuth.signOut();

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -88,6 +92,7 @@ public class ProfileFragment extends Fragment implements BackPressed {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                SharedPreferences.Editor editor = mSettings.edit();
                 if (mSettings.contains(APP_PREFERENCES_AVATAR)) {
                     String mImageUri = mSettings.getString(APP_PREFERENCES_AVATAR, "");
                     byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
@@ -178,6 +183,8 @@ public class ProfileFragment extends Fragment implements BackPressed {
                 } else {
                     shin.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("shin").getValue()));
                 }
+
+                editor.apply();
             }
 
             @Override
