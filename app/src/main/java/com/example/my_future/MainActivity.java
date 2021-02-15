@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     BottomNavigationView bottomNav;
     SharedPreferences mSettings;
     ArrayList<String> integersId = new ArrayList<>();
-    int id_new;
+    ArrayList<Integer> stringsId = new ArrayList<>();
     ListIterator<String> iteratorId = integersId.listIterator();
 
     @Override
@@ -193,26 +193,19 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() <= 0) {
+        if (fragmentManager.getBackStackEntryCount() <= 1) {
             finish();
         } else {
-            if ((fragment instanceof BackPressed) || ((BackPressed) fragment).onBackPressed()) {
-                super.onBackPressed();
-                Menu menu = bottomNav.getMenu();
-
-                Collections.reverse(integersId);
-
-                Log.d("MyLog", String.valueOf(integersId));
-                Log.d("MyLog", String.valueOf(id_new));
-                Log.d("MyLog", String.valueOf(integersId.get(0)));
-
-                for (int i = 0, size = menu.size(); i < size; i++) {
+            super.onBackPressed();
+            Menu menu = bottomNav.getMenu();
+            for (String s : integersId) {
+                for (int i = 0; i < menu.size(); i++) {
                     MenuItem item = menu.getItem(i);
-                    item.setChecked(item.getItemId() == id_new);
-                    if (integersId.get(0).equals(integersId.get(0))) {
-                        break;
+                    if (s.equals(integersId.get(integersId.size() - 1)) && i == (stringsId.size() - 1)) {
+                        item.setChecked(true);
+                        integersId.remove(integersId.size() - 1);
+                        stringsId.remove(stringsId.size() - 1);
                     }
                 }
             }
@@ -226,22 +219,26 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 switch (item.getItemId()) {
                     case R.id.fragment1:
                         selectedFragment = new PlanFragment();
+                        stringsId.add(0);
                         break;
                     case R.id.fragment2:
                         selectedFragment = new FoodFragment();
+                        stringsId.add(1);
                         break;
                     case R.id.fragment3:
                         selectedFragment = new ForumFragment();
+                        stringsId.add(2);
                         break;
                     case R.id.fragment4:
                         selectedFragment = new NotebookFragment();
+                        stringsId.add(3);
                         break;
                     case R.id.fragment5:
                         selectedFragment = new ProfileFragment();
+                        stringsId.add(4);
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("back").commit();
-                id_new = bottomNav.getSelectedItemId();
                 integersId.add(String.valueOf(bottomNav.getSelectedItemId()));
                 return true;
             };
