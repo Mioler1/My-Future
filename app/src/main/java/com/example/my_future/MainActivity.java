@@ -1,7 +1,9 @@
 package com.example.my_future;
 
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuItemImpl;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -15,6 +17,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +32,7 @@ import com.example.my_future.MenuBottom.ForumFragment;
 import com.example.my_future.MenuBottom.NotebookFragment;
 import com.example.my_future.MenuBottom.PlanFragment;
 import com.example.my_future.MenuBottom.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +41,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.ListIterator;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_ACTIVITY;
@@ -51,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
     BottomNavigationView bottomNav;
     SharedPreferences mSettings;
+    ArrayList<String> integersId = new ArrayList<>();
+    int id_new;
+    ListIterator<String> iteratorId = integersId.listIterator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,8 +198,23 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         if (fragmentManager.getBackStackEntryCount() <= 0) {
             finish();
         } else {
-            if (!(fragment instanceof BackPressed) || !((BackPressed) fragment).onBackPressed()) {
+            if ((fragment instanceof BackPressed) || ((BackPressed) fragment).onBackPressed()) {
                 super.onBackPressed();
+                Menu menu = bottomNav.getMenu();
+
+                Collections.reverse(integersId);
+
+                Log.d("MyLog", String.valueOf(integersId));
+                Log.d("MyLog", String.valueOf(id_new));
+                Log.d("MyLog", String.valueOf(integersId.get(0)));
+
+                for (int i = 0, size = menu.size(); i < size; i++) {
+                    MenuItem item = menu.getItem(i);
+                    item.setChecked(item.getItemId() == id_new);
+                    if (integersId.get(0).equals(integersId.get(0))) {
+                        break;
+                    }
+                }
             }
         }
     }
@@ -215,7 +241,8 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                         break;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("back").commit();
-
+                id_new = bottomNav.getSelectedItemId();
+                integersId.add(String.valueOf(bottomNav.getSelectedItemId()));
                 return true;
             };
 
