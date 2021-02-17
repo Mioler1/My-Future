@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.example.my_future.Interface.BackPressed;
 import com.example.my_future.R;
 
-public class PlanFragment extends Fragment implements BackPressed {
+public class PlanFragment extends Fragment {
 
     @Nullable
     @Override
@@ -20,9 +20,4 @@ public class PlanFragment extends Fragment implements BackPressed {
         return inflater.inflate(R.layout.frag_activity_training, container, false);
     }
 
-    @Override
-    public boolean onBackPressed() {
-        getFragmentManager().popBackStack();
-        return true;
-    }
 }

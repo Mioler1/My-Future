@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/fragment1"
+        android:id="@+id/fragmentPlan"
         android:icon="@drawable/ic_baseline_fitness_center_32"
         android:title="" />
     <item
-        android:id="@+id/fragment2"
+        android:id="@+id/fragmentFood"
         android:icon="@drawable/ic_baseline_no_meals_32"
         android:title="" />
     <item
-        android:id="@+id/fragment3"
+        android:id="@+id/fragmentForum"
         android:icon="@drawable/ic_baseline_forum_32"
         android:title="" />
     <item
-        android:id="@+id/fragment4"
+        android:id="@+id/fragmentNotebook"
         android:icon="@drawable/ic_baseline_border_color_24"
         android:title="" />
     <item
-        android:id="@+id/fragment5"
+        android:id="@+id/fragmentProfile"
         android:icon="@drawable/ic_baseline_account_circle_32"
         android:title="" />
 

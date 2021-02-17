@@ -16,7 +16,7 @@ import com.example.my_future.MainActivity;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.R;
 
-public class FoodFragment extends Fragment implements BackPressed {
+public class FoodFragment extends Fragment {
 
     View v;
 
@@ -38,11 +38,5 @@ public class FoodFragment extends Fragment implements BackPressed {
         });
     }
 
-
-    @Override
-    public boolean onBackPressed() {
-        getFragmentManager().popBackStack();
-        return true;
-    }
 }
 

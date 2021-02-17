@@ -69,6 +69,7 @@ public class RegistrationActivity extends AppCompatActivity {
         repeatPassword = findViewById(R.id.repeat_password_registration);
         String email_text = email.getText().toString();
         String password_text = password.getText().toString();
+        boolean check;
 
         if (email_text.isEmpty()) {
             MyToast("Поле email пустое!");
@@ -80,6 +81,20 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         if (password_text.length() < 6) {
             MyToast("Поле пароль должно содержать не менее 6 символов!");
+            return;
+        }
+        if (password_text.matches("[a-zA-Zа-яА-Я0-9@$#?&_.-]+")) {
+            check = true;
+        } else {
+            MyToast("Некоректный пароль");
+            return;
+        }
+        if (!check) {
+            MyToast("Некоректный пароль");
+            return;
+        }
+        if (email_text.equals(password_text)) {
+            MyToast("Логин не должен совпадать с паролем");
             return;
         }
         if (password_text.isEmpty()) {

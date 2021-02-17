@@ -52,7 +52,7 @@ import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
 import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
-public class ProfileFragment extends Fragment implements BackPressed {
+public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Users");
@@ -200,9 +200,4 @@ public class ProfileFragment extends Fragment implements BackPressed {
         });
     }
 
-    @Override
-    public boolean onBackPressed() {
-        getFragmentManager().popBackStack();
-        return true;
-    }
 }

@@ -1,29 +1,18 @@
 package com.example.my_future;
 
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuItemImpl;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.my_future.Interface.BackPressed;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
 import com.example.my_future.MenuFlowing.NavItemSelectedListener;
@@ -32,9 +21,7 @@ import com.example.my_future.MenuBottom.ForumFragment;
 import com.example.my_future.MenuBottom.NotebookFragment;
 import com.example.my_future.MenuBottom.PlanFragment;
 import com.example.my_future.MenuBottom.ProfileFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,8 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.ListIterator;
+import java.util.List;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_ACTIVITY;
@@ -52,16 +38,19 @@ import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_HEALTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_PROFILE;
 
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
-
     FirebaseDatabase db;
     DatabaseReference myRef;
     FirebaseAuth mAuth;
 
     BottomNavigationView bottomNav;
     SharedPreferences mSettings;
-    ArrayList<String> integersId = new ArrayList<>();
-    ArrayList<Integer> stringsId = new ArrayList<>();
-    ListIterator<String> iteratorId = integersId.listIterator();
+
+    private final List<Fragment> fragmentsInStack = new ArrayList<>();
+    private final FoodFragment fragmentFood = new FoodFragment();
+    private final ForumFragment fragmentForum = new ForumFragment();
+    private final NotebookFragment fragmentNotebook = new NotebookFragment();
+    private final PlanFragment fragmentPlan = new PlanFragment();
+    private final ProfileFragment fragmentProfile = new ProfileFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +58,14 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         setContentView(R.layout.activity_main);
 
         init();
+        clickBottomNavigationMenu();
         setupMenu();
     }
 
     private void init() {
         bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-        bottomNav.setOnNavigationItemReselectedListener(onNavigationItemReselectedListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlanFragment()).commit();
+        fragmentsInStack.add(fragmentPlan);
+        changeFragment(fragmentPlan);
 
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
@@ -191,61 +180,56 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager.getBackStackEntryCount() <= 1) {
-            finish();
-        } else {
-            super.onBackPressed();
-            Menu menu = bottomNav.getMenu();
-            for (String s : integersId) {
-                for (int i = 0; i < menu.size(); i++) {
-                    MenuItem item = menu.getItem(i);
-                    if (s.equals(integersId.get(integersId.size() - 1)) && i == (stringsId.size() - 1)) {
-                        item.setChecked(true);
-                        integersId.remove(integersId.size() - 1);
-                        stringsId.remove(stringsId.size() - 1);
-                    }
-                }
+    private void clickBottomNavigationMenu() {
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            Fragment targetFragment = itemId == R.id.fragmentPlan ? fragmentPlan
+                    : itemId == R.id.fragmentFood ? fragmentFood
+                    : itemId == R.id.fragmentForum ? fragmentForum
+                    : itemId == R.id.fragmentNotebook ? fragmentNotebook
+                    : fragmentProfile;
+
+            if (itemId != R.id.fragmentPlan) {
+                fragmentsInStack.remove(targetFragment);
+                fragmentsInStack.add(targetFragment);
             }
-        }
+
+            changeFragment(targetFragment);
+            return true;
+        });
     }
 
-    @SuppressLint("NonConstantResourceId")
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            item -> {
-                Fragment selectedFragment = null;
-                switch (item.getItemId()) {
-                    case R.id.fragment1:
-                        selectedFragment = new PlanFragment();
-                        stringsId.add(0);
-                        break;
-                    case R.id.fragment2:
-                        selectedFragment = new FoodFragment();
-                        stringsId.add(1);
-                        break;
-                    case R.id.fragment3:
-                        selectedFragment = new ForumFragment();
-                        stringsId.add(2);
-                        break;
-                    case R.id.fragment4:
-                        selectedFragment = new NotebookFragment();
-                        stringsId.add(3);
-                        break;
-                    case R.id.fragment5:
-                        selectedFragment = new ProfileFragment();
-                        stringsId.add(4);
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).addToBackStack("back").commit();
-                integersId.add(String.valueOf(bottomNav.getSelectedItemId()));
-                return true;
-            };
+    private void changeFragment(Fragment fragment) {
+        getSupportFragmentManager().
+                beginTransaction().
+                replace(R.id.fragment_container, fragment).
+                commit();
+    }
 
-    private final BottomNavigationView.OnNavigationItemReselectedListener onNavigationItemReselectedListener
-            = item -> {
-    };
+    @Override
+    public void onBackPressed() {
+        if (!fragmentsInStack.isEmpty()) {
+            fragmentsInStack.remove(fragmentsInStack.size() - 1);
+            int lastId = fragmentsInStack.size() - 1;
+
+            if (lastId != -1) {
+                changeFragment(fragmentsInStack.get(lastId));
+                bottomNav.setSelectedItemId(
+                        fragmentsInStack.get(lastId) == fragmentPlan ? R.id.fragmentPlan
+                                : fragmentsInStack.get(lastId) == fragmentFood ? R.id.fragmentFood
+                                : fragmentsInStack.get(lastId) == fragmentForum ? R.id.fragmentForum
+                                : fragmentsInStack.get(lastId) == fragmentNotebook ? R.id.fragmentNotebook
+                                : R.id.fragmentProfile
+
+                );
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     public void OnClickExit(View view) {
         mAuth.signOut();
