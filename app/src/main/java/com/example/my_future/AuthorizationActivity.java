@@ -27,6 +27,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     FirebaseDatabase db;
     DatabaseReference myRef;
     FirebaseAuth mAuth;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
         Intent intent = getIntent();
         email.setText(intent.getStringExtra("email"));
@@ -98,17 +100,21 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     public void comeEmailVer() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        assert user != null;
-        if (user.isEmailVerified()) {
+        assert mUser != null;
+        if (mUser.isEmailVerified()) {
             startActivity(new Intent(AuthorizationActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();
         } else {
             MyToast("Зайди на почту");
+            progressBar.setVisibility(View.GONE);
         }
     }
 
     public void onClickRegistrationActivity(View view) {
         startActivity(new Intent(AuthorizationActivity.this, RegistrationActivity.class));
+    }
+
+    public void onClickChangePassword(View view) {
+        mAuth.sendPasswordResetEmail("veretennik-v@mail.ru");
     }
 }

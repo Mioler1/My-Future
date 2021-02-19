@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_ACTIVITY;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_HEALTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_PROFILE;
+import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
 
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
     FirebaseDatabase db;
@@ -76,10 +78,10 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     }
 
     private void checkProfile() {
+        SharedPreferences.Editor editor = mSettings.edit();
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                SharedPreferences.Editor editor = mSettings.edit();
                 if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_PROFILE)).equals("true")) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         if (snapshot.getKey().equals(mAuth.getUid())) {
