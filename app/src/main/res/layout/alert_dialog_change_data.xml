@@ -4,7 +4,7 @@
     android:layout_width="320dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/custom">
+    android:background="@drawable/background_alert_dialog">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:scaleType="centerCrop"
             android:src="@drawable/logo_dark"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <EditText
             android:id="@+id/email_change"
@@ -31,6 +31,18 @@
             android:background="@drawable/border_for_edittext"
             android:hint="Введите новый email"
             android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/border_for_edittext"
+            android:hint="Введите текущий пароль"
+            android:inputType="textPassword"
             android:paddingStart="10dp"
             android:textColor="@color/white"
             android:textColorHint="@color/white"

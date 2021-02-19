@@ -138,9 +138,9 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     public void openChangeEmail() {
         openAlertDialog();
         EditText email_change = viewAlert.findViewById(R.id.email_change);
-        EditText old_password = viewAlert.findViewById(R.id.old_password);
+        EditText password = viewAlert.findViewById(R.id.password);
         email_change.setVisibility(View.VISIBLE);
-        old_password.setVisibility(View.VISIBLE);
+        password.setVisibility(View.VISIBLE);
 
         viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +149,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     MyToast("Введите email");
                     return;
                 }
-                if (old_password.getText().toString().isEmpty()) {
+                if (password.getText().toString().isEmpty()) {
                     MyToast("Введите старый пароль");
                     return;
                 }
@@ -161,7 +161,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String passwordOld = snapshot.child(mAuth.getUid()).child("password").getValue().toString();
-                        if (!old_password.getText().toString().equals(passwordOld)) {
+                        if (!password.getText().toString().equals(passwordOld)) {
                             MyToast("Неправильный старый пароль");
                             return;
                         }
