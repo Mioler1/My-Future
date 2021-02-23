@@ -36,7 +36,7 @@ public class MenuListFragment extends Fragment {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 navItemSelectedListener.onNavItemSelectedListener(menuItem);
-                return false;
+                return true;
             }
         });
         fontFor();

@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.my_future.Interface.BackPressed;
 import com.example.my_future.Fragments.ChangeDataFragment;
+import com.example.my_future.MainActivity;
 import com.example.my_future.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -51,6 +52,7 @@ import static com.example.my_future.Variables.APP_PREFERENCES_SHIN;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
 import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
+import static com.example.my_future.Variables.fragmentsInStack;
 
 public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -193,11 +195,9 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeDataFragment()).commit();
-            }
+        button.setOnClickListener(view -> {
+            fragmentsInStack.add(new ChangeDataFragment());
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeDataFragment()).commit();
         });
     }
-
 }

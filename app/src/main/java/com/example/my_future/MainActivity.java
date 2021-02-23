@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.my_future.Fragments.ChangeDataFragment;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
 import com.example.my_future.MenuFlowing.NavItemSelectedListener;
@@ -29,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
+import com.mxn.soul.flowingdrawer_core.FlowingMenuLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,8 @@ import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_ACTIVITY;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_HEALTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_PROFILE;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
+import static com.example.my_future.Variables.fragmentsInStack;
+import static com.example.my_future.Variables.fragmentsInStackFlowing;
 
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
     FirebaseDatabase db;
@@ -47,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     BottomNavigationView bottomNav;
     SharedPreferences mSettings;
 
-    private final List<Fragment> fragmentsInStack = new ArrayList<>();
     private final FoodFragment fragmentFood = new FoodFragment();
     private final ForumFragment fragmentForum = new ForumFragment();
     private final NotebookFragment fragmentNotebook = new NotebookFragment();
@@ -179,57 +183,66 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 finish();
                 break;
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+        if (!fragmentsInStackFlowing.isEmpty()) {
+            fragmentsInStackFlowing.clear();
+        }
+        fragmentsInStackFlowing.remove(selectedFragment);
+        fragmentsInStackFlowing.add(selectedFragment);
+        changeFragment(selectedFragment);
     }
 
     private void clickBottomNavigationMenu() {
         bottomNav.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
-
             Fragment targetFragment = itemId == R.id.fragmentPlan ? fragmentPlan
                     : itemId == R.id.fragmentFood ? fragmentFood
                     : itemId == R.id.fragmentForum ? fragmentForum
                     : itemId == R.id.fragmentNotebook ? fragmentNotebook
                     : fragmentProfile;
-
             if (itemId != R.id.fragmentPlan) {
                 fragmentsInStack.remove(targetFragment);
                 fragmentsInStack.add(targetFragment);
             }
-
+            if (!fragmentsInStackFlowing.isEmpty()) {
+                fragmentsInStackFlowing.clear();
+            }
             changeFragment(targetFragment);
             return true;
         });
     }
 
     private void changeFragment(Fragment fragment) {
-        getSupportFragmentManager().
-                beginTransaction().
-                replace(R.id.fragment_container, fragment).
-                commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
     }
 
     @Override
     public void onBackPressed() {
-        if (!fragmentsInStack.isEmpty()) {
-            fragmentsInStack.remove(fragmentsInStack.size() - 1);
+        if (!fragmentsInStackFlowing.isEmpty()) {
+            fragmentsInStackFlowing.remove(fragmentsInStackFlowing.size() - 1);
             int lastId = fragmentsInStack.size() - 1;
-
-            if (lastId != -1) {
-                changeFragment(fragmentsInStack.get(lastId));
-                bottomNav.setSelectedItemId(
-                        fragmentsInStack.get(lastId) == fragmentPlan ? R.id.fragmentPlan
-                                : fragmentsInStack.get(lastId) == fragmentFood ? R.id.fragmentFood
-                                : fragmentsInStack.get(lastId) == fragmentForum ? R.id.fragmentForum
-                                : fragmentsInStack.get(lastId) == fragmentNotebook ? R.id.fragmentNotebook
-                                : R.id.fragmentProfile
-
-                );
+            changeFragment(fragmentsInStack.get(lastId));
+        } else {
+            if (!fragmentsInStack.isEmpty()) {
+                fragmentsInStack.remove(fragmentsInStack.size() - 1);
+                int lastId = fragmentsInStack.size() - 1;
+                if (lastId != -1) {
+                    changeFragment(fragmentsInStack.get(lastId));
+                    bottomNav.setSelectedItemId(
+                            fragmentsInStack.get(lastId) == fragmentPlan ? R.id.fragmentPlan
+                                    : fragmentsInStack.get(lastId) == fragmentFood ? R.id.fragmentFood
+                                    : fragmentsInStack.get(lastId) == fragmentForum ? R.id.fragmentForum
+                                    : fragmentsInStack.get(lastId) == fragmentNotebook ? R.id.fragmentNotebook
+                                    : R.id.fragmentProfile
+                    );
+                } else {
+                    super.onBackPressed();
+                }
             } else {
                 super.onBackPressed();
             }
-        } else {
-            super.onBackPressed();
         }
     }
 

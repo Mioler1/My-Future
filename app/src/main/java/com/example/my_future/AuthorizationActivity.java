@@ -1,6 +1,5 @@
 package com.example.my_future;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,13 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -52,18 +46,11 @@ public class AuthorizationActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        Intent intent = getIntent();
-        email.setText(intent.getStringExtra("email"));
-        password.setText(intent.getStringExtra("password"));
+        email.setText(getIntent().getStringExtra("email"));
+        password.setText(getIntent().getStringExtra("password"));
 
         come = findViewById(R.id.comeButton);
-        come.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Authorization();
-            }
-        });
-
+        come.setOnClickListener(view -> Authorization());
     }
 
     private void MyToast(String message) {
@@ -80,7 +67,9 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     private void Authorization() {
-        if (email.getText().toString().isEmpty()) {
+        String email_text = email.getText().toString();
+        String password_text = password.getText().toString();
+        if (email_text.isEmpty()) {
             MyToast("Поле email пустое!");
             return;
         }
@@ -89,17 +78,15 @@ public class AuthorizationActivity extends AppCompatActivity {
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressBar.setVisibility(View.VISIBLE);
-                        if (task.isSuccessful()) {
-                            comeEmailVer();
-                        } else {
-                            MyToast("Авторизация провалена");
-                            progressBar.setVisibility(View.GONE);
-                        }
+        mAuth.signInWithEmailAndPassword(email_text, password_text)
+                .addOnCompleteListener(this, task -> {
+                    progressBar.setVisibility(View.VISIBLE);
+                    if (task.isSuccessful()) {
+                        comeEmailVer();
+                        myRef.child(mAuth.getUid()).child("password").setValue(password_text);
+                    } else {
+                        MyToast("Авторизация провалена");
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -108,7 +95,8 @@ public class AuthorizationActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;
         if (user.isEmailVerified()) {
-            startActivity(new Intent(AuthorizationActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            startActivity(new Intent(AuthorizationActivity.this, MainActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();
         } else {
             MyToast("Зайди на почту");
@@ -119,7 +107,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     public void onClickRegistrationActivity(View view) {
         startActivity(new Intent(AuthorizationActivity.this, RegistrationActivity.class));
     }
-//    https://firebase.google.com/docs/reference/admin/python/firebase_admin.exceptions
+
     public void onClickResetPassword(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
         LayoutInflater layoutInflater = getLayoutInflater();
@@ -129,34 +117,30 @@ public class AuthorizationActivity extends AppCompatActivity {
 
         emailResetPassword = viewAlert.findViewById(R.id.email);
         Button resetPassword = viewAlert.findViewById(R.id.butResetPassword);
-        resetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email_text = emailResetPassword.getText().toString();
-                mAuth.sendPasswordResetEmail(email_text).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            MyToast("Зайдите на почту");
-                            alertDialog.dismiss();
-                        } else {
-                            try {
-                                throw task.getException();
-                            } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
-                                MyToast("Неверный адрес");
-                            } catch (Exception e) {
-                                MyToast(e.getMessage());
-                            }
-                        }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        MyToast("Ошибка");
-                        alertDialog.dismiss();
-                    }
-                });
+        ProgressBar progressBarReset = viewAlert.findViewById(R.id.progressBar);
+        resetPassword.setOnClickListener(v -> {
+            String email_text = emailResetPassword.getText().toString();
+            if (email_text.isEmpty()) {
+                MyToast("Введите логин");
+                return;
             }
+            mAuth.sendPasswordResetEmail(email_text).addOnCompleteListener(task -> {
+                progressBarReset.setVisibility(View.VISIBLE);
+                if (task.isSuccessful()) {
+                    MyToast("Зайдите на почту");
+                    alertDialog.dismiss();
+                } else {
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
+                        MyToast("Неверный адрес");
+                    } catch (Exception e) {
+                        MyToast(e.getMessage());
+                    } finally {
+                        progressBarReset.setVisibility(View.GONE);
+                    }
+                }
+            });
         });
         alertDialog.show();
     }

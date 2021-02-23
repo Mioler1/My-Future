@@ -8,15 +8,12 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageListener;
 
 public class FirstScreenActivity extends AppCompatActivity {
-
     FirebaseAuth mAuth;
 
     @Override
@@ -26,12 +23,9 @@ public class FirstScreenActivity extends AppCompatActivity {
 
         final Animation animAlpha = AnimationUtils.loadAnimation(this, R.anim.button_for_activity);
         Button btnAlpha = findViewById(R.id.buttonReg);
-        btnAlpha.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                view.startAnimation(animAlpha);
-                startActivity(new Intent(FirstScreenActivity.this, RegistrationActivity.class));
-            }
+        btnAlpha.setOnClickListener(view -> {
+            view.startAnimation(animAlpha);
+            startActivity(new Intent(FirstScreenActivity.this, RegistrationActivity.class));
         });
 
         init();
@@ -42,12 +36,8 @@ public class FirstScreenActivity extends AppCompatActivity {
 
         CarouselView carouselView = findViewById(R.id.carousel);
         carouselView.setPageCount(mImage.length);
-        carouselView.setImageListener(new ImageListener() {
-            @Override
-            public void setImageForPosition(int position, ImageView imageView) {
-                imageView.setImageResource(mImage[position]);
-            }
-        });
+        carouselView.setImageListener((position, imageView) ->
+                imageView.setImageResource(mImage[position]));
     }
 
     public void onClickAuthorizationActivity(View view) {
