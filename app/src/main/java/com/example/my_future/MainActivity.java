@@ -9,12 +9,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.my_future.Fragments.ChangeDataFragment;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
 import com.example.my_future.MenuFlowing.NavItemSelectedListener;
@@ -30,17 +28,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mxn.soul.flowingdrawer_core.FlowingDrawer;
-import com.mxn.soul.flowingdrawer_core.FlowingMenuLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_ACTIVITY;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_HEALTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_PROFILE;
-import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
 import static com.example.my_future.Variables.fragmentsInStack;
 import static com.example.my_future.Variables.fragmentsInStackFlowing;
 
