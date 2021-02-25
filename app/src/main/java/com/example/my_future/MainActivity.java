@@ -8,7 +8,10 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -28,6 +31,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.File;
+import java.io.IOException;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_ACTIVITY;
@@ -169,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 selectedFragment = new CalculatedFragment();
                 break;
             case R.id.id_out:
+                mSettings.edit().clear().apply();
                 mAuth.signOut();
                 selectedFragment = new Fragment();
                 startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
@@ -239,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     }
 
     public void OnClickExit(View view) {
+        mSettings.edit().clear().apply();
         mAuth.signOut();
         startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
         finish();
