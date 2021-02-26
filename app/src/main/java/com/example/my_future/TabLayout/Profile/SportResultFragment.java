@@ -1,4 +1,4 @@
-package com.example.my_future.MenuBottom;
+package com.example.my_future.TabLayout.Profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,12 +11,17 @@ import androidx.fragment.app.Fragment;
 
 import com.example.my_future.R;
 
-public class PlanFragment extends Fragment {
+public class SportResultFragment extends Fragment {
+    View v;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bottom_fragment_training, container, false);
+        v = inflater.inflate(R.layout.tab_fragment_sport_result, container, false);
+        init();
+        return v;
     }
 
+    private void init() {
+    }
 }

@@ -10,20 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.my_future.Fragments.ChangeDataFragment;
-import com.example.my_future.Interface.BackPressed;
-import com.example.my_future.MainActivity;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.R;
 
 public class FoodFragment extends Fragment {
-
     View v;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v =  inflater.inflate(R.layout.frag_activity_food, container, false);
+        v =  inflater.inflate(R.layout.bottom_fragment_food, container, false);
         init();
         return v;
     }

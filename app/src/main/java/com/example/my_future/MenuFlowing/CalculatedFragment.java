@@ -19,7 +19,7 @@ public class CalculatedFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.frag_avtivity_calculated, container, false);
+        View v = inflater.inflate(R.layout.left_fragment_calculated, container, false);
         TextView calcMif = v.findViewById(R.id.calcMif);
         TextView calcKetch = v.findViewById(R.id.calcKetch);
         calcMif.setOnClickListener(new View.OnClickListener() {
