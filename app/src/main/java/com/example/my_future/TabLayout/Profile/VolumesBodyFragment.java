@@ -17,7 +17,7 @@ public class VolumesBodyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.bottom_fragment_profile, container, false);
+        v = inflater.inflate(R.layout.tab_fragment_volumes_body, container, false);
         init();
         return v;
     }

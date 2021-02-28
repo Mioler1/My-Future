@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class PageAdapter extends FragmentStateAdapter {
     ArrayList<Fragment> mFragmentList;
 
-    public PageAdapter(FragmentActivity fa) {
+    public PageAdapter(Fragment fa) {
         super(fa);
         mFragmentList = new ArrayList<>();
     }
