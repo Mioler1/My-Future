@@ -5,55 +5,12 @@
     android:background="@color/custom">
 
     <TextView
-        android:id="@+id/weight_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/weight"
+        android:layout_centerInParent="true"
+        android:text="Графики"
+        android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/weight_text"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/growth_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/weight_text"
-        android:text="Рост:"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/growth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/weight"
-        android:layout_toEndOf="@id/growth_text"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/gender_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/growth_text"
-        android:text="Пол:"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/growth"
-        android:layout_toEndOf="@id/gender_text"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
+        android:textSize="40sp" />
 
 </RelativeLayout>

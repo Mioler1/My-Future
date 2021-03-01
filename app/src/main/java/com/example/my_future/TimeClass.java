@@ -69,9 +69,9 @@ public class TimeClass extends Fragment {
 //        CircleImageView avatar = v.findViewById(R.id.avatar);
 //        TextView nickname = v.findViewById(R.id.nickname);
 //        TextView target = v.findViewById(R.id.target);
-        TextView weight = v.findViewById(R.id.weight);
-        TextView growth = v.findViewById(R.id.growth);
-        TextView gender = v.findViewById(R.id.gender);
+//        TextView weight = v.findViewById(R.id.weight);
+//        TextView growth = v.findViewById(R.id.growth);
+//        TextView gender = v.findViewById(R.id.gender);
 //        TextView activity = v.findViewById(R.id.activity);
 //        TextView diseases = v.findViewById(R.id.diseases);
 //        TextView experience = v.findViewById(R.id.experience);
@@ -101,21 +101,21 @@ public class TimeClass extends Fragment {
 //                } else {
 //                    nickname.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("nickname").getValue()));
 //                }
-                if (mSettings.contains(APP_PREFERENCES_WEIGHT)) {
-                    weight.setText(mSettings.getString(APP_PREFERENCES_WEIGHT, ""));
-                } else {
-                    weight.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("weight").getValue()));
-                }
-                if (mSettings.contains(APP_PREFERENCES_GROWTH)) {
-                    growth.setText(mSettings.getString(APP_PREFERENCES_GROWTH, ""));
-                } else {
-                    growth.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("growth").getValue()));
-                }
-                if (mSettings.contains(APP_PREFERENCES_GENDER)) {
-                    gender.setText(mSettings.getString(APP_PREFERENCES_GENDER, ""));
-                } else {
-                    gender.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("gender").getValue()));
-                }
+//                if (mSettings.contains(APP_PREFERENCES_WEIGHT)) {
+//                    weight.setText(mSettings.getString(APP_PREFERENCES_WEIGHT, ""));
+//                } else {
+//                    weight.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("weight").getValue()));
+//                }
+//                if (mSettings.contains(APP_PREFERENCES_GROWTH)) {
+//                    growth.setText(mSettings.getString(APP_PREFERENCES_GROWTH, ""));
+//                } else {
+//                    growth.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("growth").getValue()));
+//                }
+//                if (mSettings.contains(APP_PREFERENCES_GENDER)) {
+//                    gender.setText(mSettings.getString(APP_PREFERENCES_GENDER, ""));
+//                } else {
+//                    gender.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("gender").getValue()));
+//                }
 //                if (mSettings.contains(APP_PREFERENCES_TARGET)) {
 //                    target.setText(mSettings.getString(APP_PREFERENCES_TARGET, ""));
 //                } else {

@@ -24,10 +24,12 @@ import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
 import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
 import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
+import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_HIP;
 import static com.example.my_future.Variables.APP_PREFERENCES_NECK;
 import static com.example.my_future.Variables.APP_PREFERENCES_SHIN;
 import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
+import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class VolumesBodyFragment extends Fragment {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -47,6 +49,8 @@ public class VolumesBodyFragment extends Fragment {
 
     private void init() {
         mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        TextView weight = v.findViewById(R.id.weight);
+        TextView growth = v.findViewById(R.id.growth);
         TextView neck = v.findViewById(R.id.neck);
         TextView biceps = v.findViewById(R.id.biceps);
         TextView forearm = v.findViewById(R.id.forearm);
@@ -59,6 +63,16 @@ public class VolumesBodyFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences.Editor editor = mSettings.edit();
+                if (mSettings.contains(APP_PREFERENCES_WEIGHT)) {
+                    weight.setText(mSettings.getString(APP_PREFERENCES_WEIGHT, ""));
+                } else {
+                    weight.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("weight").getValue()));
+                }
+                if (mSettings.contains(APP_PREFERENCES_GROWTH)) {
+                    growth.setText(mSettings.getString(APP_PREFERENCES_GROWTH, ""));
+                } else {
+                    growth.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("growth").getValue()));
+                }
                 if (mSettings.contains(APP_PREFERENCES_NECK)) {
                     neck.setText(mSettings.getString(APP_PREFERENCES_NECK, ""));
                 } else {
