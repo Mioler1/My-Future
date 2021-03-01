@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.my_future.R;
+import com.example.my_future.TabLayout.DepthPageTransformer;
 import com.example.my_future.TabLayout.Profile.GraphFragment;
 import com.example.my_future.TabLayout.Profile.HealthFragment;
 import com.example.my_future.TabLayout.Profile.PageAdapter;
@@ -73,7 +74,7 @@ public class ProfileFragment extends Fragment {
         pageAdapter.addFragment(new HealthFragment());
         pageAdapter.addFragment(new GraphFragment());
         viewPager.setAdapter(pageAdapter);
-//        viewPager.setPageTransformer(new DepthPageTransformer());
+        viewPager.setPageTransformer(new DepthPageTransformer());
 
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> {
