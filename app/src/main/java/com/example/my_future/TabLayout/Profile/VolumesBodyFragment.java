@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
+import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_VOLUME;
 import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
 import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
 import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
@@ -35,9 +37,11 @@ import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class VolumesBodyFragment extends Fragment {
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("Users");
+    TextView weight, growth, neck, biceps, forearm, chest, waist, hip, shin;
+
+    FirebaseAuth mAuth;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     SharedPreferences mSettings;
     View v;
@@ -47,25 +51,38 @@ public class VolumesBodyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.tab_fragment_volumes_body, container, false);
         init();
+        if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_VOLUME)).equals("true")) {
+            RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
+            RelativeLayout relativePlus = v.findViewById(R.id.Rel_plus);
+            relativeReadData.setVisibility(View.VISIBLE);
+            relativePlus.setVisibility(View.GONE);
+            downloadData();
+        }
         return v;
     }
 
     private void init() {
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Users");
         mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        TextView weight = v.findViewById(R.id.weight);
-        TextView growth = v.findViewById(R.id.growth);
-        TextView neck = v.findViewById(R.id.neck);
-        TextView biceps = v.findViewById(R.id.biceps);
-        TextView forearm = v.findViewById(R.id.forearm);
-        TextView chest = v.findViewById(R.id.chest);
-        TextView waist = v.findViewById(R.id.waist);
-        TextView hip = v.findViewById(R.id.hip);
-        TextView shin = v.findViewById(R.id.shin);
+
+        weight = v.findViewById(R.id.weight);
+        growth = v.findViewById(R.id.growth);
+        neck = v.findViewById(R.id.neck);
+        biceps = v.findViewById(R.id.biceps);
+        forearm = v.findViewById(R.id.forearm);
+        chest = v.findViewById(R.id.chest);
+        waist = v.findViewById(R.id.waist);
+        hip = v.findViewById(R.id.hip);
+        shin = v.findViewById(R.id.shin);
 
         v.findViewById(R.id.but_plus).setOnClickListener(view -> {
             startActivity(new Intent(getContext(), FillingDataVolumesActivity.class));
         });
+    }
 
+    private void downloadData() {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

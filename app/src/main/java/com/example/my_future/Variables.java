@@ -35,6 +35,8 @@ public class Variables {
 
     //  Переменные проверки заполнения данных
     public static final String APP_PREFERENCES_BOOLEAN_PROFILE = "ProfileBool";
+    public static final String APP_PREFERENCES_BOOLEAN_VOLUME = "VolumeBool";
+    public static final String APP_PREFERENCES_BOOLEAN_SPORT = "SportBool";
     public static final String APP_PREFERENCES_BOOLEAN_HEALTH = "HealthBool";
     public static final String APP_PREFERENCES_BOOLEAN_ACTIVITY = "ActivityBool";
 }
