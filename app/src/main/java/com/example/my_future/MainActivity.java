@@ -102,50 +102,50 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                         }
                     }
                 }
-                if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_PROFILE)).equals("true")) {
-                    if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_HEALTH)).equals("true")) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            if (snapshot.getKey().equals(mAuth.getUid())) {
-                                for (DataSnapshot s : snapshot.getChildren()) {
-                                    if (s.getKey().equals("health")) {
-                                        if (s.getValue().equals("none")) {
-                                            startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class));
-                                            finish();
-                                        } else {
-                                            editor.putString(APP_PREFERENCES_BOOLEAN_HEALTH, "true");
-                                            editor.apply();
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_HEALTH)).equals("true")) {
-                    if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_ACTIVITY)).equals("true")) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            if (snapshot.getKey().equals(mAuth.getUid())) {
-                                for (DataSnapshot s : snapshot.getChildren()) {
-                                    if (s.getKey().equals("health")) {
-                                        for (DataSnapshot health : s.getChildren()) {
-                                            if (health.getKey().equals("activity")) {
-                                                if (health.getValue().equals("none")) {
-                                                    startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class).putExtra("openActivity", "false"));
-                                                    finish();
-                                                } else {
-                                                    editor.putString(APP_PREFERENCES_BOOLEAN_ACTIVITY, "true");
-                                                    editor.apply();
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+//                if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_PROFILE)).equals("true")) {
+//                    if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_HEALTH)).equals("true")) {
+//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                            if (snapshot.getKey().equals(mAuth.getUid())) {
+//                                for (DataSnapshot s : snapshot.getChildren()) {
+//                                    if (s.getKey().equals("health")) {
+//                                        if (s.getValue().equals("none")) {
+//                                            startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class));
+//                                            finish();
+//                                        } else {
+//                                            editor.putString(APP_PREFERENCES_BOOLEAN_HEALTH, "true");
+//                                            editor.apply();
+//                                            break;
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_HEALTH)).equals("true")) {
+//                    if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_ACTIVITY)).equals("true")) {
+//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                            if (snapshot.getKey().equals(mAuth.getUid())) {
+//                                for (DataSnapshot s : snapshot.getChildren()) {
+//                                    if (s.getKey().equals("health")) {
+//                                        for (DataSnapshot health : s.getChildren()) {
+//                                            if (health.getKey().equals("activity")) {
+//                                                if (health.getValue().equals("none")) {
+//                                                    startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class).putExtra("openActivity", "false"));
+//                                                    finish();
+//                                                } else {
+//                                                    editor.putString(APP_PREFERENCES_BOOLEAN_ACTIVITY, "true");
+//                                                    editor.apply();
+//                                                    break;
+//                                                }
+//                                            }
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
             }
 
             @Override

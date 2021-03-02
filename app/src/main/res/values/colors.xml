@@ -18,6 +18,7 @@
     //color for button "IntroActivity"
     <color name="gradient_start_color">#4c84ff</color>
     <color name="gradient_end_color">#18a3fe</color>
+    <color name="background_button">#43b581</color>
 
     //color forindicator
     <color name="tab_indicator_gray">#5b5b5b</color>

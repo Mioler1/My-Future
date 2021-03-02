@@ -61,17 +61,12 @@ import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class FillingDataUserActivity extends AppCompatActivity {
 
-    // Окно с данными пользователя
     EditText nickname, weight, growth;
     RadioGroup gender;
     Spinner target;
     TextView textNoVisibleGender, textNoVisibleTarget;
     ProgressBar progressBarDataUser;
-    ProgressBar progressBarDataVolume;
     CircleImageView avatar_img;
-
-    // Окно с объёмами тела
-    EditText waist, neck, chest, biceps, forearm, hip, shin;
 
     FirebaseDatabase db;
     FirebaseAuth mAuth;
@@ -106,16 +101,6 @@ public class FillingDataUserActivity extends AppCompatActivity {
         target = findViewById(R.id.target);
         progressBarDataUser = findViewById(R.id.progressBarUser);
         avatar_img = findViewById(R.id.avatar);
-
-        // Иннициализация в окне объёмы пользователя
-        waist = findViewById(R.id.waist);
-        neck = findViewById(R.id.neck);
-        chest = findViewById(R.id.chest);
-        biceps = findViewById(R.id.biceps);
-        forearm = findViewById(R.id.forearm);
-        hip = findViewById(R.id.hip);
-        shin = findViewById(R.id.shin);
-        progressBarDataVolume = findViewById(R.id.progressBarVolume);
 
         avatar_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,91 +215,6 @@ public class FillingDataUserActivity extends AppCompatActivity {
                 relativeDataUser.setVisibility(View.GONE);
                 avatar_img.setVisibility(View.GONE);
                 relativeDataVolume.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                MyToast("Данные не добавились");
-            }
-        });
-    }
-
-    public void onClickSaveDataVolume(View view) {
-        String waist_text = waist.getText().toString();
-        String neck_text = neck.getText().toString();
-        String chest_text = chest.getText().toString();
-        String biceps_text = biceps.getText().toString();
-        String forearm_text = forearm.getText().toString();
-        String hip_text = hip.getText().toString();
-        String shin_text = shin.getText().toString();
-
-        SharedPreferences.Editor editor = mSettings.edit();
-        if (!waist_text.isEmpty() && !neck_text.isEmpty() && !chest_text.isEmpty() && !biceps_text.isEmpty() && !forearm_text.isEmpty() && !hip_text.isEmpty() && !shin_text.isEmpty()) {
-            progressBarDataVolume.setVisibility(View.VISIBLE);
-        }
-
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!waist_text.isEmpty()) {
-                    myRef.child(mAuth.getUid()).child("volume").child("waist").setValue(waist_text);
-                    editor.putString(APP_PREFERENCES_WAIST, waist_text);
-                } else {
-                    myRef.child(mAuth.getUid()).child("volume").child("waist").setValue("—");
-                    editor.putString(APP_PREFERENCES_WAIST, "—");
-                }
-
-                if (!neck_text.isEmpty()) {
-                    myRef.child(mAuth.getUid()).child("volume").child("neck").setValue(neck_text);
-                    editor.putString(APP_PREFERENCES_NECK, neck_text);
-                } else {
-                    myRef.child(mAuth.getUid()).child("volume").child("neck").setValue("—");
-                    editor.putString(APP_PREFERENCES_NECK, "—");
-                }
-
-                if (!chest_text.isEmpty()) {
-                    myRef.child(mAuth.getUid()).child("volume").child("chest").setValue(chest_text);
-                    editor.putString(APP_PREFERENCES_CHEST, chest_text);
-                } else {
-                    myRef.child(mAuth.getUid()).child("volume").child("chest").setValue("—");
-                    editor.putString(APP_PREFERENCES_CHEST, "—");
-                }
-
-                if (!biceps_text.isEmpty()) {
-                    myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue(biceps_text);
-                    editor.putString(APP_PREFERENCES_BICEPS, biceps_text);
-                } else {
-                    myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue("—");
-                    editor.putString(APP_PREFERENCES_BICEPS, "—");
-                }
-
-                if (!forearm_text.isEmpty()) {
-                    myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue(forearm_text);
-                    editor.putString(APP_PREFERENCES_FOREARM, forearm_text);
-                } else {
-                    myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue("—");
-                    editor.putString(APP_PREFERENCES_FOREARM, "—");
-                }
-
-                if (!hip_text.isEmpty()) {
-                    myRef.child(mAuth.getUid()).child("volume").child("hip").setValue(hip_text);
-                    editor.putString(APP_PREFERENCES_HIP, hip_text);
-                } else {
-                    myRef.child(mAuth.getUid()).child("volume").child("hip").setValue("—");
-                    editor.putString(APP_PREFERENCES_HIP, "—");
-                }
-
-                if (!shin_text.isEmpty()) {
-                    myRef.child(mAuth.getUid()).child("volume").child("shin").setValue(shin_text);
-                    editor.putString(APP_PREFERENCES_SHIN, shin_text);
-                } else {
-                    myRef.child(mAuth.getUid()).child("volume").child("shin").setValue("—");
-                    editor.putString(APP_PREFERENCES_SHIN, "—");
-                }
-
-                editor.apply();
-                startActivity(new Intent(FillingDataUserActivity.this, FillingDataUserHealthActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                finish();
             }
 
             @Override

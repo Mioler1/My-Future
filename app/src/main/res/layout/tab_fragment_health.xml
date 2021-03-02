@@ -4,75 +4,111 @@
     android:layout_height="match_parent"
     android:background="@color/custom">
 
-    <TextView
-        android:id="@+id/activity_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Активность: "
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/activity"
+    <RelativeLayout
+        android:id="@+id/RelRead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gender"
-        android:layout_toEndOf="@id/activity_text"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
+        android:padding="10dp"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/diseases_text"
+        <TextView
+            android:id="@+id/activity_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Активность: "
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gender"
+            android:layout_toEndOf="@id/activity_text"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/diseases_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_text"
+            android:text="Заболевания: "
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/diseases"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_text"
+            android:layout_toEndOf="@id/diseases_text"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/experience_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/diseases_text"
+            android:text="Стаж: "
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/experience"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/diseases"
+            android:layout_toEndOf="@id/experience_text"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/pressure_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/experience_text"
+            android:text="Давление: "
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/experience"
+            android:layout_toEndOf="@id/pressure_text"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/but_plus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/activity_text"
-        android:text="Заболевания: "
-        android:textColor="@color/white"
-        android:textSize="22sp" />
+        android:layout_centerInParent="true">
 
-    <TextView
-        android:id="@+id/diseases"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/activity_text"
-        android:layout_toEndOf="@id/diseases_text"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Показатели здоровья"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="40sp" />
 
-    <TextView
-        android:id="@+id/experience_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/diseases_text"
-        android:text="Стаж: "
-        android:textColor="@color/white"
-        android:textSize="22sp" />
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_below="@id/text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background_circle_plus"
+            android:src="@drawable/plus" />
 
-    <TextView
-        android:id="@+id/experience"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/diseases"
-        android:layout_toEndOf="@id/experience_text"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/pressure_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/experience_text"
-        android:text="Давление: "
-        android:textColor="@color/white"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/pressure"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/experience"
-        android:layout_toEndOf="@id/pressure_text"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
+    </RelativeLayout>
 
 </RelativeLayout>
