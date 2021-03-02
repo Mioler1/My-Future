@@ -17,14 +17,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.my_future.Intro.IntroActivity;
 import com.example.my_future.Models.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,27 +47,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
-import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
-import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
-import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
 import static com.example.my_future.Variables.APP_PREFERENCES_GENDER;
 import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
-import static com.example.my_future.Variables.APP_PREFERENCES_HIP;
-import static com.example.my_future.Variables.APP_PREFERENCES_NECK;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
-import static com.example.my_future.Variables.APP_PREFERENCES_SHIN;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
-import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
 import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
 
 public class FillingDataUserActivity extends AppCompatActivity {
-
     EditText nickname, weight, growth;
     RadioGroup gender;
     Spinner target;
     TextView textNoVisibleGender, textNoVisibleTarget;
     ProgressBar progressBarDataUser;
     CircleImageView avatar_img;
+    Button buttonSave;
 
     FirebaseDatabase db;
     FirebaseAuth mAuth;
@@ -101,15 +95,13 @@ public class FillingDataUserActivity extends AppCompatActivity {
         target = findViewById(R.id.target);
         progressBarDataUser = findViewById(R.id.progressBarUser);
         avatar_img = findViewById(R.id.avatar);
+        buttonSave = findViewById(R.id.but_save);
 
-        avatar_img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent uploadIntent = new Intent();
-                uploadIntent.setType("image/*");
-                uploadIntent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(uploadIntent, 1);
-            }
+        avatar_img.setOnClickListener(v -> {
+            Intent uploadIntent = new Intent();
+            uploadIntent.setType("image/*");
+            uploadIntent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(uploadIntent, 1);
         });
     }
 
@@ -137,7 +129,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
             return;
         }
 
-        if (weight.getText().toString().isEmpty()) {
+        if (weight_text.isEmpty()) {
             MyToast("Поле вес пустое");
             return;
         }
@@ -173,8 +165,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
             MyToast("Выберите цель");
             return;
         }
-
-        if (!nickname_text.isEmpty() && !weight.getText().toString().isEmpty() && !growth_text.isEmpty() && !textNoVisibleGender.getText().toString().isEmpty() && !textNoVisibleTarget.getText().toString().isEmpty()) {
+        if (!nickname_text.isEmpty() && weight_text.isEmpty() && !growth_text.isEmpty() && !textNoVisibleGender.getText().toString().isEmpty() && !textNoVisibleTarget.getText().toString().isEmpty()) {
             progressBarDataUser.setVisibility(View.VISIBLE);
         }
 
@@ -202,19 +193,15 @@ public class FillingDataUserActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString(APP_PREFERENCES_NICKNAME, nickname_text);
                 editor.putString(APP_PREFERENCES_WEIGHT, weight_text);
-                editor.putString(APP_PREFERENCES_GROWTH, growth.getText().toString());
+                editor.putString(APP_PREFERENCES_GROWTH, growth_text);
                 editor.putString(APP_PREFERENCES_GENDER, textNoVisibleGender.getText().toString());
                 editor.putString(APP_PREFERENCES_TARGET, textNoVisibleTarget.getText().toString());
                 editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
-
-                RelativeLayout relativeDataUser = findViewById(R.id.AutoLayout);
-                RelativeLayout relativeDataVolume = findViewById(R.id.AutoLayout2);
-                relativeDataUser.setVisibility(View.GONE);
-                avatar_img.setVisibility(View.GONE);
-                relativeDataVolume.setVisibility(View.VISIBLE);
+                startActivity(new Intent(FillingDataUserActivity.this, IntroActivity.class));
+                finish();
             }
 
             @Override
@@ -224,21 +211,18 @@ public class FillingDataUserActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void genderSelection() {
         gender.clearCheck();
         textNoVisibleGender = findViewById(R.id.visible_text_gender);
-        gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.gender_men:
-                        textNoVisibleGender.setText("Мужской");
-                        break;
-                    case R.id.gender_girl:
-                        textNoVisibleGender.setText("Женский");
-                        break;
-                }
+        gender.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.gender_men:
+                    textNoVisibleGender.setText("Мужской");
+                    break;
+                case R.id.gender_girl:
+                    textNoVisibleGender.setText("Женский");
+                    break;
             }
         });
     }
@@ -253,6 +237,9 @@ public class FillingDataUserActivity extends AppCompatActivity {
         if (requestCode == 1 && data != null && data.getData() != null) {
             if (resultCode == RESULT_OK) {
                 avatar_img.setImageURI(data.getData());
+                progressBarDataUser.setVisibility(View.VISIBLE);
+                buttonSave.setEnabled(false);
+                buttonSave.setBackgroundResource(R.drawable.btn_save_disabled);
                 uploadImage();
             }
         }
@@ -263,24 +250,17 @@ public class FillingDataUserActivity extends AppCompatActivity {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] byteArray = baos.toByteArray();
-        final StorageReference myStorage = mStorageRef.child(System.currentTimeMillis() + "my_avatar");
+        final StorageReference myStorage = mStorageRef.child(System.currentTimeMillis() + " my_avatar");
         UploadTask uploadTask = myStorage.putBytes(byteArray);
-        Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                return myStorage.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                uploadUri = task.getResult();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                MyToast("Картинка не загрузилась");
-            }
-        });
+        uploadTask.continueWithTask(task -> myStorage.getDownloadUrl()).
+                addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        uploadUri = task.getResult();
+                        buttonSave.setEnabled(true);
+                        buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
+                        progressBarDataUser.setVisibility(View.GONE);
+                    }
+                }).addOnFailureListener(e -> MyToast("Картинка не загрузилась"));
     }
 
     private void targetSelection() {

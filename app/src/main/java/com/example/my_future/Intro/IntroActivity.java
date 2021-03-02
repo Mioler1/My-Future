@@ -23,7 +23,7 @@ import java.util.List;
 
 public class IntroActivity extends AppCompatActivity {
 
-    private ViewPager screenPager;
+    ViewPager screenPager;
     IntroViewPager introViewPager;
     TabLayout tabIndicator;
     Button btnNext;
@@ -65,18 +65,14 @@ public class IntroActivity extends AppCompatActivity {
         tabIndicator.setupWithViewPager(screenPager);
 
         //next button click Listener
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                position = screenPager.getCurrentItem();
-                if (position < mList.size()) {
-                    position++;
-                    screenPager.setCurrentItem(position);
-                }
-                if (position == mList.size() - 1) {
-                    LoadLastScreen();
-                }
+        btnNext.setOnClickListener(view -> {
+            position = screenPager.getCurrentItem();
+            if (position < mList.size()) {
+                position++;
+                screenPager.setCurrentItem(position);
+            }
+            if (position == mList.size() - 1) {
+                LoadLastScreen();
             }
         });
 
@@ -100,14 +96,10 @@ public class IntroActivity extends AppCompatActivity {
             }
         });
 
-        btnGetStarted.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(IntroActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                finish();
-            }
+        btnGetStarted.setOnClickListener(view -> {
+            startActivity(new Intent(IntroActivity.this, MainActivity.class));
+            finish();
         });
-
     }
 
     private void LoadLastScreen() {

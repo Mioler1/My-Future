@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.my_future.Intro.IntroActivity;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
 import com.example.my_future.MenuFlowing.NavItemSelectedListener;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         init();
         clickBottomNavigationMenu();
         setupMenu();
+        Log.d("MyLog", String.valueOf(fragmentsInStack));
     }
 
     private void init() {
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                                 if (s.getKey().equals("profile")) {
                                     if (s.getValue().equals("none")) {
                                         startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
+                                        fragmentsInStack.clear();
                                         finish();
                                     } else {
                                         editor.putString(APP_PREFERENCES_BOOLEAN_PROFILE, "true");
@@ -102,50 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                         }
                     }
                 }
-//                if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_PROFILE)).equals("true")) {
-//                    if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_HEALTH)).equals("true")) {
-//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                            if (snapshot.getKey().equals(mAuth.getUid())) {
-//                                for (DataSnapshot s : snapshot.getChildren()) {
-//                                    if (s.getKey().equals("health")) {
-//                                        if (s.getValue().equals("none")) {
-//                                            startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class));
-//                                            finish();
-//                                        } else {
-//                                            editor.putString(APP_PREFERENCES_BOOLEAN_HEALTH, "true");
-//                                            editor.apply();
-//                                            break;
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_HEALTH)).equals("true")) {
-//                    if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_ACTIVITY)).equals("true")) {
-//                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                            if (snapshot.getKey().equals(mAuth.getUid())) {
-//                                for (DataSnapshot s : snapshot.getChildren()) {
-//                                    if (s.getKey().equals("health")) {
-//                                        for (DataSnapshot health : s.getChildren()) {
-//                                            if (health.getKey().equals("activity")) {
-//                                                if (health.getValue().equals("none")) {
-//                                                    startActivity(new Intent(MainActivity.this, FillingDataUserHealthActivity.class).putExtra("openActivity", "false"));
-//                                                    finish();
-//                                                } else {
-//                                                    editor.putString(APP_PREFERENCES_BOOLEAN_ACTIVITY, "true");
-//                                                    editor.apply();
-//                                                    break;
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
             }
 
             @Override
@@ -176,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 break;
             case R.id.id_out:
                 mSettings.edit().clear().apply();
+                fragmentsInStack.clear();
+                fragmentsInStackFlowing.clear();
                 mAuth.signOut();
                 selectedFragment = new Fragment();
                 startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
@@ -219,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
     @Override
     public void onBackPressed() {
+        Log.d("MyLog", String.valueOf(fragmentsInStack));
         if (!fragmentsInStackFlowing.isEmpty()) {
             fragmentsInStackFlowing.remove(fragmentsInStackFlowing.size() - 1);
             int lastId = fragmentsInStack.size() - 1;

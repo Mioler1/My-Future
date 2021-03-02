@@ -46,8 +46,10 @@ public class AuthorizationActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        email.setText(getIntent().getStringExtra("email"));
-        password.setText(getIntent().getStringExtra("password"));
+//        email.setText(getIntent().getStringExtra("email"));
+//        password.setText(getIntent().getStringExtra("password"));
+        email.setText("veretennik-v@mail.ru");
+        password.setText("123123");
 
         come = findViewById(R.id.comeButton);
         come.setOnClickListener(view -> Authorization());
@@ -73,13 +75,13 @@ public class AuthorizationActivity extends AppCompatActivity {
             MyToast("Поле email пустое!");
             return;
         }
-        if (password.getText().toString().isEmpty()) {
+        if (password_text.isEmpty()) {
             MyToast("Поле пароль пустое!");
             return;
         }
 
         mAuth.signInWithEmailAndPassword(email_text, password_text)
-                .addOnCompleteListener(this, task -> {
+                .addOnCompleteListener(task -> {
                     progressBar.setVisibility(View.VISIBLE);
                     if (task.isSuccessful()) {
                         comeEmailVer();
@@ -96,7 +98,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         assert user != null;
         if (user.isEmailVerified()) {
             startActivity(new Intent(AuthorizationActivity.this, MainActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();
         } else {
             MyToast("Зайди на почту");

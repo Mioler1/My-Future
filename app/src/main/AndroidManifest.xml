@@ -50,7 +50,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Additionally.FragmentActivityActivism"
             android:screenOrientation="portrait" />

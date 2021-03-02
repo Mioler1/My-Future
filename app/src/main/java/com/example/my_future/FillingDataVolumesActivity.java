@@ -71,13 +71,20 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences.Editor editor = mSettings.edit();
+                String neck_text = String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("neck").getValue());
+                String biceps_text = String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("biceps").getValue());
+                String forearm_text = String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("forearm").getValue());
+                String chest_text = String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("chest").getValue());
+                String waist_text = String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("waist").getValue());
+                String hip_text = String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("hip").getValue());
+                String shin_text = String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("shin").getValue());
                 if (mSettings.contains(APP_PREFERENCES_NECK)) {
                     if (!mSettings.getString(APP_PREFERENCES_NECK, "").equals("—")) {
                         neck.setText(mSettings.getString(APP_PREFERENCES_NECK, ""));
                     }
                 } else {
-                    if (!String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("neck").getValue()).equals("—")) {
-                        neck.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("neck").getValue()));
+                    if (!neck_text.equals("—") && !neck_text.equals("null")) {
+                        neck.setText(neck_text);
                     }
                 }
                 if (mSettings.contains(APP_PREFERENCES_BICEPS)) {
@@ -85,8 +92,8 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
                         biceps.setText(mSettings.getString(APP_PREFERENCES_BICEPS, ""));
                     }
                 } else {
-                    if (!String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("biceps").getValue()).equals("—")) {
-                        biceps.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("biceps").getValue()));
+                    if (!biceps_text.equals("—") && !biceps_text.equals("null")) {
+                        biceps.setText(biceps_text);
                     }
                 }
                 if (mSettings.contains(APP_PREFERENCES_FOREARM)) {
@@ -94,8 +101,8 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
                         forearm.setText(mSettings.getString(APP_PREFERENCES_FOREARM, ""));
                     }
                 } else {
-                    if (!String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("forearm").getValue()).equals("—")) {
-                        forearm.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("forearm").getValue()));
+                    if (!forearm_text.equals("—") && !forearm_text.equals("null")) {
+                        forearm.setText(forearm_text);
                     }
                 }
                 if (mSettings.contains(APP_PREFERENCES_CHEST)) {
@@ -103,8 +110,8 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
                         chest.setText(mSettings.getString(APP_PREFERENCES_CHEST, ""));
                     }
                 } else {
-                    if (!String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("chest").getValue()).equals("—")) {
-                        chest.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("chest").getValue()));
+                    if (!chest_text.equals("—") && !chest_text.equals("null")) {
+                        chest.setText(chest_text);
                     }
                 }
                 if (mSettings.contains(APP_PREFERENCES_WAIST)) {
@@ -112,8 +119,8 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
                         waist.setText(mSettings.getString(APP_PREFERENCES_WAIST, ""));
                     }
                 } else {
-                    if (!String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("waist").getValue()).equals("—")) {
-                        waist.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("waist").getValue()));
+                    if (!waist_text.equals("—") && !waist_text.equals("null")) {
+                        waist.setText(waist_text);
                     }
                 }
                 if (mSettings.contains(APP_PREFERENCES_HIP)) {
@@ -121,8 +128,8 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
                         hip.setText(mSettings.getString(APP_PREFERENCES_HIP, ""));
                     }
                 } else {
-                    if (!String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("hip").getValue()).equals("—")) {
-                        hip.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("hip").getValue()));
+                    if (!hip_text.equals("—") && !hip_text.equals("null")) {
+                        hip.setText(hip_text);
                     }
                 }
                 if (mSettings.contains(APP_PREFERENCES_SHIN)) {
@@ -130,8 +137,8 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
                         shin.setText(mSettings.getString(APP_PREFERENCES_SHIN, ""));
                     }
                 } else {
-                    if (!String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("shin").getValue()).equals("—")) {
-                        shin.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("shin").getValue()));
+                    if (!shin_text.equals("—") && !shin_text.equals("null")) {
+                        shin.setText(shin_text);
                     }
                 }
                 editor.apply();
