@@ -15,8 +15,6 @@ import com.example.my_future.R;
 import java.util.List;
 
 public class IntroViewPager extends PagerAdapter {
-
-
     Context mContext;
     List<IntroItem> mListScreen;
 

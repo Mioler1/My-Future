@@ -1,32 +1,39 @@
 package com.example.my_future.TabLayout.Profile;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
+import static com.example.my_future.Variables.fragmentsInStackTab;
+import static com.example.my_future.Variables.stringList;
 
-public class PageAdapter extends FragmentStateAdapter {
-    ArrayList<Fragment> mFragmentList;
+public class PageAdapter extends FragmentPagerAdapter {
 
-    public PageAdapter(Fragment fa) {
-        super(fa);
-        mFragmentList = new ArrayList<>();
+    public PageAdapter(@NonNull FragmentManager fm) {
+        super(fm);
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        fragmentsInStackTab.add(fragment);
+        stringList.add(title);
     }
 
     @NonNull
     @Override
-    public Fragment createFragment(int position) {
-        return mFragmentList.get(position);
+    public Fragment getItem(int position) {
+        return fragmentsInStackTab.get(position);
     }
 
-    public void addFragment(Fragment fragment) {
-        mFragmentList.add(fragment);
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return stringList.get(position);
     }
 
     @Override
-    public int getItemCount() {
-        return mFragmentList.size();
+    public int getCount() {
+        return fragmentsInStackTab.size();
     }
 }

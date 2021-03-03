@@ -10,6 +10,9 @@ public class Variables {
     public static final List<Fragment> fragmentsInStack = new ArrayList<>();
     public static final List<Fragment> fragmentsInStackFlowing = new ArrayList<>();
 
+    public static final List<Fragment> fragmentsInStackTab = new ArrayList<>();
+    public static final List<String> stringList = new ArrayList<>();
+
     //  Переменные данных пользователя
     public static final String APP_PREFERENCES_NICKNAME = "Nickname";
     public static final String APP_PREFERENCES_WEIGHT = "Weight";

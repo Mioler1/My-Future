@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.my_future.Interface.BackPressed;
 import com.example.my_future.Intro.IntroActivity;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
@@ -42,6 +43,8 @@ import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_HEALTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_PROFILE;
 import static com.example.my_future.Variables.fragmentsInStack;
 import static com.example.my_future.Variables.fragmentsInStackFlowing;
+import static com.example.my_future.Variables.fragmentsInStackTab;
+import static com.example.my_future.Variables.stringList;
 
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
     FirebaseDatabase db;
@@ -65,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         init();
         clickBottomNavigationMenu();
         setupMenu();
-        Log.d("MyLog", String.valueOf(fragmentsInStack));
     }
 
     private void init() {
@@ -167,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 fragmentsInStackFlowing.clear();
             }
             changeFragment(targetFragment);
+
             return true;
         });
     }
@@ -180,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
     @Override
     public void onBackPressed() {
-        Log.d("MyLog", String.valueOf(fragmentsInStack));
         if (!fragmentsInStackFlowing.isEmpty()) {
             fragmentsInStackFlowing.remove(fragmentsInStackFlowing.size() - 1);
             int lastId = fragmentsInStack.size() - 1;
@@ -205,6 +207,9 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 super.onBackPressed();
             }
         }
+
+        Log.d("MyLog", String.valueOf(fragmentsInStack));
+
     }
 
     public void OnClickExit(View view) {
