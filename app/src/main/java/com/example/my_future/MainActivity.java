@@ -8,16 +8,11 @@ import androidx.fragment.app.FragmentManager;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.my_future.Interface.BackPressed;
-import com.example.my_future.Intro.IntroActivity;
 import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.MenuFlowing.MenuListFragment;
 import com.example.my_future.MenuFlowing.NavItemSelectedListener;
@@ -34,17 +29,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-import java.io.IOException;
-
 import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_ACTIVITY;
-import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_HEALTH;
 import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_PROFILE;
 import static com.example.my_future.Variables.fragmentsInStack;
 import static com.example.my_future.Variables.fragmentsInStackFlowing;
-import static com.example.my_future.Variables.fragmentsInStackTab;
-import static com.example.my_future.Variables.stringList;
 
 public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
     FirebaseDatabase db;
@@ -207,9 +195,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 super.onBackPressed();
             }
         }
-
-        Log.d("MyLog", String.valueOf(fragmentsInStack));
-
     }
 
     public void OnClickExit(View view) {

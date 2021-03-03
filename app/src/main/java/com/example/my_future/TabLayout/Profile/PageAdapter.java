@@ -4,13 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import static com.example.my_future.Variables.fragmentsInStackTab;
-import static com.example.my_future.Variables.stringList;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PageAdapter extends FragmentStatePagerAdapter {
+    List<Fragment> fragmentsInStackTab = new ArrayList<>();
+    List<String> stringList = new ArrayList<>();
 
     public PageAdapter(@NonNull FragmentManager fm) {
         super(fm);

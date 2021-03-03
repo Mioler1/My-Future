@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
-import com.example.my_future.Interface.BackPressed;
 import com.example.my_future.R;
 import com.example.my_future.TabLayout.DepthPageTransformer;
 import com.example.my_future.TabLayout.Profile.GraphFragment;
@@ -28,7 +25,6 @@ import com.example.my_future.TabLayout.Profile.PageAdapter;
 import com.example.my_future.TabLayout.Profile.SportResultFragment;
 import com.example.my_future.TabLayout.Profile.VolumesBodyFragment;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,8 +38,6 @@ import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
-import static com.example.my_future.Variables.fragmentsInStack;
-import static com.example.my_future.Variables.fragmentsInStackTab;
 
 public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth;
@@ -75,15 +69,15 @@ public class ProfileFragment extends Fragment {
 
         pageAdapter = new PageAdapter(getFragmentManager());
         pageAdapter.addFragment(new VolumesBodyFragment(), "Объёмы");
-        pageAdapter.addFragment(new SportResultFragment(),"Спорт");
-        pageAdapter.addFragment(new HealthFragment(),"Здоровья");
-        pageAdapter.addFragment(new GraphFragment(),"Графики");
-        viewPager.setOffscreenPageLimit(4);
+        pageAdapter.addFragment(new SportResultFragment(), "Спорт");
+        pageAdapter.addFragment(new HealthFragment(), "Здоровья");
+        pageAdapter.addFragment(new GraphFragment(), "Графики");
+
         viewPager.setAdapter(pageAdapter);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
+        viewPager.setSaveFromParentEnabled(false);
         tabLayout.setupWithViewPager(viewPager);
 
-        Log.d("MyLog", String.valueOf(fragmentsInStackTab));
         downloadData();
     }
 
@@ -123,10 +117,4 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
-//
-//    @Override
-//    public boolean onBackPressed() {
-//        return true;
-//
-//    }
 }
