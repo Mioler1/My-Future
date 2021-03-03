@@ -5,11 +5,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import static com.example.my_future.Variables.fragmentsInStackTab;
 import static com.example.my_future.Variables.stringList;
 
-public class PageAdapter extends FragmentPagerAdapter {
+public class PageAdapter extends FragmentStatePagerAdapter {
 
     public PageAdapter(@NonNull FragmentManager fm) {
         super(fm);

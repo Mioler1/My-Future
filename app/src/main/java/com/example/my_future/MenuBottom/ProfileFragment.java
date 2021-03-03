@@ -78,6 +78,7 @@ public class ProfileFragment extends Fragment {
         pageAdapter.addFragment(new SportResultFragment(),"Спорт");
         pageAdapter.addFragment(new HealthFragment(),"Здоровья");
         pageAdapter.addFragment(new GraphFragment(),"Графики");
+        viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(pageAdapter);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         tabLayout.setupWithViewPager(viewPager);
