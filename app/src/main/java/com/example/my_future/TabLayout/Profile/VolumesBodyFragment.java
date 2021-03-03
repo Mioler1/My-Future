@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class VolumesBodyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.tab_fragment_volumes_body, container, false);
         init();
+        Log.d("MyLog", String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_VOLUME)));
         if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_VOLUME)).equals("true")) {
             RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
             RelativeLayout relativePlus = v.findViewById(R.id.Rel_plus);
@@ -77,9 +79,8 @@ public class VolumesBodyFragment extends Fragment {
         hip = v.findViewById(R.id.hip);
         shin = v.findViewById(R.id.shin);
 
-        v.findViewById(R.id.but_plus).setOnClickListener(view -> {
-            startActivity(new Intent(getContext(), FillingDataVolumesActivity.class));
-        });
+        v.findViewById(R.id.but_plus).setOnClickListener(view ->
+            startActivity(new Intent(getContext(), FillingDataVolumesActivity.class)));
     }
 
     private void downloadData() {

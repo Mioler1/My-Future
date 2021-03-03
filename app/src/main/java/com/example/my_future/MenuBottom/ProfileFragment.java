@@ -72,7 +72,6 @@ public class ProfileFragment extends Fragment {
         pageAdapter.addFragment(new SportResultFragment(), "Спорт");
         pageAdapter.addFragment(new HealthFragment(), "Здоровья");
         pageAdapter.addFragment(new GraphFragment(), "Графики");
-
         viewPager.setAdapter(pageAdapter);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         viewPager.setSaveFromParentEnabled(false);
