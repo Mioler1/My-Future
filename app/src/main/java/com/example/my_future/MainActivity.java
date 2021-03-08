@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
         clickBottomNavigationMenu();
         setupMenu();
@@ -114,32 +113,32 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         }
     }
 
-//    @SuppressLint("NonConstantResourceId")
-//    @Override
-//    public void onNavItemSelectedListener(MenuItem item) {
-//        Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
-//        Fragment selectedFragment = null;
-//        switch (item.getItemId()) {
-//            case R.id.id_calculate:
-//                selectedFragment = new CalculatedFragment();
-//                break;
-//            case R.id.id_out:
-//                mSettings.edit().clear().apply();
-//                fragmentsInStack.clear();
-//                fragmentsInStackFlowing.clear();
-//                mAuth.signOut();
-//                selectedFragment = new Fragment();
-//                startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
-//                finish();
-//                break;
-//        }
-//        if (!fragmentsInStackFlowing.isEmpty()) {
-//            fragmentsInStackFlowing.clear();
-//        }
-//        fragmentsInStackFlowing.remove(selectedFragment);
-//        fragmentsInStackFlowing.add(selectedFragment);
-//        changeFragment(selectedFragment);
-//    }
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onNavItemSelectedListener(MenuItem item) {
+        Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
+        Fragment selectedFragment = null;
+        switch (item.getItemId()) {
+            case R.id.id_calculate:
+                selectedFragment = new CalculatedFragment();
+                break;
+            case R.id.id_out:
+                mSettings.edit().clear().apply();
+                fragmentsInStack.clear();
+                fragmentsInStackFlowing.clear();
+                mAuth.signOut();
+                selectedFragment = new Fragment();
+                startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
+                finish();
+                break;
+        }
+        if (!fragmentsInStackFlowing.isEmpty()) {
+            fragmentsInStackFlowing.clear();
+        }
+        fragmentsInStackFlowing.remove(selectedFragment);
+        fragmentsInStackFlowing.add(selectedFragment);
+        changeFragment(selectedFragment);
+    }
 
     private void clickBottomNavigationMenu() {
         bottomNav.setOnNavigationItemSelectedListener(item -> {

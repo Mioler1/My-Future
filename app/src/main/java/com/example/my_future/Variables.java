@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Variables {
+    public static final String TAG = "MyLog";
     public static final String APP_PREFERENCES = "saveDataUser";
     public static final List<Fragment> fragmentsInStack = new ArrayList<>();
     public static final List<Fragment> fragmentsInStackFlowing = new ArrayList<>();
