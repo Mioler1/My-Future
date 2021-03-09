@@ -6,25 +6,19 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.my_future.Adapters.PressureAdapter;
-import com.example.my_future.Intro.IntroActivity;
 import com.example.my_future.Models.Pressure;
 import com.example.my_future.Models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,19 +27,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_ACTIVITY;
 import static com.example.my_future.Variables.APP_PREFERENCES_DISEASES;
 import static com.example.my_future.Variables.APP_PREFERENCES_EXPERIENCE;
 import static com.example.my_future.Variables.APP_PREFERENCES_PRESSURE;
 
-public class FillingDataUserHealthActivity extends AppCompatActivity {
+public class FillingDataHealthActivity extends AppCompatActivity {
 
     // Окно с данными о здоровье пользователя
     TextView textNoVisiblePressure, textNoVisibleDiseases, textNoVisibleExperience;
@@ -56,7 +46,6 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference myRef;
 
-    StorageReference mStorageRef;
     SharedPreferences mSettings;
 
     @Override
@@ -65,19 +54,9 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filling_data_health);
 
         init();
-        Intent intent = getIntent();
-        if (intent.getStringExtra("openActivity") != null) {
-            if (intent.getStringExtra("openActivity").equals("false")) {
-                RelativeLayout relativeDataHealth = findViewById(R.id.AutoLayout3);
-                RelativeLayout relativeDataActivity = findViewById(R.id.AutoLayout4);
-                relativeDataHealth.setVisibility(View.GONE);
-                relativeDataActivity.setVisibility(View.VISIBLE);
-            }
-        }
         pressureSelection();
         diseasesSelection();
         experienceSelection();
-        onClickSaveDataActivity();
     }
 
     private void init() {
@@ -85,7 +64,6 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
-        mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
 
         // Окно с данными о здоровье пользователя
         recyclerPressure = findViewById(R.id.pressureList);
@@ -126,10 +104,8 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
                 myRef.child(mAuth.getUid()).child("health").setValue(user);
                 myRef.child(mAuth.getUid()).child("health").child("activity").setValue("none");
 
-                RelativeLayout relativeDataHealth = findViewById(R.id.AutoLayout3);
-                RelativeLayout relativeDataActivity = findViewById(R.id.AutoLayout4);
-                relativeDataHealth.setVisibility(View.GONE);
-                relativeDataActivity.setVisibility(View.VISIBLE);
+                startActivity(new Intent(FillingDataHealthActivity.this, FillingDataActivismActivity.class));
+                finish();
             }
 
             @Override
@@ -139,71 +115,8 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
         });
     }
 
-    public void onClickSaveDataActivity() {
-        TextView textNoVisibleActivity = findViewById(R.id.visible_text_activity);
-        ImageButton but_activity_1 = findViewById(R.id.image_click_activity_1);
-        ImageButton but_activity_2 = findViewById(R.id.image_click_activity_2);
-        ImageButton but_activity_3 = findViewById(R.id.image_click_activity_3);
-        ImageButton but_activity_4 = findViewById(R.id.image_click_activity_4);
-        ImageButton but_activity_5 = findViewById(R.id.image_click_activity_5);
-        Button next_activity = findViewById(R.id.but_activity_nextClick);
-
-        but_activity_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textNoVisibleActivity.setText("1.2");
-            }
-        });
-        but_activity_2.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                textNoVisibleActivity.setText("1.375");
-            }
-        });
-        but_activity_3.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                textNoVisibleActivity.setText("1.55");
-            }
-        });
-        but_activity_4.setOnClickListener(new View.OnClickListener() {
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                textNoVisibleActivity.setText("1.725");
-            }
-        });
-        but_activity_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                textNoVisibleActivity.setText("1.9");
-            }
-        });
-
-        next_activity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String text_activity = textNoVisibleActivity.getText().toString();
-                if (text_activity.isEmpty()) {
-                    MyToast("Выберите свою активность");
-                    return;
-                }
-                SharedPreferences.Editor editor = mSettings.edit();
-                editor.putString(APP_PREFERENCES_ACTIVITY, text_activity);
-                editor.apply();
-
-                myRef.child(mAuth.getUid()).child("health").child("activity").setValue(text_activity);
-                startActivity(new Intent(FillingDataUserHealthActivity.this, IntroActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                finish();
-            }
-        });
-    }
-
     private void MyToast(String message) {
-        Toast.makeText(FillingDataUserHealthActivity.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(FillingDataHealthActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void pressureSelection() {
@@ -221,12 +134,7 @@ public class FillingDataUserHealthActivity extends AppCompatActivity {
         pressureArrayList.add(new Pressure("Гипертония умеренная", "160-179", "100-109"));
         pressureArrayList.add(new Pressure("Гипертония тяжёлая", "≥180", "≥110"));
 
-        PressureAdapter.OnUserClickListener onUserClickListener = new PressureAdapter.OnUserClickListener() {
-            @Override
-            public void onUserClick(Pressure pressure) {
-                textNoVisiblePressure.setText(pressure.getNamePressure());
-            }
-        };
+        PressureAdapter.OnUserClickListener onUserClickListener = pressure -> textNoVisiblePressure.setText(pressure.getNamePressure());
 
         PressureAdapter pressureAdapter = new PressureAdapter(this, pressureArrayList, onUserClickListener);
         recyclerPressure.setAdapter(pressureAdapter);

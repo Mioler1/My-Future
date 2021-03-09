@@ -1,17 +1,21 @@
 package com.example.my_future.TabLayout.Profile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.my_future.FillingDataHealthActivity;
+import com.example.my_future.FillingDataVolumesActivity;
 import com.example.my_future.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -48,6 +52,9 @@ public class HealthFragment extends Fragment {
         TextView diseases = v.findViewById(R.id.diseases);
         TextView experience = v.findViewById(R.id.experience);
         TextView pressure = v.findViewById(R.id.pressure);
+
+        v.findViewById(R.id.but_plus).setOnClickListener(view ->
+                startActivity(new Intent(getContext(), FillingDataHealthActivity.class)));
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
