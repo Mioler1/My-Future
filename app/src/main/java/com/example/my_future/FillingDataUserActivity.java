@@ -27,10 +27,6 @@ import android.widget.Toast;
 
 import com.example.my_future.Intro.IntroActivity;
 import com.example.my_future.Models.User;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,13 +41,13 @@ import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
-import static com.example.my_future.Variables.APP_PREFERENCES_GENDER;
-import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
-import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
-import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
-import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_AVATAR;
+import static com.example.my_future.Variables.APP_DATA_USER_GENDER;
+import static com.example.my_future.Variables.APP_DATA_USER_GROWTH;
+import static com.example.my_future.Variables.APP_DATA_USER_NICKNAME;
+import static com.example.my_future.Variables.APP_DATA_USER_TARGET;
+import static com.example.my_future.Variables.APP_DATA_USER_WEIGHT;
 
 public class FillingDataUserActivity extends AppCompatActivity {
     EditText nickname, weight, growth;
@@ -81,7 +77,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
     }
 
     private void init() {
-        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -191,12 +187,12 @@ public class FillingDataUserActivity extends AppCompatActivity {
                 String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
                 SharedPreferences.Editor editor = mSettings.edit();
-                editor.putString(APP_PREFERENCES_NICKNAME, nickname_text);
-                editor.putString(APP_PREFERENCES_WEIGHT, weight_text);
-                editor.putString(APP_PREFERENCES_GROWTH, growth_text);
-                editor.putString(APP_PREFERENCES_GENDER, textNoVisibleGender.getText().toString());
-                editor.putString(APP_PREFERENCES_TARGET, textNoVisibleTarget.getText().toString());
-                editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
+                editor.putString(APP_DATA_USER_NICKNAME, nickname_text);
+                editor.putString(APP_DATA_USER_WEIGHT, weight_text);
+                editor.putString(APP_DATA_USER_GROWTH, growth_text);
+                editor.putString(APP_DATA_USER_GENDER, textNoVisibleGender.getText().toString());
+                editor.putString(APP_DATA_USER_TARGET, textNoVisibleTarget.getText().toString());
+                editor.putString(APP_DATA_USER_AVATAR, encodedImage);
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);

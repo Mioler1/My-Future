@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,17 +23,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
-import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_VOLUME;
-import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
-import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
-import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
-import static com.example.my_future.Variables.APP_PREFERENCES_HIP;
-import static com.example.my_future.Variables.APP_PREFERENCES_NECK;
-import static com.example.my_future.Variables.APP_PREFERENCES_SHIN;
-import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
-import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
+import static com.example.my_future.Variables.ALL_CHECK_DATA;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_BICEPS;
+import static com.example.my_future.Variables.APP_DATA_USER_CHEST;
+import static com.example.my_future.Variables.APP_DATA_USER_FOREARM;
+import static com.example.my_future.Variables.APP_DATA_USER_GROWTH;
+import static com.example.my_future.Variables.APP_DATA_USER_HIP;
+import static com.example.my_future.Variables.APP_DATA_USER_NECK;
+import static com.example.my_future.Variables.APP_DATA_USER_SHIN;
+import static com.example.my_future.Variables.APP_DATA_USER_WAIST;
+import static com.example.my_future.Variables.APP_DATA_USER_WEIGHT;
+import static com.example.my_future.Variables.CHECK_DATA_VOLUME;
 
 public class VolumesBodyFragment extends Fragment {
     TextView weight, growth, neck, biceps, forearm, chest, waist, hip, shin;
@@ -44,7 +43,7 @@ public class VolumesBodyFragment extends Fragment {
     FirebaseDatabase database;
     DatabaseReference myRef;
 
-    SharedPreferences mSettings;
+    SharedPreferences mSettings, checkDataSettings;
     View v;
 
     @Nullable
@@ -52,8 +51,7 @@ public class VolumesBodyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.tab_fragment_volumes_body, container, false);
         init();
-        Log.d("MyLog", String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_VOLUME)));
-        if (String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_VOLUME)).equals("true")) {
+        if (String.valueOf(checkDataSettings.contains(CHECK_DATA_VOLUME)).equals("true")) {
             RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
             RelativeLayout relativePlus = v.findViewById(R.id.Rel_plus);
             relativeReadData.setVisibility(View.VISIBLE);
@@ -67,7 +65,8 @@ public class VolumesBodyFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
-        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
+        checkDataSettings = getContext().getSharedPreferences(ALL_CHECK_DATA, Context.MODE_PRIVATE);
 
         weight = v.findViewById(R.id.weight);
         growth = v.findViewById(R.id.growth);
@@ -88,48 +87,48 @@ public class VolumesBodyFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences.Editor editor = mSettings.edit();
-                if (mSettings.contains(APP_PREFERENCES_WEIGHT)) {
-                    weight.setText(mSettings.getString(APP_PREFERENCES_WEIGHT, ""));
+                if (mSettings.contains(APP_DATA_USER_WEIGHT)) {
+                    weight.setText(mSettings.getString(APP_DATA_USER_WEIGHT, ""));
                 } else {
                     weight.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("weight").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_GROWTH)) {
-                    growth.setText(mSettings.getString(APP_PREFERENCES_GROWTH, ""));
+                if (mSettings.contains(APP_DATA_USER_GROWTH)) {
+                    growth.setText(mSettings.getString(APP_DATA_USER_GROWTH, ""));
                 } else {
                     growth.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("growth").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_NECK)) {
-                    neck.setText(mSettings.getString(APP_PREFERENCES_NECK, ""));
+                if (mSettings.contains(APP_DATA_USER_NECK)) {
+                    neck.setText(mSettings.getString(APP_DATA_USER_NECK, ""));
                 } else {
                     neck.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("neck").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_BICEPS)) {
-                    biceps.setText(mSettings.getString(APP_PREFERENCES_BICEPS, ""));
+                if (mSettings.contains(APP_DATA_USER_BICEPS)) {
+                    biceps.setText(mSettings.getString(APP_DATA_USER_BICEPS, ""));
                 } else {
                     biceps.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("biceps").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_FOREARM)) {
-                    forearm.setText(mSettings.getString(APP_PREFERENCES_FOREARM, ""));
+                if (mSettings.contains(APP_DATA_USER_FOREARM)) {
+                    forearm.setText(mSettings.getString(APP_DATA_USER_FOREARM, ""));
                 } else {
                     forearm.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("forearm").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_CHEST)) {
-                    chest.setText(mSettings.getString(APP_PREFERENCES_CHEST, ""));
+                if (mSettings.contains(APP_DATA_USER_CHEST)) {
+                    chest.setText(mSettings.getString(APP_DATA_USER_CHEST, ""));
                 } else {
                     chest.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("chest").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_WAIST)) {
-                    waist.setText(mSettings.getString(APP_PREFERENCES_WAIST, ""));
+                if (mSettings.contains(APP_DATA_USER_WAIST)) {
+                    waist.setText(mSettings.getString(APP_DATA_USER_WAIST, ""));
                 } else {
                     waist.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("waist").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_HIP)) {
-                    hip.setText(mSettings.getString(APP_PREFERENCES_HIP, ""));
+                if (mSettings.contains(APP_DATA_USER_HIP)) {
+                    hip.setText(mSettings.getString(APP_DATA_USER_HIP, ""));
                 } else {
                     hip.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("hip").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_SHIN)) {
-                    shin.setText(mSettings.getString(APP_PREFERENCES_SHIN, ""));
+                if (mSettings.contains(APP_DATA_USER_SHIN)) {
+                    shin.setText(mSettings.getString(APP_DATA_USER_SHIN, ""));
                 } else {
                     shin.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("shin").getValue()));
                 }

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -30,10 +31,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_DISEASES;
-import static com.example.my_future.Variables.APP_PREFERENCES_EXPERIENCE;
-import static com.example.my_future.Variables.APP_PREFERENCES_PRESSURE;
+import static com.example.my_future.Variables.ALL_CHECK_DATA;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_DISEASES;
+import static com.example.my_future.Variables.APP_DATA_USER_EXPERIENCE;
+import static com.example.my_future.Variables.APP_DATA_USER_PRESSURE;
+import static com.example.my_future.Variables.CHECK_DATA_HEALTH;
 
 public class FillingDataHealthActivity extends AppCompatActivity {
 
@@ -46,7 +49,7 @@ public class FillingDataHealthActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     DatabaseReference myRef;
 
-    SharedPreferences mSettings;
+    SharedPreferences mSettings, checkDataSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,8 @@ public class FillingDataHealthActivity extends AppCompatActivity {
     }
 
     private void init() {
-        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
+        checkDataSettings = this.getSharedPreferences(ALL_CHECK_DATA, Context.MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -96,11 +100,15 @@ public class FillingDataHealthActivity extends AppCompatActivity {
                 user.setExperience(text_experience);
 
                 SharedPreferences.Editor editor = mSettings.edit();
-                editor.putString(APP_PREFERENCES_PRESSURE, text_pressure);
-                editor.putString(APP_PREFERENCES_DISEASES, text_diseases);
-                editor.putString(APP_PREFERENCES_EXPERIENCE, text_experience);
-
+                editor.putString(APP_DATA_USER_PRESSURE, text_pressure);
+                editor.putString(APP_DATA_USER_DISEASES, text_diseases);
+                editor.putString(APP_DATA_USER_EXPERIENCE, text_experience);
                 editor.apply();
+
+                SharedPreferences.Editor editorCheck = checkDataSettings.edit();
+                editorCheck.putString(CHECK_DATA_HEALTH, "true");
+                editorCheck.apply();
+
                 myRef.child(mAuth.getUid()).child("health").setValue(user);
                 myRef.child(mAuth.getUid()).child("health").child("activity").setValue("none");
 

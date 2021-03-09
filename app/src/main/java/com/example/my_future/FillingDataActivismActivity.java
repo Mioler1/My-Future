@@ -13,15 +13,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_ACTIVITY;
+import static com.example.my_future.Variables.ALL_CHECK_DATA;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_ACTIVITY;
+import static com.example.my_future.Variables.CHECK_DATA_ACTIVISM;
 
 public class FillingDataActivismActivity extends AppCompatActivity {
     FirebaseDatabase db;
     FirebaseAuth mAuth;
     DatabaseReference myRef;
 
-    SharedPreferences mSettings;
+    SharedPreferences mSettings, checkDataSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +35,8 @@ public class FillingDataActivismActivity extends AppCompatActivity {
     }
 
     private void init() {
-        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
+        checkDataSettings = this.getSharedPreferences(ALL_CHECK_DATA, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -61,8 +64,12 @@ public class FillingDataActivismActivity extends AppCompatActivity {
                 return;
             }
             SharedPreferences.Editor editor = mSettings.edit();
-            editor.putString(APP_PREFERENCES_ACTIVITY, text_activity);
+            editor.putString(APP_DATA_USER_ACTIVITY, text_activity);
             editor.apply();
+
+            SharedPreferences.Editor editorCheck = checkDataSettings.edit();
+            editorCheck.putString(CHECK_DATA_ACTIVISM, "true");
+            editorCheck.apply();
 
             myRef.child(mAuth.getUid()).child("health").child("activity").setValue(text_activity);
             finish();

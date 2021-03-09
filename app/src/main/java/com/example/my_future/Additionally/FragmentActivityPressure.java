@@ -7,19 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.my_future.Adapters.PressureAdapter;
 import com.example.my_future.Models.Pressure;
-import com.example.my_future.Models.User;
 import com.example.my_future.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,12 +22,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_PRESSURE;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_PRESSURE;
 
 public class FragmentActivityPressure extends AppCompatActivity {
     TextView textNoVisiblePressure;
@@ -55,7 +49,7 @@ public class FragmentActivityPressure extends AppCompatActivity {
     }
 
     private void init() {
-        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -78,7 +72,7 @@ public class FragmentActivityPressure extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 myRef.child(mAuth.getUid()).child("health").child("pressure").setValue(text_pressure);
                 SharedPreferences.Editor editor = mSettings.edit();
-                editor.putString(APP_PREFERENCES_PRESSURE, text_pressure);
+                editor.putString(APP_DATA_USER_PRESSURE, text_pressure);
                 editor.apply();
                 onBackPressed();
                 finish();

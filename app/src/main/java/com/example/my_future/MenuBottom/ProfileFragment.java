@@ -39,10 +39,10 @@ import java.io.ByteArrayOutputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
-import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
-import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_AVATAR;
+import static com.example.my_future.Variables.APP_DATA_USER_NICKNAME;
+import static com.example.my_future.Variables.APP_DATA_USER_TARGET;
 
 public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth;
@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
-        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
 
         viewPager = v.findViewById(R.id.viewPager);
         tabLayout = v.findViewById(R.id.tabLayout);
@@ -104,21 +104,21 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences.Editor editor = mSettings.edit();
-                if (mSettings.contains(APP_PREFERENCES_AVATAR)) {
-                    String mImageUri = mSettings.getString(APP_PREFERENCES_AVATAR, "");
+                if (mSettings.contains(APP_DATA_USER_AVATAR)) {
+                    String mImageUri = mSettings.getString(APP_DATA_USER_AVATAR, "");
                     byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
                     avatar.setImageBitmap(bitmap);
                 } else {
                     new SaveAvatarTask().execute();
                 }
-                if (mSettings.contains(APP_PREFERENCES_NICKNAME)) {
-                    nickname.setText(mSettings.getString(APP_PREFERENCES_NICKNAME, ""));
+                if (mSettings.contains(APP_DATA_USER_NICKNAME)) {
+                    nickname.setText(mSettings.getString(APP_DATA_USER_NICKNAME, ""));
                 } else {
                     nickname.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("nickname").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_TARGET)) {
-                    target.setText(mSettings.getString(APP_PREFERENCES_TARGET, ""));
+                if (mSettings.contains(APP_DATA_USER_TARGET)) {
+                    target.setText(mSettings.getString(APP_DATA_USER_TARGET, ""));
                 } else {
                     target.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("target").getValue()));
                 }
@@ -162,7 +162,7 @@ public class ProfileFragment extends Fragment {
                     byte[] byteArray = baos.toByteArray();
                     String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
                     SharedPreferences.Editor editor = mSettings.edit();
-                    editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
+                    editor.putString(APP_DATA_USER_AVATAR, encodedImage);
                     editor.apply();
                 }
 

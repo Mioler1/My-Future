@@ -2,21 +2,15 @@ package com.example.my_future;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.my_future.Fragments.ChangeDataFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,27 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_ACTIVITY;
-import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
-import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
-import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
-import static com.example.my_future.Variables.APP_PREFERENCES_DISEASES;
-import static com.example.my_future.Variables.APP_PREFERENCES_EXPERIENCE;
-import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
-import static com.example.my_future.Variables.APP_PREFERENCES_GENDER;
-import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
-import static com.example.my_future.Variables.APP_PREFERENCES_HIP;
-import static com.example.my_future.Variables.APP_PREFERENCES_NECK;
-import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
-import static com.example.my_future.Variables.APP_PREFERENCES_PRESSURE;
-import static com.example.my_future.Variables.APP_PREFERENCES_SHIN;
-import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
-import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
-import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
-import static com.example.my_future.Variables.fragmentsInStack;
+import static com.example.my_future.Variables.ALL_DATA_USER;
 
 public class TimeClass extends Fragment {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -63,7 +37,7 @@ public class TimeClass extends Fragment {
     }
 
     private void init() {
-        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mSettings = getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
 //        Button button = v.findViewById(R.id.click);
 //        CircleImageView avatar = v.findViewById(R.id.avatar);
 //        TextView nickname = v.findViewById(R.id.nickname);

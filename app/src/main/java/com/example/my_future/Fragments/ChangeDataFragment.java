@@ -57,19 +57,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
-import static com.example.my_future.Variables.APP_PREFERENCES_BICEPS;
-import static com.example.my_future.Variables.APP_PREFERENCES_CHEST;
-import static com.example.my_future.Variables.APP_PREFERENCES_FOREARM;
-import static com.example.my_future.Variables.APP_PREFERENCES_GROWTH;
-import static com.example.my_future.Variables.APP_PREFERENCES_HIP;
-import static com.example.my_future.Variables.APP_PREFERENCES_NECK;
-import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
-import static com.example.my_future.Variables.APP_PREFERENCES_SHIN;
-import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
-import static com.example.my_future.Variables.APP_PREFERENCES_WAIST;
-import static com.example.my_future.Variables.APP_PREFERENCES_WEIGHT;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_AVATAR;
+import static com.example.my_future.Variables.APP_DATA_USER_BICEPS;
+import static com.example.my_future.Variables.APP_DATA_USER_CHEST;
+import static com.example.my_future.Variables.APP_DATA_USER_FOREARM;
+import static com.example.my_future.Variables.APP_DATA_USER_GROWTH;
+import static com.example.my_future.Variables.APP_DATA_USER_HIP;
+import static com.example.my_future.Variables.APP_DATA_USER_NECK;
+import static com.example.my_future.Variables.APP_DATA_USER_NICKNAME;
+import static com.example.my_future.Variables.APP_DATA_USER_SHIN;
+import static com.example.my_future.Variables.APP_DATA_USER_TARGET;
+import static com.example.my_future.Variables.APP_DATA_USER_WAIST;
+import static com.example.my_future.Variables.APP_DATA_USER_WEIGHT;
 
 public class ChangeDataFragment extends Fragment implements BackPressed {
     TextView textNoVisibleTargetChange, textNoVisibleDiseases, textNoVisibleExperience;
@@ -98,7 +98,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     }
 
     private void init() {
-        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = getContext().getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -283,8 +283,8 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         openAlertDialog();
         EditText nickname_change = viewAlert.findViewById(R.id.nickname_change);
 
-        if (mSettings.contains(APP_PREFERENCES_NICKNAME)) {
-            nickname_change.setText(mSettings.getString(APP_PREFERENCES_NICKNAME, ""));
+        if (mSettings.contains(APP_DATA_USER_NICKNAME)) {
+            nickname_change.setText(mSettings.getString(APP_DATA_USER_NICKNAME, ""));
         }
 
         nickname_change.setVisibility(View.VISIBLE);
@@ -316,7 +316,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                         progressBar.setVisibility(View.VISIBLE);
                         myRef.child(mAuth.getUid()).child("profile").child("nickname").setValue(nickname_text);
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_NICKNAME, nickname_text);
+                        editor.putString(APP_DATA_USER_NICKNAME, nickname_text);
                         editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
@@ -361,7 +361,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                         progressBar.setVisibility(View.VISIBLE);
                         myRef.child(mAuth.getUid()).child("profile").child("weight").setValue(weight_text);
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_WEIGHT, weight_text);
+                        editor.putString(APP_DATA_USER_WEIGHT, weight_text);
                         editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
@@ -404,7 +404,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                         progressBar.setVisibility(View.VISIBLE);
                         myRef.child(mAuth.getUid()).child("profile").child("growth").setValue(growth_text);
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_GROWTH, growth_text);
+                        editor.putString(APP_DATA_USER_GROWTH, growth_text);
                         editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
@@ -438,7 +438,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                         progressBar.setVisibility(View.VISIBLE);
                         myRef.child(mAuth.getUid()).child("profile").child("target").setValue(textNoVisibleTargetChange.getText().toString());
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_TARGET, textNoVisibleTargetChange.getText().toString());
+                        editor.putString(APP_DATA_USER_TARGET, textNoVisibleTargetChange.getText().toString());
                         editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
@@ -458,7 +458,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         openAlertDialog();
         avatar_img_change.setVisibility(View.VISIBLE);
 
-        if (mSettings.contains(APP_PREFERENCES_AVATAR)) {
+        if (mSettings.contains(APP_DATA_USER_AVATAR)) {
             String mImageUri = mSettings.getString("Avatar", "");
             byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
@@ -486,7 +486,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                         String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_AVATAR, encodedImage);
+                        editor.putString(APP_DATA_USER_AVATAR, encodedImage);
                         editor.apply();
 
                         MyToast("Готово");
@@ -524,7 +524,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                         progressBar.setVisibility(View.VISIBLE);
                         myRef.child(mAuth.getUid()).child("health").child("experience").setValue(diseases_text);
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_TARGET, diseases_text);
+                        editor.putString(APP_DATA_USER_TARGET, diseases_text);
                         editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
@@ -568,7 +568,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                         progressBar.setVisibility(View.VISIBLE);
                         myRef.child(mAuth.getUid()).child("health").child("experience").setValue(experience_text);
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_TARGET, experience_text);
+                        editor.putString(APP_DATA_USER_TARGET, experience_text);
                         editor.apply();
                         MyToast("Готово");
                         alertDialog.dismiss();
@@ -605,38 +605,38 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (mSettings.contains(APP_PREFERENCES_WAIST)) {
-                    waist.setText(mSettings.getString(APP_PREFERENCES_WAIST, ""));
+                if (mSettings.contains(APP_DATA_USER_WAIST)) {
+                    waist.setText(mSettings.getString(APP_DATA_USER_WAIST, ""));
                 } else {
                     waist.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("waist").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_NECK)) {
-                    neck.setText(mSettings.getString(APP_PREFERENCES_NECK, ""));
+                if (mSettings.contains(APP_DATA_USER_NECK)) {
+                    neck.setText(mSettings.getString(APP_DATA_USER_NECK, ""));
                 } else {
                     neck.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("neck").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_CHEST)) {
-                    chest.setText(mSettings.getString(APP_PREFERENCES_CHEST, ""));
+                if (mSettings.contains(APP_DATA_USER_CHEST)) {
+                    chest.setText(mSettings.getString(APP_DATA_USER_CHEST, ""));
                 } else {
                     chest.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("chest").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_BICEPS)) {
-                    biceps.setText(mSettings.getString(APP_PREFERENCES_BICEPS, ""));
+                if (mSettings.contains(APP_DATA_USER_BICEPS)) {
+                    biceps.setText(mSettings.getString(APP_DATA_USER_BICEPS, ""));
                 } else {
                     biceps.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("biceps").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_FOREARM)) {
-                    forearm.setText(mSettings.getString(APP_PREFERENCES_FOREARM, ""));
+                if (mSettings.contains(APP_DATA_USER_FOREARM)) {
+                    forearm.setText(mSettings.getString(APP_DATA_USER_FOREARM, ""));
                 } else {
                     forearm.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("forearm").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_HIP)) {
-                    hip.setText(mSettings.getString(APP_PREFERENCES_HIP, ""));
+                if (mSettings.contains(APP_DATA_USER_HIP)) {
+                    hip.setText(mSettings.getString(APP_DATA_USER_HIP, ""));
                 } else {
                     hip.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("hip").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_SHIN)) {
-                    shin.setText(mSettings.getString(APP_PREFERENCES_SHIN, ""));
+                if (mSettings.contains(APP_DATA_USER_SHIN)) {
+                    shin.setText(mSettings.getString(APP_DATA_USER_SHIN, ""));
                 } else {
                     shin.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("volume").child("shin").getValue()));
                 }
@@ -669,58 +669,58 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (!waist_text.isEmpty()) {
                             myRef.child(mAuth.getUid()).child("volume").child("waist").setValue(waist_text);
-                            editor.putString(APP_PREFERENCES_WAIST, waist_text);
+                            editor.putString(APP_DATA_USER_WAIST, waist_text);
                         } else {
                             myRef.child(mAuth.getUid()).child("volume").child("waist").setValue("—");
-                            editor.putString(APP_PREFERENCES_WAIST, "—");
+                            editor.putString(APP_DATA_USER_WAIST, "—");
                         }
 
                         if (!neck_text.isEmpty()) {
                             myRef.child(mAuth.getUid()).child("volume").child("neck").setValue(neck_text);
-                            editor.putString(APP_PREFERENCES_NECK, neck_text);
+                            editor.putString(APP_DATA_USER_NECK, neck_text);
                         } else {
                             myRef.child(mAuth.getUid()).child("volume").child("neck").setValue("—");
-                            editor.putString(APP_PREFERENCES_NECK, "—");
+                            editor.putString(APP_DATA_USER_NECK, "—");
                         }
 
                         if (!chest_text.isEmpty()) {
                             myRef.child(mAuth.getUid()).child("volume").child("chest").setValue(chest_text);
-                            editor.putString(APP_PREFERENCES_CHEST, chest_text);
+                            editor.putString(APP_DATA_USER_CHEST, chest_text);
                         } else {
                             myRef.child(mAuth.getUid()).child("volume").child("chest").setValue("—");
-                            editor.putString(APP_PREFERENCES_CHEST, "—");
+                            editor.putString(APP_DATA_USER_CHEST, "—");
                         }
 
                         if (!biceps_text.isEmpty()) {
                             myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue(biceps_text);
-                            editor.putString(APP_PREFERENCES_BICEPS, biceps_text);
+                            editor.putString(APP_DATA_USER_BICEPS, biceps_text);
                         } else {
                             myRef.child(mAuth.getUid()).child("volume").child("biceps").setValue("—");
-                            editor.putString(APP_PREFERENCES_BICEPS, "—");
+                            editor.putString(APP_DATA_USER_BICEPS, "—");
                         }
 
                         if (!forearm_text.isEmpty()) {
                             myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue(forearm_text);
-                            editor.putString(APP_PREFERENCES_FOREARM, forearm_text);
+                            editor.putString(APP_DATA_USER_FOREARM, forearm_text);
                         } else {
                             myRef.child(mAuth.getUid()).child("volume").child("forearm").setValue("—");
-                            editor.putString(APP_PREFERENCES_FOREARM, "—");
+                            editor.putString(APP_DATA_USER_FOREARM, "—");
                         }
 
                         if (!hip_text.isEmpty()) {
                             myRef.child(mAuth.getUid()).child("volume").child("hip").setValue(hip_text);
-                            editor.putString(APP_PREFERENCES_HIP, hip_text);
+                            editor.putString(APP_DATA_USER_HIP, hip_text);
                         } else {
                             myRef.child(mAuth.getUid()).child("volume").child("hip").setValue("—");
-                            editor.putString(APP_PREFERENCES_HIP, "—");
+                            editor.putString(APP_DATA_USER_HIP, "—");
                         }
 
                         if (!shin_text.isEmpty()) {
                             myRef.child(mAuth.getUid()).child("volume").child("shin").setValue(shin_text);
-                            editor.putString(APP_PREFERENCES_SHIN, shin_text);
+                            editor.putString(APP_DATA_USER_SHIN, shin_text);
                         } else {
                             myRef.child(mAuth.getUid()).child("volume").child("shin").setValue("—");
-                            editor.putString(APP_PREFERENCES_SHIN, "—");
+                            editor.putString(APP_DATA_USER_SHIN, "—");
                         }
 
                         editor.apply();

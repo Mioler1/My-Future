@@ -29,8 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_BOOLEAN_PROFILE;
+import static com.example.my_future.Variables.ALL_CHECK_DATA;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.CHECK_DATA_PROFILE;
 import static com.example.my_future.Variables.fragmentsInStack;
 import static com.example.my_future.Variables.fragmentsInStackFlowing;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     FirebaseAuth mAuth;
 
     BottomNavigationView bottomNav;
-    SharedPreferences mSettings;
+    SharedPreferences mSettings, checkDataSettings;
 
     private final FoodFragment fragmentFood = new FoodFragment();
     private final ForumFragment fragmentForum = new ForumFragment();
@@ -66,16 +67,17 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
 
-        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
+        checkDataSettings = this.getSharedPreferences(ALL_CHECK_DATA, MODE_PRIVATE);
         checkProfile();
     }
 
     private void checkProfile() {
-        SharedPreferences.Editor editor = mSettings.edit();
+        SharedPreferences.Editor editor = checkDataSettings.edit();
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!String.valueOf(mSettings.contains(APP_PREFERENCES_BOOLEAN_PROFILE)).equals("true")) {
+                if (!String.valueOf(checkDataSettings.contains(CHECK_DATA_PROFILE)).equals("true")) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         if (snapshot.getKey().equals(mAuth.getUid())) {
                             for (DataSnapshot s : snapshot.getChildren()) {
@@ -85,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                                         fragmentsInStack.clear();
                                         finish();
                                     } else {
-                                        editor.putString(APP_PREFERENCES_BOOLEAN_PROFILE, "true");
+                                        editor.putString(CHECK_DATA_PROFILE, "true");
                                         editor.apply();
                                         break;
                                     }

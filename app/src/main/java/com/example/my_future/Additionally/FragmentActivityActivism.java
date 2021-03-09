@@ -22,8 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_ACTIVITY;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_ACTIVITY;
 
 public class FragmentActivityActivism extends AppCompatActivity {
     TextView text_activity_noVisible;
@@ -50,7 +50,7 @@ public class FragmentActivityActivism extends AppCompatActivity {
     }
 
     private void init() {
-        mSettings = this.getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE);
+        mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -79,7 +79,7 @@ public class FragmentActivityActivism extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         myRef.child(mAuth.getUid()).child("health").child("activity").setValue(activity_text);
                         SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_PREFERENCES_ACTIVITY, activity_text);
+                        editor.putString(APP_DATA_USER_ACTIVITY, activity_text);
                         editor.apply();
                         MyToast("Готово");
                         onBackPressed();

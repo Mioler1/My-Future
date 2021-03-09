@@ -7,15 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.my_future.FillingDataActivismActivity;
 import com.example.my_future.FillingDataHealthActivity;
-import com.example.my_future.FillingDataVolumesActivity;
 import com.example.my_future.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,18 +24,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.my_future.Variables.APP_PREFERENCES;
-import static com.example.my_future.Variables.APP_PREFERENCES_ACTIVITY;
-import static com.example.my_future.Variables.APP_PREFERENCES_DISEASES;
-import static com.example.my_future.Variables.APP_PREFERENCES_EXPERIENCE;
-import static com.example.my_future.Variables.APP_PREFERENCES_PRESSURE;
+import static com.example.my_future.Variables.ALL_CHECK_DATA;
+import static com.example.my_future.Variables.ALL_DATA_USER;
+import static com.example.my_future.Variables.APP_DATA_USER_ACTIVITY;
+import static com.example.my_future.Variables.APP_DATA_USER_DISEASES;
+import static com.example.my_future.Variables.APP_DATA_USER_EXPERIENCE;
+import static com.example.my_future.Variables.APP_DATA_USER_PRESSURE;
+import static com.example.my_future.Variables.CHECK_DATA_ACTIVISM;
+import static com.example.my_future.Variables.CHECK_DATA_HEALTH;
 
 public class HealthFragment extends Fragment {
+    TextView activism, diseases, experience, pressure;
+
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("Users");
 
-    SharedPreferences mSettings;
+    SharedPreferences mSettings, checkDataSettings;
     View v;
 
     @Nullable
@@ -43,40 +48,56 @@ public class HealthFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.tab_fragment_health, container, false);
         init();
+        if (String.valueOf(checkDataSettings.contains(CHECK_DATA_HEALTH)).equals("true") &&
+                String.valueOf(checkDataSettings.contains(CHECK_DATA_ACTIVISM)).equals("true")) {
+            RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
+            RelativeLayout relativePlus = v.findViewById(R.id.Rel_plus);
+            relativeReadData.setVisibility(View.VISIBLE);
+            relativePlus.setVisibility(View.GONE);
+            downloadData();
+        }
         return v;
     }
 
     private void init() {
-        mSettings = getContext().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        TextView activity = v.findViewById(R.id.activity);
-        TextView diseases = v.findViewById(R.id.diseases);
-        TextView experience = v.findViewById(R.id.experience);
-        TextView pressure = v.findViewById(R.id.pressure);
+        mSettings = getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
+        checkDataSettings = getContext().getSharedPreferences(ALL_CHECK_DATA, Context.MODE_PRIVATE);
+        activism = v.findViewById(R.id.activity);
+        diseases = v.findViewById(R.id.diseases);
+        experience = v.findViewById(R.id.experience);
+        pressure = v.findViewById(R.id.pressure);
 
-        v.findViewById(R.id.but_plus).setOnClickListener(view ->
-                startActivity(new Intent(getContext(), FillingDataHealthActivity.class)));
+        v.findViewById(R.id.but_plus).setOnClickListener(view -> {
+            if (!String.valueOf(checkDataSettings.contains(CHECK_DATA_HEALTH)).equals("true")) {
+                startActivity(new Intent(getContext(), FillingDataHealthActivity.class));
+            } else {
+                startActivity(new Intent(getContext(), FillingDataActivismActivity.class));
+            }
+        });
+    }
 
+    private void downloadData() {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences.Editor editor = mSettings.edit();
-                if (mSettings.contains(APP_PREFERENCES_ACTIVITY)) {
-                    activity.setText(mSettings.getString(APP_PREFERENCES_ACTIVITY, ""));
+                if (mSettings.contains(APP_DATA_USER_ACTIVITY)) {
+                    activism.setText(mSettings.getString(APP_DATA_USER_ACTIVITY, ""));
                 } else {
-                    activity.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("health").child("activity").getValue()));
+                    activism.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("health").child("activity").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_DISEASES)) {
-                    diseases.setText(mSettings.getString(APP_PREFERENCES_DISEASES, ""));
+                if (mSettings.contains(APP_DATA_USER_DISEASES)) {
+                    diseases.setText(mSettings.getString(APP_DATA_USER_DISEASES, ""));
                 } else {
                     diseases.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("health").child("diseases").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_EXPERIENCE)) {
-                    experience.setText(mSettings.getString(APP_PREFERENCES_EXPERIENCE, ""));
+                if (mSettings.contains(APP_DATA_USER_EXPERIENCE)) {
+                    experience.setText(mSettings.getString(APP_DATA_USER_EXPERIENCE, ""));
                 } else {
                     experience.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("health").child("experience").getValue()));
                 }
-                if (mSettings.contains(APP_PREFERENCES_PRESSURE)) {
-                    pressure.setText(mSettings.getString(APP_PREFERENCES_PRESSURE, ""));
+                if (mSettings.contains(APP_DATA_USER_PRESSURE)) {
+                    pressure.setText(mSettings.getString(APP_DATA_USER_PRESSURE, ""));
                 } else {
                     pressure.setText(String.valueOf(snapshot.child(mAuth.getUid()).child("health").child("pressure").getValue()));
                 }
