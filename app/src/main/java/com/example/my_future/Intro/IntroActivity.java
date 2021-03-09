@@ -36,35 +36,28 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //make the activity on fullscreen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_intro);
 
-        //ini views
         btnNext = findViewById(R.id.btn_next);
         tabIndicator = findViewById(R.id.tab_indicator);
         btnGetStarted = findViewById(R.id.btn_get_start);
         btnAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_anim);
 
-        //fill list screen
         List<IntroItem> mList = new ArrayList<>();
-        mList.add(new IntroItem("Выбирай тренировку и начинай работать", "Каждый найдет свой путь", R.drawable.test1));
-        mList.add(new IntroItem("Спроси советов у лучших", "Появился вопрос? - задай его!", R.drawable.faq));
-        mList.add(new IntroItem("Следи за своим питанием", "Вперед к заветному весу!", R.drawable.test2));
-        mList.add(new IntroItem("Отслеживай свой прогресс", "Побей свои рекорд!", R.drawable.test4));
+        mList.add(new IntroItem("Выбирай тренировку и начинай работать", "Каждый найдет свой путь", R.drawable.image_intro1));
+        mList.add(new IntroItem("Спроси советов у лучших", "Появился вопрос? - задай его!", R.drawable.image_intro2));
+        mList.add(new IntroItem("Следи за своим питанием", "Вперед к заветному весу!", R.drawable.image_intro3));
+        mList.add(new IntroItem("Отслеживай свой прогресс", "Побей свои рекорд!", R.drawable.image_intro4));
 
-        //setup ViewPager
         screenPager = findViewById(R.id.Pager1);
         introViewPager = new IntroViewPager(this, mList);
         screenPager.setAdapter(introViewPager);
         screenPager.setBackgroundColor(Color.GRAY);
 
-        //setup tablayout
         tabIndicator.setupWithViewPager(screenPager);
 
-        //next button click Listener
         btnNext.setOnClickListener(view -> {
             position = screenPager.getCurrentItem();
             if (position < mList.size()) {
@@ -76,7 +69,6 @@ public class IntroActivity extends AppCompatActivity {
             }
         });
 
-        //solve the problem
         tabIndicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -108,5 +100,4 @@ public class IntroActivity extends AppCompatActivity {
         tabIndicator.setVisibility(View.INVISIBLE);
         btnGetStarted.setAnimation(btnAnim);
     }
-
 }

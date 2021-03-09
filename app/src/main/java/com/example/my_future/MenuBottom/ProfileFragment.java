@@ -8,7 +8,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ import static com.example.my_future.Variables.APP_PREFERENCES;
 import static com.example.my_future.Variables.APP_PREFERENCES_AVATAR;
 import static com.example.my_future.Variables.APP_PREFERENCES_NICKNAME;
 import static com.example.my_future.Variables.APP_PREFERENCES_TARGET;
-import static com.example.my_future.Variables.TAG;
 
 public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth;
@@ -77,15 +75,23 @@ public class ProfileFragment extends Fragment {
         tabLayout = v.findViewById(R.id.tabLayout);
 
         pageAdapter = new PageAdapter(getFragmentManager());
-        pageAdapter.addFragment(new VolumesBodyFragment(), "Объёмы");
-        pageAdapter.addFragment(new SportResultFragment(), "Спорт");
-        pageAdapter.addFragment(new HealthFragment(), "Здоровья");
-        pageAdapter.addFragment(new GraphFragment(), "Графики");
+        pageAdapter.addFragment(new VolumesBodyFragment());
+        pageAdapter.addFragment(new SportResultFragment());
+        pageAdapter.addFragment(new HealthFragment());
+        pageAdapter.addFragment(new GraphFragment());
 
         viewPager.setAdapter(pageAdapter);
         viewPager.setPageTransformer(true, new DepthPageTransformer());
         viewPager.setSaveFromParentEnabled(false);
         tabLayout.setupWithViewPager(viewPager);
+
+        int[] iconResId = {R.drawable.ic_person,
+                R.drawable.ic_fitness,
+                R.drawable.ic_health,
+                R.drawable.ic_graph};
+        for (int i = 0; i < iconResId.length; i++) {
+            tabLayout.getTabAt(i).setIcon(iconResId[i]);
+        }
         downloadData();
     }
 

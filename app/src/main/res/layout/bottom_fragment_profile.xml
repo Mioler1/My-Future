@@ -29,7 +29,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
             android:layout_toStartOf="@id/exit"
-            android:background="@drawable/ic_baseline_settings_32" />
+            android:background="@drawable/ic_settings" />
 
         <ImageView
             android:id="@+id/exit"
@@ -38,7 +38,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/ic_baseline_exit_to_app_24"
+            android:background="@drawable/ic_exit"
             android:onClick="OnClickExit" />
 
         <View
@@ -119,8 +119,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/for_button"
                 app:tabIndicatorColor="@color/black"
-                app:tabSelectedTextColor="#000"
-                app:tabTextColor="#fff">
+                app:tabSelectedTextColor="@color/black"
+                app:tabTextColor="@color/white">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"

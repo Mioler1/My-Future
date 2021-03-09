@@ -3,23 +3,23 @@
 
     <item
         android:id="@+id/fragmentPlan"
-        android:icon="@drawable/ic_baseline_fitness_center_32"
+        android:icon="@drawable/ic_fitness"
         android:title="" />
     <item
         android:id="@+id/fragmentFood"
-        android:icon="@drawable/ic_baseline_no_meals_32"
+        android:icon="@drawable/ic_meals"
         android:title="" />
     <item
         android:id="@+id/fragmentForum"
-        android:icon="@drawable/ic_baseline_forum_32"
+        android:icon="@drawable/ic_forum"
         android:title="" />
     <item
         android:id="@+id/fragmentNotebook"
-        android:icon="@drawable/ic_baseline_border_color_24"
+        android:icon="@drawable/ic_notebook"
         android:title="" />
     <item
         android:id="@+id/fragmentProfile"
-        android:icon="@drawable/ic_baseline_account_circle_32"
+        android:icon="@drawable/ic_account"
         android:title="" />
 
 </menu>
