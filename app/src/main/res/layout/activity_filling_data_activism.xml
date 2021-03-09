@@ -7,11 +7,37 @@
     android:background="@color/custom"
     tools:context=".FillingDataActivismActivity">
 
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/f1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:gravity="center"
+            android:text="Выбор уровня активности"
+            android:textColor="#ffffff"
+            android:textSize="34sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/f1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/tab_indicator_gray" />
+    </RelativeLayout>
+
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/but_activity_nextClick">
+        android:layout_above="@id/but_activity_nextClick"
+        android:layout_below="@+id/header">
 
         <LinearLayout
             android:id="@+id/activityLin"
@@ -32,6 +58,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/border_for_calc" />
+
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_activity_1"
@@ -72,13 +99,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
 
+
                 <ImageButton
                     android:id="@+id/image_click_activity_2"
                     android:layout_width="match_parent"
                     android:layout_height="125dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="1dp"
                     android:background="@drawable/border_for_calc" />
+
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_activity_2"
@@ -119,13 +149,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
 
+
                 <ImageButton
                     android:id="@+id/image_click_activity_3"
                     android:layout_width="match_parent"
                     android:layout_height="125dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="1dp"
                     android:background="@drawable/border_for_calc" />
+
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_activity_3"
@@ -172,6 +205,7 @@
                     android:layout_height="125dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="1dp"
                     android:background="@drawable/border_for_calc" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -219,6 +253,7 @@
                     android:layout_height="125dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="1dp"
                     android:background="@drawable/border_for_calc" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -237,10 +272,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="15dp"
                     android:layout_toEndOf="@id/img_activity_5"
-                    android:padding="5dp"
                     android:text="1.900"
-                    android:textColor="@color/white"
-                    android:textSize="15sp" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:layout_width="285dp"

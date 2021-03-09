@@ -51,11 +51,46 @@ public class FillingDataActivismActivity extends AppCompatActivity {
         ImageButton but_activity_5 = findViewById(R.id.image_click_activity_5);
         Button next_activity = findViewById(R.id.but_activity_nextClick);
 
-        but_activity_1.setOnClickListener(view -> textNoVisibleActivity.setText("1.2"));
-        but_activity_2.setOnClickListener(view -> textNoVisibleActivity.setText("1.375"));
-        but_activity_3.setOnClickListener(view -> textNoVisibleActivity.setText("1.55"));
-        but_activity_4.setOnClickListener(view -> textNoVisibleActivity.setText("1.725"));
-        but_activity_5.setOnClickListener(view -> textNoVisibleActivity.setText("1.9"));
+        but_activity_1.setOnClickListener(view -> {
+            textNoVisibleActivity.setText("1.2");
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
+        });
+        but_activity_2.setOnClickListener(view -> {
+            textNoVisibleActivity.setText("1.375");
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
+        });
+        but_activity_3.setOnClickListener(view -> {
+            textNoVisibleActivity.setText("1.55");
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
+        });
+        but_activity_4.setOnClickListener(view -> {
+            textNoVisibleActivity.setText("1.725");
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
+        });
+        but_activity_5.setOnClickListener(view -> {
+            textNoVisibleActivity.setText("1.9");
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+        });
 
         next_activity.setOnClickListener(view -> {
             String text_activity = textNoVisibleActivity.getText().toString();

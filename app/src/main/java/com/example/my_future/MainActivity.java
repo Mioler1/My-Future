@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 break;
             case R.id.id_out:
                 mSettings.edit().clear().apply();
+                checkDataSettings.edit().clear().apply();
                 fragmentsInStack.clear();
                 fragmentsInStackFlowing.clear();
                 mAuth.signOut();
@@ -150,10 +151,9 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                     : itemId == R.id.fragmentForum ? fragmentForum
                     : itemId == R.id.fragmentNotebook ? fragmentNotebook
                     : fragmentProfile;
-            if (itemId != R.id.fragmentPlan) {
-                fragmentsInStack.remove(targetFragment);
-                fragmentsInStack.add(targetFragment);
-            }
+            fragmentsInStack.remove(targetFragment);
+            fragmentsInStack.add(targetFragment);
+
             if (!fragmentsInStackFlowing.isEmpty()) {
                 fragmentsInStackFlowing.clear();
             }
@@ -200,6 +200,8 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
     public void OnClickExit(View view) {
         mSettings.edit().clear().apply();
+        fragmentsInStack.clear();
+        fragmentsInStackFlowing.clear();
         mAuth.signOut();
         startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
         finish();

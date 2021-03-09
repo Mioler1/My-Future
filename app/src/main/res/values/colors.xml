@@ -24,4 +24,7 @@
     <color name="tab_indicator_gray">#5b5b5b</color>
     <color name="intro_title">#000000</color>
     <color name="intro_description">#656565</color>
+
+
+    <color name="invisible">#00000000</color>
 </resources>

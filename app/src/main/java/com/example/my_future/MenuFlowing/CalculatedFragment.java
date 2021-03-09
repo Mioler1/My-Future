@@ -22,18 +22,9 @@ public class CalculatedFragment extends Fragment {
         View v = inflater.inflate(R.layout.left_fragment_calculated, container, false);
         TextView calcMif = v.findViewById(R.id.calcMif);
         TextView calcKetch = v.findViewById(R.id.calcKetch);
-        calcMif.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), CalculetedMifflinActivity.class));
-            }
-        });
-        calcKetch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), CalculatedKetchActivity.class));
-            }
-        });
+
+        calcMif.setOnClickListener(view -> startActivity(new Intent(getContext(), CalculetedMifflinActivity.class)));
+        calcKetch.setOnClickListener(view -> startActivity(new Intent(getContext(), CalculatedKetchActivity.class)));
         return v;
     }
 }

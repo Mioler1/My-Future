@@ -197,7 +197,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:background="@drawable/background_circle_plus"
-            android:src="@drawable/plus" />
+            android:src="@drawable/ic_plus" />
 
     </RelativeLayout>
 
