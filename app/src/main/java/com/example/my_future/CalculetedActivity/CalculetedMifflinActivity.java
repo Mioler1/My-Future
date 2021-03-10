@@ -33,34 +33,25 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
         ImageButton but_girl = findViewById(R.id.image_click_girl);
         Button next_gender = findViewById(R.id.but_gender_nextClick);
 
-        but_man.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                text_gender_noVisible.setText("Мужской");
-                but_man.setBackgroundResource(R.drawable.border_for_calc_active);
-                but_girl.setBackgroundResource(R.color.custom);
-            }
+        but_man.setOnClickListener(view -> {
+            text_gender_noVisible.setText("Мужской");
+            but_man.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_girl.setBackgroundResource(R.drawable.border_for_edittext);
         });
-        but_girl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                text_gender_noVisible.setText("Женский");
-                but_girl.setBackgroundResource(R.drawable.border_for_calc_active);
-                but_man.setBackgroundResource(R.color.custom);
-            }
+        but_girl.setOnClickListener(view -> {
+            text_gender_noVisible.setText("Женский");
+            but_girl.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_man.setBackgroundResource(R.drawable.border_for_edittext);
         });
-        next_gender.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (text_gender_noVisible.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Выберите пол", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                RelativeLayout relativeGender = findViewById(R.id.genderRel);
-                relativeGender.setVisibility(View.GONE);
-                RelativeLayout relativeActivity = findViewById(R.id.activityRel);
-                relativeActivity.setVisibility(View.VISIBLE);
+        next_gender.setOnClickListener(view -> {
+            if (text_gender_noVisible.getText().toString().isEmpty()) {
+                Toast.makeText(CalculetedMifflinActivity.this, "Выберите пол", Toast.LENGTH_SHORT).show();
+                return;
             }
+            RelativeLayout relativeGender = findViewById(R.id.genderRel);
+            relativeGender.setVisibility(View.GONE);
+            RelativeLayout relativeActivity = findViewById(R.id.activityRel);
+            relativeActivity.setVisibility(View.VISIBLE);
         });
     }
 
@@ -73,78 +64,56 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
         ImageButton but_activity_5 = findViewById(R.id.image_click_activity_5);
         Button next_activity = findViewById(R.id.but_activity_nextClick);
 
-        but_activity_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                text_activity_noVisible.setText("1.2");
-                but_activity_1.setBackgroundResource(R.drawable.border_for_calc_active);
-                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
-            }
+        but_activity_1.setOnClickListener(view -> {
+            text_activity_noVisible.setText("1.2");
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
         });
-        but_activity_2.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                text_activity_noVisible.setText("1.375");
-                but_activity_2.setBackgroundResource(R.drawable.border_for_calc_active);
-                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
-            }
+        but_activity_2.setOnClickListener(view -> {
+            text_activity_noVisible.setText("1.375");
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
         });
-        but_activity_3.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                text_activity_noVisible.setText("1.55");
-                but_activity_3.setBackgroundResource(R.drawable.border_for_calc_active);
-                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
-            }
+        but_activity_3.setOnClickListener(view -> {
+            text_activity_noVisible.setText("1.55");
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
         });
-        but_activity_4.setOnClickListener(new View.OnClickListener() {
+        but_activity_4.setOnClickListener(view -> {
+            text_activity_noVisible.setText("1.725");
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
+        });
+        but_activity_5.setOnClickListener(view -> {
+            text_activity_noVisible.setText("1.9");
+            but_activity_5.setBackgroundResource(R.drawable.border_for_calc_active);
+            but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
+            but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
+        });
+        next_activity.setOnClickListener(view -> {
+            if (text_activity_noVisible.getText().toString().isEmpty()) {
+                Toast.makeText(CalculetedMifflinActivity.this, "Выберите свою активность", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                text_activity_noVisible.setText("1.725");
-                but_activity_4.setBackgroundResource(R.drawable.border_for_calc_active);
-                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_5.setBackgroundResource(R.drawable.border_for_calc);
-            }
-        });
-        but_activity_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                text_activity_noVisible.setText("1.9");
-                but_activity_5.setBackgroundResource(R.drawable.border_for_calc_active);
-                but_activity_2.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_3.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_4.setBackgroundResource(R.drawable.border_for_calc);
-                but_activity_1.setBackgroundResource(R.drawable.border_for_calc);
-            }
-        });
-        next_activity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (text_activity_noVisible.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Выберите свою активность", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                RelativeLayout relativeActivity = findViewById(R.id.activityRel);
-                relativeActivity.setVisibility(View.GONE);
-                RelativeLayout relativeData = findViewById(R.id.dataRel);
-                relativeData.setVisibility(View.VISIBLE);
-            }
+            RelativeLayout relativeActivity = findViewById(R.id.activityRel);
+            relativeActivity.setVisibility(View.GONE);
+            RelativeLayout relativeData = findViewById(R.id.dataRel);
+            relativeData.setVisibility(View.VISIBLE);
         });
     }
 
@@ -154,55 +123,51 @@ public class CalculetedMifflinActivity extends AppCompatActivity {
         EditText weight_text = findViewById(R.id.weight);
         Button calculate = findViewById(R.id.but_data_nextClick);
 
-        calculate.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View view) {
-                if (age_text.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Введите свой возраст", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (growth_text.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Введите свой рост", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (weight_text.getText().toString().isEmpty()) {
-                    Toast.makeText(CalculetedMifflinActivity.this, "Введите свой вес", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        calculate.setOnClickListener(view -> {
+            if (age_text.getText().toString().isEmpty()) {
+                Toast.makeText(CalculetedMifflinActivity.this, "Введите свой возраст", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (growth_text.getText().toString().isEmpty()) {
+                Toast.makeText(CalculetedMifflinActivity.this, "Введите свой рост", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (weight_text.getText().toString().isEmpty()) {
+                Toast.makeText(CalculetedMifflinActivity.this, "Введите свой вес", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                RelativeLayout relativeData = findViewById(R.id.dataRel);
-                relativeData.setVisibility(View.GONE);
-                RelativeLayout relativeResult = findViewById(R.id.resultRel);
-                relativeResult.setVisibility(View.VISIBLE);
-                TextView result_norm_text = findViewById(R.id.result_norm);
-                TextView result_kit_text = findViewById(R.id.result_kit);
-                TextView result_slimming_text = findViewById(R.id.result_slimming);
+            RelativeLayout relativeData = findViewById(R.id.dataRel);
+            relativeData.setVisibility(View.GONE);
+            RelativeLayout relativeResult = findViewById(R.id.resultRel);
+            relativeResult.setVisibility(View.VISIBLE);
+            TextView result_norm_text = findViewById(R.id.result_norm);
+            TextView result_kit_text = findViewById(R.id.result_kit);
+            TextView result_slimming_text = findViewById(R.id.result_slimming);
 
-                double activity = Double.parseDouble(text_activity_noVisible.getText().toString());
-                double weight = Double.parseDouble(weight_text.getText().toString());
-                int growth = Integer.parseInt(growth_text.getText().toString());
-                int age = Integer.parseInt(age_text.getText().toString());
-                double result;
+            double activity = Double.parseDouble(text_activity_noVisible.getText().toString());
+            double weight = Double.parseDouble(weight_text.getText().toString());
+            int growth = Integer.parseInt(growth_text.getText().toString());
+            int age = Integer.parseInt(age_text.getText().toString());
+            double result;
 
-                if (text_gender_noVisible.getText().toString().equals("Мужской")) {
-                    result = (10 * weight + 6.25 * growth - 5 * age + 5) * activity;
+            if (text_gender_noVisible.getText().toString().equals("Мужской")) {
+                result = (10 * weight + 6.25 * growth - 5 * age + 5) * activity;
 
-                    result_norm_text.setText(Math.round(result) + " калорий");
-                    double kit = result + (result * 20 / 100);
-                    result_kit_text.setText(Math.round(kit) + " калорий");
-                    double slimming = result - (result * 20 / 100);
-                    result_slimming_text.setText(Math.round(slimming) + " калорий");
-                }
-                if (text_gender_noVisible.getText().toString().equals("Женский")) {
-                    result = (10 * weight + 6.25 * growth - 5 * age - 161) * activity;
+                result_norm_text.setText(Math.round(result) + " калорий");
+                double kit = result + (result * 20 / 100);
+                result_kit_text.setText(Math.round(kit) + " калорий");
+                double slimming = result - (result * 20 / 100);
+                result_slimming_text.setText(Math.round(slimming) + " калорий");
+            }
+            if (text_gender_noVisible.getText().toString().equals("Женский")) {
+                result = (10 * weight + 6.25 * growth - 5 * age - 161) * activity;
 
-                    result_norm_text.setText(Math.round(result) + " калорий");
-                    double kit = result + (result * 20 / 100);
-                    result_kit_text.setText(Math.round(kit) + " калорий");
-                    double slimming = result - (result * 20 / 100);
-                    result_slimming_text.setText(Math.round(slimming) + " калорий");
-                }
+                result_norm_text.setText(Math.round(result) + " калорий");
+                double kit = result + (result * 20 / 100);
+                result_kit_text.setText(Math.round(kit) + " калорий");
+                double slimming = result - (result * 20 / 100);
+                result_slimming_text.setText(Math.round(slimming) + " калорий");
             }
         });
     }

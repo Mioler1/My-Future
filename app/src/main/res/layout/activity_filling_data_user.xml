@@ -98,7 +98,7 @@
                         android:id="@+id/weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Введите ваш вес"
+                        android:hint="Введите ваш вес (кг)"
                         android:inputType="numberDecimal" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -122,7 +122,7 @@
                         android:id="@+id/growth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Введите ваш рост"
+                        android:hint="Введите ваш рост (см)"
                         android:inputType="numberDecimal" />
 
                 </com.google.android.material.textfield.TextInputLayout>

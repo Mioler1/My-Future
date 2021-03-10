@@ -1,6 +1,7 @@
 package com.example.my_future.MenuBottom;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.my_future.Fragments.ChangeDataFragment;
 import com.example.my_future.R;
 import com.example.my_future.TabLayout.DepthPageTransformer;
 import com.example.my_future.TabLayout.Profile.GraphFragment;
@@ -86,13 +88,16 @@ public class ProfileFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         int[] iconResId = {R.drawable.ic_person,
-                R.drawable.ic_fitness,
+                R.drawable.ic_fitness_black,
                 R.drawable.ic_health,
                 R.drawable.ic_graph};
         for (int i = 0; i < iconResId.length; i++) {
             tabLayout.getTabAt(i).setIcon(iconResId[i]);
         }
         downloadData();
+
+        v.findViewById(R.id.ic_changeData).setOnClickListener(view ->
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeDataFragment()).commit());
     }
 
     private void downloadData() {

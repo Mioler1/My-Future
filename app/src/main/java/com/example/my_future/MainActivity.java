@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onNavItemSelectedListener(MenuItem item) {
-        Toast.makeText(this, item.getTitle(), Toast.LENGTH_SHORT).show();
         Fragment selectedFragment = null;
         switch (item.getItemId()) {
             case R.id.id_calculate:

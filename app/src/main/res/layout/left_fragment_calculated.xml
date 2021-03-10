@@ -5,9 +5,30 @@
     android:layout_height="match_parent"
     android:background="@color/custom">
 
+    <TextView
+        android:id="@+id/textCalc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Калькуляторы калорий"
+        android:textColor="@color/white"
+        android:textSize="30sp" />
+
+    <View
+        android:id="@+id/viewHeader"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textCalc"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/tab_indicator_gray" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@+id/viewHeader"
         android:orientation="vertical"
         android:padding="10dp">
 

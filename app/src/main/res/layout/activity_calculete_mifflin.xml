@@ -12,15 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginStart="60dp"
+        android:background="@drawable/shape_login"
+        android:paddingBottom="20dp"
         android:visibility="visible">
 
         <TextView
             android:id="@+id/text_title_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:text="Выберите пол:"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="24sp" />
 
         <LinearLayout
@@ -41,7 +47,7 @@
                     android:layout_width="150dp"
                     android:layout_height="180dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/custom" />
+                    android:background="@color/white" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_man"
@@ -58,7 +64,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:text="Мужской"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -74,7 +80,7 @@
                     android:layout_width="150dp"
                     android:layout_height="180dp"
                     android:layout_centerHorizontal="true"
-                    android:background="@color/custom" />
+                    android:background="@color/white" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_girl"
@@ -82,7 +88,8 @@
                     android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
-                    android:src="@drawable/default_avatar" />
+                    android:src="@drawable/default_avatar"
+                    app:civ_border_color="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +98,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:text="Женский"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -104,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/genderLin"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/btn_save_actived"
             android:text="Продолжить"
             android:textColor="@color/white" />
@@ -149,6 +156,7 @@
                 android:background="@color/tab_indicator_gray" />
         </RelativeLayout>
 
+
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -175,6 +183,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="20dp"
                         android:background="@drawable/border_for_calc" />
+
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_activity_1"
@@ -215,13 +224,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp">
 
+
                     <ImageButton
                         android:id="@+id/image_click_activity_2"
                         android:layout_width="match_parent"
                         android:layout_height="125dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="1dp"
                         android:background="@drawable/border_for_calc" />
+
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_activity_2"
@@ -262,13 +274,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp">
 
+
                     <ImageButton
                         android:id="@+id/image_click_activity_3"
                         android:layout_width="match_parent"
                         android:layout_height="125dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="1dp"
                         android:background="@drawable/border_for_calc" />
+
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/img_activity_3"
@@ -299,7 +314,7 @@
                         android:padding="5dp"
                         android:text="Для умеренно активных людей: физическая работа средней тяжести или регулярные тренировки 3-5 дней в неделю."
                         android:textColor="@color/white"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp" />
 
                 </RelativeLayout>
 
@@ -315,6 +330,7 @@
                         android:layout_height="125dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="1dp"
                         android:background="@drawable/border_for_calc" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -362,6 +378,7 @@
                         android:layout_height="125dp"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="20dp"
+                        android:layout_marginTop="1dp"
                         android:background="@drawable/border_for_calc" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -426,6 +443,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_marginStart="70dp"
+        android:background="@drawable/shape_login"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp"
         android:visibility="gone">
 
         <TextView
@@ -433,58 +454,77 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:text="Введите свои данные:"
-            android:textColor="@color/white"
-            android:textSize="19sp" />
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:id="@+id/dataLin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_title_data"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <EditText
-                android:id="@+id/age"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/border_for_edittext"
-                android:hint="Введите свой возраст"
-                android:inputType="number"
-                android:paddingStart="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:layout_height="wrap_content"
+                app:boxStrokeColor="@color/custom"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
+                app:hintTextColor="@color/custom">
 
-            <EditText
-                android:id="@+id/growth"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/border_for_edittext"
-                android:hint="Введите свой рост"
-                android:inputType="number"
-                android:paddingStart="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Введите свой возраст"
+                    android:inputType="number"
+                    android:paddingStart="12dp"
+                    android:textColor="@color/black" />
 
-            <EditText
-                android:id="@+id/weight"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/border_for_edittext"
-                android:hint="Введите свой вес"
-                android:inputType="numberDecimal"
-                android:paddingStart="10dp"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:boxStrokeColor="@color/custom"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
+                app:hintTextColor="@color/custom">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/growth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Введите свой рост"
+                    android:inputType="number"
+                    android:paddingStart="12dp"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:boxStrokeColor="@color/custom"
+                app:hintTextAppearance="@style/TextAppearance.AppCompat.Small"
+                app:hintTextColor="@color/custom">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Введите свой вес"
+                    android:inputType="number"
+                    android:paddingStart="12dp"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
