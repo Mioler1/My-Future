@@ -58,6 +58,7 @@ public class ProfileFragment extends Fragment {
     SharedPreferences mSettings;
     View v;
     String urlAvatar = "";
+    SaveAvatarTask saveAvatarTask = new SaveAvatarTask();
 
     @Nullable
     @Override
@@ -177,5 +178,16 @@ public class ProfileFragment extends Fragment {
                 }
             });
         }
+
+        @Override
+        protected void onCancelled(Void aVoid) {
+            super.onCancelled(aVoid);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        saveAvatarTask.cancel(true);
     }
 }
