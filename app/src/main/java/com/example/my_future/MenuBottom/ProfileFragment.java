@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,7 +59,6 @@ public class ProfileFragment extends Fragment {
     SharedPreferences mSettings;
     View v;
     String urlAvatar = "";
-    SaveAvatarTask saveAvatarTask = new SaveAvatarTask();
 
     @Nullable
     @Override
@@ -116,7 +116,24 @@ public class ProfileFragment extends Fragment {
                     Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
                     avatar.setImageBitmap(bitmap);
                 } else {
-                    new SaveAvatarTask().execute();
+                    urlAvatar = String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue());
+                    Picasso.with(getContext()).load(urlAvatar).error(R.drawable.default_avatar).into(avatar, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Bitmap bitmap = ((BitmapDrawable) avatar.getDrawable()).getBitmap();
+                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                            byte[] byteArray = baos.toByteArray();
+                            String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                            editor.putString(APP_DATA_USER_AVATAR, encodedImage);
+                            editor.apply();
+                        }
+
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
                 }
                 if (mSettings.contains(APP_DATA_USER_NICKNAME)) {
                     nickname.setText(mSettings.getString(APP_DATA_USER_NICKNAME, ""));
@@ -136,58 +153,5 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-    }
-
-    class SaveAvatarTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    urlAvatar = String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue());
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    error.getMessage();
-                }
-            });
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Picasso.with(getContext()).load(urlAvatar).error(R.drawable.default_avatar).into(avatar, new Callback() {
-                @Override
-                public void onSuccess() {
-                    Bitmap bitmap = ((BitmapDrawable) avatar.getDrawable()).getBitmap();
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                    byte[] byteArray = baos.toByteArray();
-                    String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                    SharedPreferences.Editor editor = mSettings.edit();
-                    editor.putString(APP_DATA_USER_AVATAR, encodedImage);
-                    editor.apply();
-                }
-
-                @Override
-                public void onError() {
-
-                }
-            });
-        }
-
-        @Override
-        protected void onCancelled(Void aVoid) {
-            super.onCancelled(aVoid);
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        saveAvatarTask.cancel(true);
     }
 }
