@@ -1,17 +1,22 @@
 package com.example.my_future.MenuBottom;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +25,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.my_future.Fragments.ChangeDataFragment;
 import com.example.my_future.R;
 import com.example.my_future.TabLayout.DepthPageTransformer;
@@ -35,47 +45,65 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.my_future.Variables.ALL_DATA_USER;
 import static com.example.my_future.Variables.APP_DATA_USER_AVATAR;
+import static com.example.my_future.Variables.APP_DATA_USER_GENDER;
+import static com.example.my_future.Variables.APP_DATA_USER_GROWTH;
 import static com.example.my_future.Variables.APP_DATA_USER_NICKNAME;
 import static com.example.my_future.Variables.APP_DATA_USER_TARGET;
+import static com.example.my_future.Variables.APP_DATA_USER_WEIGHT;
+import static com.example.my_future.Variables.TAG;
 
 public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    StorageReference mStorageRef;
+    SharedPreferences mSettings;
 
+    CircleImageView avatar, changeAvatar;
     ViewPager viewPager;
     TabLayout tabLayout;
-    CircleImageView avatar;
     PageAdapter pageAdapter;
-    SharedPreferences mSettings;
-    View v;
+
+    View viewFragment, viewAlert;
+    Button buttonSave;
+    ProgressBar progressBarDataUser;
+    AlertDialog alertDialog;
+
     String urlAvatar = "";
+    Uri uploadUri;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.bottom_fragment_profile, container, false);
+        viewFragment = inflater.inflate(R.layout.bottom_fragment_profile, container, false);
         init();
-        return v;
+        return viewFragment;
     }
 
     private void init() {
+        avatar = viewFragment.findViewById(R.id.avatar);
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
-        mSettings = getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
+        mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
+        mSettings = viewFragment.getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
 
-        viewPager = v.findViewById(R.id.viewPager);
-        tabLayout = v.findViewById(R.id.tabLayout);
+        viewPager = viewFragment.findViewById(R.id.viewPager);
+        tabLayout = viewFragment.findViewById(R.id.tabLayout);
 
         pageAdapter = new PageAdapter(getFragmentManager());
         pageAdapter.addFragment(new VolumesBodyFragment());
@@ -95,45 +123,39 @@ public class ProfileFragment extends Fragment {
         for (int i = 0; i < iconResId.length; i++) {
             tabLayout.getTabAt(i).setIcon(iconResId[i]);
         }
-        downloadData();
 
-        v.findViewById(R.id.ic_changeData).setOnClickListener(view ->
+        downloadData();
+        changeAvatar();
+        viewFragment.findViewById(R.id.ic_changeData).setOnClickListener(view ->
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeDataFragment()).commit());
     }
 
     private void downloadData() {
-        avatar = v.findViewById(R.id.avatar);
-        TextView nickname = v.findViewById(R.id.nickname);
-        TextView target = v.findViewById(R.id.target);
+        TextView nickname = viewFragment.findViewById(R.id.nickname);
+        TextView target = viewFragment.findViewById(R.id.target);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences.Editor editor = mSettings.edit();
                 if (mSettings.contains(APP_DATA_USER_AVATAR)) {
-                    String mImageUri = mSettings.getString(APP_DATA_USER_AVATAR, "");
-                    byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
-                    avatar.setImageBitmap(bitmap);
+                    String user_avatar = mSettings.getString(APP_DATA_USER_AVATAR, "");
+                    Glide.with(avatar.getContext()).load(user_avatar).error(R.drawable.default_avatar).into(avatar);
                 } else {
                     urlAvatar = String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue());
-                    Picasso.with(getContext()).load(urlAvatar).error(R.drawable.default_avatar).into(avatar, new Callback() {
+                    Glide.with(avatar.getContext()).load(urlAvatar).listener(new RequestListener<Drawable>() {
                         @Override
-                        public void onSuccess() {
-                            Bitmap bitmap = ((BitmapDrawable) avatar.getDrawable()).getBitmap();
-                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                            byte[] byteArray = baos.toByteArray();
-                            String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                            editor.putString(APP_DATA_USER_AVATAR, encodedImage);
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            editor.putString(APP_DATA_USER_AVATAR, urlAvatar);
                             editor.apply();
+                            return false;
                         }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });
+                    }).error(R.drawable.default_avatar).into(avatar);
                 }
                 if (mSettings.contains(APP_DATA_USER_NICKNAME)) {
                     nickname.setText(mSettings.getString(APP_DATA_USER_NICKNAME, ""));
@@ -153,5 +175,100 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+    }
+
+    private void changeAvatar() {
+        avatar.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyAlertDialog);
+            LayoutInflater inflater = getLayoutInflater();
+            viewAlert = inflater.inflate(R.layout.alert_dialog_change_avatar, null);
+            changeAvatar = viewAlert.findViewById(R.id.avatar_change);
+            buttonSave = viewAlert.findViewById(R.id.butSave);
+            progressBarDataUser = viewAlert.findViewById(R.id.progressBar);
+            viewAlert.findViewById(R.id.change_avatar).setOnClickListener(vChange -> {
+                Intent uploadIntent = new Intent();
+                uploadIntent.setType("image/*");
+                uploadIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(uploadIntent, 1);
+            });
+            viewAlert.findViewById(R.id.delete_avatar).setOnClickListener(vDelete -> {
+                deleteAvatar();
+                alertDialog.dismiss();
+            });
+            builder.setView(viewAlert).setCancelable(true);
+            alertDialog = builder.create();
+            alertDialog.show();
+
+            buttonSave.setOnClickListener(vSave -> {
+                deleteAvatar();
+                myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(uploadUri.toString());
+                SharedPreferences.Editor editor = mSettings.edit();
+                editor.putString(APP_DATA_USER_AVATAR, String.valueOf(uploadUri));
+                editor.apply();
+                alertDialog.dismiss();
+            });
+        });
+    }
+
+    private void deleteAvatar() {
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference storageReference;
+        if (mSettings.contains(APP_DATA_USER_AVATAR)) {
+            storageReference = firebaseStorage.getReferenceFromUrl(mSettings.getString(APP_DATA_USER_AVATAR, ""));
+        } else {
+            storageReference = firebaseStorage.getReferenceFromUrl(urlAvatar);
+        }
+        storageReference.delete();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && data != null && data.getData() != null) {
+            if (resultCode == RESULT_OK) {
+                RelativeLayout relativeSelection = viewAlert.findViewById(R.id.RelSelectionClick);
+                RelativeLayout relativeChange = viewAlert.findViewById(R.id.RelChangeAvatar);
+                relativeSelection.setVisibility(View.GONE);
+                relativeChange.setVisibility(View.VISIBLE);
+                progressBarDataUser.setVisibility(View.VISIBLE);
+                buttonSave.setEnabled(false);
+                buttonSave.setBackgroundResource(R.drawable.btn_save_disabled);
+                changeAvatar.setImageURI(data.getData());
+                uploadImage();
+            }
+        }
+    }
+
+    private void uploadImage() {
+        DateFormat dateFormat = new SimpleDateFormat("HHmmss");
+        String date = dateFormat.format(new Date());
+        Bitmap bitmap = ((BitmapDrawable) changeAvatar.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] byteArray = baos.toByteArray();
+        MyToast(String.valueOf(byteArray.length));
+        if (byteArray.length <= 5242880) {
+            final StorageReference myStorage = mStorageRef.child(System.currentTimeMillis() + " " + date);
+            UploadTask uploadTask = myStorage.putBytes(byteArray);
+            uploadTask.continueWithTask(task ->
+                    myStorage.getDownloadUrl()).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    uploadUri = task.getResult();
+                    buttonSave.setEnabled(true);
+                    buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
+                    progressBarDataUser.setVisibility(View.GONE);
+                }
+            }).addOnFailureListener(e -> MyToast("Картинка не загрузилась"));
+        } else {
+            MyToast("Размер картинки не более 5мб");
+            changeAvatar.setImageResource(R.drawable.default_avatar);
+            buttonSave.setEnabled(true);
+            buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
+            progressBarDataUser.setVisibility(View.GONE);
+        }
+    }
+
+    private void MyToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

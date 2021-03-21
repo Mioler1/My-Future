@@ -23,4 +23,7 @@
         <item name="colorControlActivated">@color/for_button</item>
     </style>
 
+    <style name="MyAlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@color/invisible</item>
+    </style>
 </resources>

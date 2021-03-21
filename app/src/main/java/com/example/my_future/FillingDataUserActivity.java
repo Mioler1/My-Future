@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -38,6 +37,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -180,19 +182,13 @@ public class FillingDataUserActivity extends AppCompatActivity {
                     user.setAvatar("default");
                 }
 
-                Bitmap bitmap = ((BitmapDrawable) avatar_img.getDrawable()).getBitmap();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] byteArray = baos.toByteArray();
-                String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
                 SharedPreferences.Editor editor = mSettings.edit();
                 editor.putString(APP_DATA_USER_NICKNAME, nickname_text);
                 editor.putString(APP_DATA_USER_WEIGHT, weight_text);
                 editor.putString(APP_DATA_USER_GROWTH, growth_text);
                 editor.putString(APP_DATA_USER_GENDER, textNoVisibleGender.getText().toString());
                 editor.putString(APP_DATA_USER_TARGET, textNoVisibleTarget.getText().toString());
-                editor.putString(APP_DATA_USER_AVATAR, encodedImage);
+                editor.putString(APP_DATA_USER_AVATAR, String.valueOf(uploadUri));
                 editor.apply();
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
@@ -242,21 +238,32 @@ public class FillingDataUserActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
+        DateFormat dateFormat = new SimpleDateFormat("HHmmss");
+        String date = dateFormat.format(new Date());
         Bitmap bitmap = ((BitmapDrawable) avatar_img.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] byteArray = baos.toByteArray();
-        final StorageReference myStorage = mStorageRef.child(System.currentTimeMillis() + " my_avatar");
-        UploadTask uploadTask = myStorage.putBytes(byteArray);
-        uploadTask.continueWithTask(task -> myStorage.getDownloadUrl()).
-                addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        uploadUri = task.getResult();
-                        buttonSave.setEnabled(true);
-                        buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
-                        progressBarDataUser.setVisibility(View.GONE);
-                    }
-                }).addOnFailureListener(e -> MyToast("Картинка не загрузилась"));
+        MyToast(String.valueOf(byteArray.length));
+        if (byteArray.length <= 5242880) {
+            final StorageReference myStorage = mStorageRef.child(System.currentTimeMillis() + " " + date);
+            UploadTask uploadTask = myStorage.putBytes(byteArray);
+            uploadTask.continueWithTask(task ->
+                    myStorage.getDownloadUrl()).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            uploadUri = task.getResult();
+                            buttonSave.setEnabled(true);
+                            buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
+                            progressBarDataUser.setVisibility(View.GONE);
+                        }
+                    }).addOnFailureListener(e -> MyToast("Картинка не загрузилась"));
+        } else {
+            MyToast("Размер картинки не более 5мб");
+            avatar_img.setImageResource(R.drawable.default_avatar);
+            buttonSave.setEnabled(true);
+            buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
+            progressBarDataUser.setVisibility(View.GONE);
+        }
     }
 
     private void targetSelection() {

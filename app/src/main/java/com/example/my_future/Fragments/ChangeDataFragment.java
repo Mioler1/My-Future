@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.my_future.Additionally.FragmentActivityPressure;
 import com.example.my_future.AuthorizationActivity;
 import com.example.my_future.Additionally.FragmentActivityActivism;
@@ -455,51 +456,43 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
     }
 
     public void openChangeAvatar() {
+//        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+//        StorageReference storageReference = firebaseStorage.getReferenceFromUrl();
+//        storageReference.delete();
         openAlertDialog();
         avatar_img_change.setVisibility(View.VISIBLE);
 
         if (mSettings.contains(APP_DATA_USER_AVATAR)) {
-            String mImageUri = mSettings.getString("Avatar", "");
-            byte[] decode = Base64.decode(mImageUri, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(decode, 0, decode.length);
-            avatar_img_change.setImageBitmap(bitmap);
+            String user_avatar = mSettings.getString(APP_DATA_USER_AVATAR, "");
+            Glide.with(getContext()).load(user_avatar).error(R.drawable.default_avatar).into(avatar_img_change);
         }
 
         Button butSave = viewAlert.findViewById(R.id.butSaveChangeDate);
         butSave.setBackgroundResource(R.drawable.btn_save_disabled);
         butSave.setEnabled(false);
 
-        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("MyLog", String.valueOf(uploadUri));
-                        myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
+        viewAlert.findViewById(R.id.butSaveChangeDate).setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Log.d("MyLog", String.valueOf(uploadUri));
+                    myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
 
-                        Bitmap bitmap = ((BitmapDrawable) avatar_img_change.getDrawable()).getBitmap();
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                        byte[] byteArray = baos.toByteArray();
-                        String encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    SharedPreferences.Editor editor = mSettings.edit();
+                    editor.putString(APP_DATA_USER_AVATAR, String.valueOf(uploadUri));
+                    editor.apply();
 
-                        SharedPreferences.Editor editor = mSettings.edit();
-                        editor.putString(APP_DATA_USER_AVATAR, encodedImage);
-                        editor.apply();
+                    MyToast("Готово");
+                    alertDialog.dismiss();
+                }
 
-                        MyToast("Готово");
-                        alertDialog.dismiss();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        MyToast("Не сменил");
-                        alertDialog.dismiss();
-                    }
-                });
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    MyToast("Не сменил");
+                    alertDialog.dismiss();
+                }
+            });
         });
     }
 
