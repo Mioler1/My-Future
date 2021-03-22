@@ -46,8 +46,11 @@ public class AuthorizationActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
 
-        email.setText(getIntent().getStringExtra("email"));
-        password.setText(getIntent().getStringExtra("password"));
+        email.setText("veretennik-v@mail.ru");
+        password.setText("121212");
+
+//        email.setText(getIntent().getStringExtra("email"));
+//        password.setText(getIntent().getStringExtra("password"));
 
         come = findViewById(R.id.comeButton);
         come.setOnClickListener(view -> Authorization());

@@ -43,8 +43,9 @@ import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.my_future.Variables.ALL_DATA_AVATAR;
 import static com.example.my_future.Variables.ALL_DATA_USER;
-import static com.example.my_future.Variables.APP_DATA_USER_AVATAR;
+import static com.example.my_future.Variables.APP_DATA_AVATAR;
 import static com.example.my_future.Variables.APP_DATA_USER_GENDER;
 import static com.example.my_future.Variables.APP_DATA_USER_GROWTH;
 import static com.example.my_future.Variables.APP_DATA_USER_NICKNAME;
@@ -65,7 +66,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
     DatabaseReference myRef;
     StorageReference mStorageRef;
 
-    SharedPreferences mSettings;
+    SharedPreferences mSettings, avatarSettings;
     Uri uploadUri;
 
     @Override
@@ -80,6 +81,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
 
     private void init() {
         mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
+        avatarSettings = this.getSharedPreferences(ALL_DATA_AVATAR, MODE_PRIVATE);
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
@@ -188,8 +190,10 @@ public class FillingDataUserActivity extends AppCompatActivity {
                 editor.putString(APP_DATA_USER_GROWTH, growth_text);
                 editor.putString(APP_DATA_USER_GENDER, textNoVisibleGender.getText().toString());
                 editor.putString(APP_DATA_USER_TARGET, textNoVisibleTarget.getText().toString());
-                editor.putString(APP_DATA_USER_AVATAR, String.valueOf(uploadUri));
                 editor.apply();
+                SharedPreferences.Editor editorAvatar = avatarSettings.edit();
+                editorAvatar.putString(APP_DATA_AVATAR, String.valueOf(uploadUri));
+                editorAvatar.apply();
 
                 myRef.child(mAuth.getUid()).child("profile").setValue(user);
                 startActivity(new Intent(FillingDataUserActivity.this, IntroActivity.class));

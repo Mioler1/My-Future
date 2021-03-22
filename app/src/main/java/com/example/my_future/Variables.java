@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Variables {
-    public static final String TAG = "MyLog";
+    public static final String TAG = "TAG";
     public static final List<Fragment> fragmentsInStack = new ArrayList<>();
     public static final List<Fragment> fragmentsInStackFlowing = new ArrayList<>();
 
     //  Переменные сохранения
     public static final String ALL_DATA_USER = "saveDataUser";
+    public static final String ALL_DATA_AVATAR = "saveDataAvatar";
     public static final String ALL_CHECK_DATA = "saveCheckData";
 
     //  Переменные данных пользователя
@@ -20,7 +21,7 @@ public class Variables {
     public static final String APP_DATA_USER_GROWTH = "Growth";
     public static final String APP_DATA_USER_GENDER = "Gender";
     public static final String APP_DATA_USER_TARGET = "Target";
-    public static final String APP_DATA_USER_AVATAR = "Avatar";
+    public static final String APP_DATA_AVATAR = "Avatar";
 
     //  Переменные объёма пользователя
     public static final String APP_DATA_USER_WAIST = "Waist";

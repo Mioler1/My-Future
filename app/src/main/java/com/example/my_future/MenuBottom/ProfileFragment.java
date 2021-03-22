@@ -1,5 +1,6 @@
 package com.example.my_future.MenuBottom;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,21 +57,20 @@ import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.my_future.Variables.ALL_DATA_AVATAR;
 import static com.example.my_future.Variables.ALL_DATA_USER;
-import static com.example.my_future.Variables.APP_DATA_USER_AVATAR;
-import static com.example.my_future.Variables.APP_DATA_USER_GENDER;
-import static com.example.my_future.Variables.APP_DATA_USER_GROWTH;
+import static com.example.my_future.Variables.APP_DATA_AVATAR;
 import static com.example.my_future.Variables.APP_DATA_USER_NICKNAME;
 import static com.example.my_future.Variables.APP_DATA_USER_TARGET;
-import static com.example.my_future.Variables.APP_DATA_USER_WEIGHT;
 import static com.example.my_future.Variables.TAG;
 
 public class ProfileFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
-    StorageReference mStorageRef;
-    SharedPreferences mSettings;
+    StorageReference mStorageRef, storageReference;
+    FirebaseStorage firebaseStorage;
+    SharedPreferences mSettings, avatarSettings;
 
     CircleImageView avatar, changeAvatar;
     ViewPager viewPager;
@@ -79,12 +78,14 @@ public class ProfileFragment extends Fragment {
     PageAdapter pageAdapter;
 
     View viewFragment, viewAlert;
+    TextView nickname, target;
     Button buttonSave;
     ProgressBar progressBarDataUser;
     AlertDialog alertDialog;
 
-    String urlAvatar = "";
     Uri uploadUri;
+    String urlAvatar = "";
+    boolean noImage = false;
 
     @Nullable
     @Override
@@ -96,11 +97,16 @@ public class ProfileFragment extends Fragment {
 
     private void init() {
         avatar = viewFragment.findViewById(R.id.avatar);
+        nickname = viewFragment.findViewById(R.id.nickname);
+        target = viewFragment.findViewById(R.id.target);
+
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Users");
+        firebaseStorage = FirebaseStorage.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference("Avatars");
         mSettings = viewFragment.getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
+        avatarSettings = viewFragment.getContext().getSharedPreferences(ALL_DATA_AVATAR, Context.MODE_PRIVATE);
 
         viewPager = viewFragment.findViewById(R.id.viewPager);
         tabLayout = viewFragment.findViewById(R.id.tabLayout);
@@ -131,16 +137,14 @@ public class ProfileFragment extends Fragment {
     }
 
     private void downloadData() {
-        TextView nickname = viewFragment.findViewById(R.id.nickname);
-        TextView target = viewFragment.findViewById(R.id.target);
-
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                SharedPreferences.Editor editor = mSettings.edit();
-                if (mSettings.contains(APP_DATA_USER_AVATAR)) {
-                    String user_avatar = mSettings.getString(APP_DATA_USER_AVATAR, "");
+                SharedPreferences.Editor editorAvatar = avatarSettings.edit();
+                if (avatarSettings.contains(APP_DATA_AVATAR)) {
+                    String user_avatar = avatarSettings.getString(APP_DATA_AVATAR, "");
                     Glide.with(avatar.getContext()).load(user_avatar).error(R.drawable.default_avatar).into(avatar);
+                    noImage = true;
                 } else {
                     urlAvatar = String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue());
                     Glide.with(avatar.getContext()).load(urlAvatar).listener(new RequestListener<Drawable>() {
@@ -151,12 +155,14 @@ public class ProfileFragment extends Fragment {
 
                         @Override
                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            editor.putString(APP_DATA_USER_AVATAR, urlAvatar);
-                            editor.apply();
+                            editorAvatar.putString(APP_DATA_AVATAR, urlAvatar);
+                            editorAvatar.apply();
+                            noImage = true;
                             return false;
                         }
                     }).error(R.drawable.default_avatar).into(avatar);
                 }
+                SharedPreferences.Editor editor = mSettings.edit();
                 if (mSettings.contains(APP_DATA_USER_NICKNAME)) {
                     nickname.setText(mSettings.getString(APP_DATA_USER_NICKNAME, ""));
                 } else {
@@ -193,6 +199,7 @@ public class ProfileFragment extends Fragment {
             });
             viewAlert.findViewById(R.id.delete_avatar).setOnClickListener(vDelete -> {
                 deleteAvatar();
+                avatar.setImageResource(R.drawable.default_avatar);
                 alertDialog.dismiss();
             });
             builder.setView(viewAlert).setCancelable(true);
@@ -203,7 +210,7 @@ public class ProfileFragment extends Fragment {
                 deleteAvatar();
                 myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(uploadUri.toString());
                 SharedPreferences.Editor editor = mSettings.edit();
-                editor.putString(APP_DATA_USER_AVATAR, String.valueOf(uploadUri));
+                editor.putString(APP_DATA_AVATAR, String.valueOf(uploadUri));
                 editor.apply();
                 alertDialog.dismiss();
             });
@@ -211,14 +218,21 @@ public class ProfileFragment extends Fragment {
     }
 
     private void deleteAvatar() {
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference;
-        if (mSettings.contains(APP_DATA_USER_AVATAR)) {
-            storageReference = firebaseStorage.getReferenceFromUrl(mSettings.getString(APP_DATA_USER_AVATAR, ""));
-        } else {
-            storageReference = firebaseStorage.getReferenceFromUrl(urlAvatar);
+        if (noImage) {
+            if (avatarSettings.contains(APP_DATA_AVATAR)) {
+                storageReference = firebaseStorage.getReferenceFromUrl(avatarSettings.getString(APP_DATA_AVATAR, ""));
+                myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue("default");
+                avatarSettings.edit().clear().apply();
+                storageReference.delete();
+            } else {
+                if (!urlAvatar.isEmpty() && !urlAvatar.equals("default")) {
+                    storageReference = firebaseStorage.getReferenceFromUrl(urlAvatar);
+                    myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue("default");
+                    avatarSettings.edit().clear().apply();
+                    storageReference.delete();
+                }
+            }
         }
-        storageReference.delete();
     }
 
     @Override

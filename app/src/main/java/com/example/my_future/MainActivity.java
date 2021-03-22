@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import static com.example.my_future.Variables.ALL_CHECK_DATA;
+import static com.example.my_future.Variables.ALL_DATA_AVATAR;
 import static com.example.my_future.Variables.ALL_DATA_USER;
 import static com.example.my_future.Variables.CHECK_DATA_PROFILE;
 import static com.example.my_future.Variables.fragmentsInStack;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     FirebaseAuth mAuth;
 
     BottomNavigationView bottomNav;
-    SharedPreferences mSettings, checkDataSettings;
+    SharedPreferences mSettings, checkDataSettings, avatarSettings;
 
     private final FoodFragment fragmentFood = new FoodFragment();
     private final ForumFragment fragmentForum = new ForumFragment();
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
         mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
         checkDataSettings = this.getSharedPreferences(ALL_CHECK_DATA, MODE_PRIVATE);
+        avatarSettings = this.getSharedPreferences(ALL_DATA_AVATAR, MODE_PRIVATE);
         checkProfile();
     }
 
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
             case R.id.id_out:
                 mSettings.edit().clear().apply();
                 checkDataSettings.edit().clear().apply();
+                avatarSettings.edit().clear().apply();
                 fragmentsInStack.clear();
                 fragmentsInStackFlowing.clear();
                 mAuth.signOut();

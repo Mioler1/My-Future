@@ -59,7 +59,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.my_future.Variables.ALL_DATA_USER;
-import static com.example.my_future.Variables.APP_DATA_USER_AVATAR;
+import static com.example.my_future.Variables.APP_DATA_AVATAR;
 import static com.example.my_future.Variables.APP_DATA_USER_BICEPS;
 import static com.example.my_future.Variables.APP_DATA_USER_CHEST;
 import static com.example.my_future.Variables.APP_DATA_USER_FOREARM;
@@ -462,8 +462,8 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
         openAlertDialog();
         avatar_img_change.setVisibility(View.VISIBLE);
 
-        if (mSettings.contains(APP_DATA_USER_AVATAR)) {
-            String user_avatar = mSettings.getString(APP_DATA_USER_AVATAR, "");
+        if (mSettings.contains(APP_DATA_AVATAR)) {
+            String user_avatar = mSettings.getString(APP_DATA_AVATAR, "");
             Glide.with(getContext()).load(user_avatar).error(R.drawable.default_avatar).into(avatar_img_change);
         }
 
@@ -480,7 +480,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                     myRef.child(mAuth.getUid()).child("profile").child("avatar").setValue(String.valueOf(uploadUri));
 
                     SharedPreferences.Editor editor = mSettings.edit();
-                    editor.putString(APP_DATA_USER_AVATAR, String.valueOf(uploadUri));
+                    editor.putString(APP_DATA_AVATAR, String.valueOf(uploadUri));
                     editor.apply();
 
                     MyToast("Готово");
