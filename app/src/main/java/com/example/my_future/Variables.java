@@ -9,6 +9,7 @@ public class Variables {
     public static final String TAG = "TAG";
     public static final List<Fragment> fragmentsInStack = new ArrayList<>();
     public static final List<Fragment> fragmentsInStackFlowing = new ArrayList<>();
+    public static final String MY_AUTH = "id";
 
     //  Переменные сохранения
     public static final String ALL_DATA_USER = "saveDataUser";

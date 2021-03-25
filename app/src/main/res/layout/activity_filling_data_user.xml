@@ -186,7 +186,7 @@
                     android:layout_below="@id/target"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/btn_save_actived"
+                    android:background="@drawable/btn_save_active"
                     android:fontFamily="@font/roboto"
                     android:onClick="onClickSaveDataUser"
                     android:text="@string/onward"

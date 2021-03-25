@@ -2,7 +2,9 @@ package com.example.my_future;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.my_future.MenuBottom.ProfileFragment;
+import com.example.my_future.TabLayout.Profile.VolumesBodyFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -65,6 +69,7 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
     }
 
     private void downloadData() {
+        progressBarDataVolume.setVisibility(View.VISIBLE);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -140,11 +145,12 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
                     }
                 }
                 editor.apply();
+                progressBarDataVolume.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                progressBarDataVolume.setVisibility(View.GONE);
             }
         });
     }
@@ -157,12 +163,8 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
         String forearm_text = forearm.getText().toString();
         String hip_text = hip.getText().toString();
         String shin_text = shin.getText().toString();
-
         SharedPreferences.Editor editor = mSettings.edit();
-        SharedPreferences.Editor editorCheck = checkData.edit();
-        if (!waist_text.isEmpty() && !neck_text.isEmpty() && !chest_text.isEmpty() && !biceps_text.isEmpty() && !forearm_text.isEmpty() && !hip_text.isEmpty() && !shin_text.isEmpty()) {
-            progressBarDataVolume.setVisibility(View.VISIBLE);
-        }
+        progressBarDataVolume.setVisibility(View.VISIBLE);
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -217,15 +219,20 @@ public class FillingDataVolumesActivity extends AppCompatActivity {
                     editor.putString(APP_DATA_USER_SHIN, "—");
                 }
                 if (!waist_text.isEmpty() && !neck_text.isEmpty() && !chest_text.isEmpty() && !biceps_text.isEmpty() && !forearm_text.isEmpty() && !hip_text.isEmpty() && !shin_text.isEmpty()) {
+                    SharedPreferences.Editor editorCheck = checkData.edit();
                     editorCheck.putString(CHECK_DATA_VOLUME, "true");
+                    editorCheck.apply();
+                    Intent intent = new Intent();
+                    intent.putExtra("check", "true");
+                    setResult(RESULT_OK, intent);
                 }
                 editor.apply();
-                editorCheck.apply();
                 finish();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                progressBarDataVolume.setVisibility(View.GONE);
                 MyToast("Данные не добавились");
             }
         });

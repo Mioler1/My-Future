@@ -119,7 +119,7 @@
                 android:layout_below="@id/experience"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/btn_save_actived"
+                android:background="@drawable/btn_save_active"
                 android:fontFamily="@font/roboto"
                 android:onClick="onClickSaveDataHealth"
                 android:text="@string/onward"

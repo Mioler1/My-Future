@@ -123,10 +123,12 @@
             android:id="@+id/regButton"
             android:layout_width="252dp"
             android:layout_height="wrap_content"
+            android:stateListAnimator="@animator/button_elevation"
+            android:onClick="onClickRegistration"
             android:layout_below="@id/label3"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:background="@drawable/btn_save_actived"
+            android:background="@drawable/btn_save_active"
             android:fontFamily="@font/roboto"
             android:text="@string/Registration"
             android:textColor="@color/white" />

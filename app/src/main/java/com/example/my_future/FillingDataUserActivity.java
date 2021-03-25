@@ -165,9 +165,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
             MyToast("Выберите цель");
             return;
         }
-        if (!nickname_text.isEmpty() && weight_text.isEmpty() && !growth_text.isEmpty() && !textNoVisibleGender.getText().toString().isEmpty() && !textNoVisibleTarget.getText().toString().isEmpty()) {
-            progressBarDataUser.setVisibility(View.VISIBLE);
-        }
+        progressBarDataUser.setVisibility(View.VISIBLE);
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -202,6 +200,7 @@ public class FillingDataUserActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                progressBarDataUser.setVisibility(View.GONE);
                 MyToast("Данные не добавились");
             }
         });
@@ -254,18 +253,18 @@ public class FillingDataUserActivity extends AppCompatActivity {
             UploadTask uploadTask = myStorage.putBytes(byteArray);
             uploadTask.continueWithTask(task ->
                     myStorage.getDownloadUrl()).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            uploadUri = task.getResult();
-                            buttonSave.setEnabled(true);
-                            buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
-                            progressBarDataUser.setVisibility(View.GONE);
-                        }
-                    }).addOnFailureListener(e -> MyToast("Картинка не загрузилась"));
+                if (task.isSuccessful()) {
+                    uploadUri = task.getResult();
+                    buttonSave.setEnabled(true);
+                    buttonSave.setBackgroundResource(R.drawable.btn_save_active);
+                    progressBarDataUser.setVisibility(View.GONE);
+                }
+            }).addOnFailureListener(e -> MyToast("Картинка не загрузилась"));
         } else {
             MyToast("Размер картинки не более 5мб");
             avatar_img.setImageResource(R.drawable.default_avatar);
             buttonSave.setEnabled(true);
-            buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
+            buttonSave.setBackgroundResource(R.drawable.btn_save_active);
             progressBarDataUser.setVisibility(View.GONE);
         }
     }

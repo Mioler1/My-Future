@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,16 +40,14 @@ import static com.example.my_future.Variables.APP_DATA_USER_PRESSURE;
 import static com.example.my_future.Variables.CHECK_DATA_HEALTH;
 
 public class FillingDataHealthActivity extends AppCompatActivity {
-
-    // Окно с данными о здоровье пользователя
     TextView textNoVisiblePressure, textNoVisibleDiseases, textNoVisibleExperience;
     Spinner diseases, experience;
     RecyclerView recyclerPressure;
+    ProgressBar progressBarHealth;
 
     FirebaseDatabase db;
     FirebaseAuth mAuth;
     DatabaseReference myRef;
-
     SharedPreferences mSettings, checkDataSettings;
 
     @Override
@@ -69,10 +68,10 @@ public class FillingDataHealthActivity extends AppCompatActivity {
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
 
-        // Окно с данными о здоровье пользователя
         recyclerPressure = findViewById(R.id.pressureList);
         diseases = findViewById(R.id.diseases);
         experience = findViewById(R.id.experience);
+        progressBarHealth = findViewById(R.id.progressBarActive);
     }
 
     public void onClickSaveDataHealth(View view) {
@@ -91,6 +90,7 @@ public class FillingDataHealthActivity extends AppCompatActivity {
             MyToast("Выберите стаж");
             return;
         }
+        progressBarHealth.setVisibility(View.VISIBLE);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,11 +113,15 @@ public class FillingDataHealthActivity extends AppCompatActivity {
                 myRef.child(mAuth.getUid()).child("health").child("activity").setValue("none");
 
                 startActivity(new Intent(FillingDataHealthActivity.this, FillingDataActivismActivity.class));
+                Intent intent = new Intent();
+                intent.putExtra("check", "true");
+                setResult(RESULT_OK, intent);
                 finish();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                progressBarHealth.setVisibility(View.GONE);
                 MyToast("Данные не добавились");
             }
         });
@@ -129,7 +133,6 @@ public class FillingDataHealthActivity extends AppCompatActivity {
 
     private void pressureSelection() {
         textNoVisiblePressure = findViewById(R.id.visible_text_pressure);
-
         recyclerPressure.setLayoutManager(new LinearLayoutManager(this));
         recyclerPressure.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -143,7 +146,6 @@ public class FillingDataHealthActivity extends AppCompatActivity {
         pressureArrayList.add(new Pressure("Гипертония тяжёлая", "≥180", "≥110"));
 
         PressureAdapter.OnUserClickListener onUserClickListener = pressure -> textNoVisiblePressure.setText(pressure.getNamePressure());
-
         PressureAdapter pressureAdapter = new PressureAdapter(this, pressureArrayList, onUserClickListener);
         recyclerPressure.setAdapter(pressureAdapter);
     }

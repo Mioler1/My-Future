@@ -103,9 +103,10 @@
             android:id="@+id/change_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_below="@+id/label2"
+            android:layout_alignParentEnd="true"
             android:layout_marginTop="2dp"
+            android:stateListAnimator="@animator/button_elevation"
             android:fontFamily="@font/roboto"
             android:onClick="onClickResetPassword"
             android:text="@string/changePassword"
@@ -123,11 +124,12 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/btn_save_actived"
+                android:background="@drawable/btn_save_active"
                 android:fontFamily="@font/roboto"
+                android:onClick="onClickAuthorization"
+                android:stateListAnimator="@animator/button_elevation"
                 android:text="@string/Come"
                 android:textColor="@color/white" />
-
 
             <TextView
                 android:id="@+id/questions_text"
@@ -145,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/questions_text"
                 android:layout_centerHorizontal="true"
+                android:stateListAnimator="@animator/button_elevation"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/roboto"
                 android:gravity="end"

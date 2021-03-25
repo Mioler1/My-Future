@@ -12,7 +12,6 @@ public class StartScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
-
         new Handler().postDelayed(() -> {
             startActivity(new Intent(StartScreenActivity.this, FirstScreenActivity.class));
             finish();

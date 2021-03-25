@@ -308,7 +308,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_save_actived"
+            android:background="@drawable/btn_save_active"
             android:text="Продолжить"
             android:textColor="@color/white"/>
 

@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import static com.example.my_future.Variables.ALL_CHECK_DATA;
 import static com.example.my_future.Variables.ALL_DATA_AVATAR;
 import static com.example.my_future.Variables.ALL_DATA_USER;
 import static com.example.my_future.Variables.CHECK_DATA_PROFILE;
+import static com.example.my_future.Variables.MY_AUTH;
 import static com.example.my_future.Variables.fragmentsInStack;
 import static com.example.my_future.Variables.fragmentsInStackFlowing;
 
@@ -68,9 +70,9 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
 
-        mSettings = this.getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
-        checkDataSettings = this.getSharedPreferences(ALL_CHECK_DATA, MODE_PRIVATE);
-        avatarSettings = this.getSharedPreferences(ALL_DATA_AVATAR, MODE_PRIVATE);
+        mSettings = getSharedPreferences(ALL_DATA_USER, MODE_PRIVATE);
+        checkDataSettings = getSharedPreferences(ALL_CHECK_DATA, MODE_PRIVATE);
+        avatarSettings = getSharedPreferences(ALL_DATA_AVATAR, MODE_PRIVATE);
         checkProfile();
     }
 
@@ -127,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 break;
             case R.id.id_out:
                 mSettings.edit().clear().apply();
-                checkDataSettings.edit().clear().apply();
                 avatarSettings.edit().clear().apply();
                 fragmentsInStack.clear();
                 fragmentsInStackFlowing.clear();
@@ -165,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
         });
     }
 
-    private void changeFragment(Fragment fragment) {
+    public void changeFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
@@ -198,15 +199,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 super.onBackPressed();
             }
         }
-    }
-
-    public void OnClickExit(View view) {
-        mSettings.edit().clear().apply();
-        fragmentsInStack.clear();
-        fragmentsInStackFlowing.clear();
-        mAuth.signOut();
-        startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
-        finish();
     }
 
     private void MyToast(String message) {

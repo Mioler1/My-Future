@@ -61,6 +61,7 @@
         android:onClick="onClickAuthorizationActivity"
         android:text="@string/Come"
         android:textAllCaps="false"
+        android:stateListAnimator="@animator/button_elevation"
         android:textColor="#ffffff"
         android:textSize="16sp" />
 

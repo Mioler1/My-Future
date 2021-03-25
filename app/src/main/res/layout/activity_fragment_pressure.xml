@@ -95,7 +95,7 @@
             android:layout_below="@id/pressureList"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:background="@drawable/btn_save_actived"
+            android:background="@drawable/btn_save_active"
             android:fontFamily="@font/roboto"
             android:onClick="onClickSaveDataPressure"
             android:text="@string/onward"

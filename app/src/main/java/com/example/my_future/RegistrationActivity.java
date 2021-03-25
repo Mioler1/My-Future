@@ -37,28 +37,25 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void init() {
         progressBar = findViewById(R.id.progressBar);
+        registration = findViewById(R.id.regButton);
 
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
-
-        registration = findViewById(R.id.regButton);
-        registration.setOnClickListener(view -> Registration());
     }
 
     private void MyToast(String message) {
         Toast.makeText(RegistrationActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void Registration() {
+    public void onClickRegistration(View view) {
         email = findViewById(R.id.email_registration);
         password = findViewById(R.id.password_registration);
         repeatPassword = findViewById(R.id.repeat_password_registration);
         String email_text = email.getText().toString();
         String password_text = password.getText().toString();
         String repeat_password_text = repeatPassword.getText().toString();
-        boolean check;
-
+        boolean check = false;
         if (email_text.isEmpty()) {
             MyToast("Поле email пустое!");
             return;
@@ -73,9 +70,6 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         if (password_text.matches("[a-zA-Zа-яА-Я0-9@$#?&_.-]+")) {
             check = true;
-        } else {
-            MyToast("Некоректный пароль");
-            return;
         }
         if (!check) {
             MyToast("Некоректный пароль");
@@ -93,10 +87,10 @@ public class RegistrationActivity extends AppCompatActivity {
             MyToast("Повторный пароль введен неверно!");
             return;
         }
-
+        progressBar.setVisibility(View.VISIBLE);
+        registration.setClickable(false);
         mAuth.createUserWithEmailAndPassword(email_text, password_text)
                 .addOnCompleteListener(task -> {
-                    progressBar.setVisibility(View.VISIBLE);
                     if (task.isSuccessful()) {
                         User user = new User();
                         user.setEmail(email_text);
@@ -111,6 +105,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         sendEmailVer();
                     } else {
                         progressBar.setVisibility(View.GONE);
+                        registration.setClickable(true);
                         try {
                             throw task.getException();
                         } catch (FirebaseAuthInvalidCredentialsException malformedEmail) {
@@ -133,7 +128,8 @@ public class RegistrationActivity extends AppCompatActivity {
                 startActivity();
                 finish();
             } else {
-                MyToast("Не работает");
+                progressBar.setVisibility(View.GONE);
+                registration.setClickable(true);
             }
         });
     }

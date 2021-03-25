@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.my_future.FillingDataVolumesActivity;
+import com.example.my_future.MenuBottom.ProfileFragment;
 import com.example.my_future.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +37,7 @@ import static com.example.my_future.Variables.APP_DATA_USER_SHIN;
 import static com.example.my_future.Variables.APP_DATA_USER_WAIST;
 import static com.example.my_future.Variables.APP_DATA_USER_WEIGHT;
 import static com.example.my_future.Variables.CHECK_DATA_VOLUME;
+import static com.example.my_future.Variables.TAG;
 
 public class VolumesBodyFragment extends Fragment {
     TextView weight, growth, neck, biceps, forearm, chest, waist, hip, shin;
@@ -51,13 +54,7 @@ public class VolumesBodyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.tab_fragment_volumes_body, container, false);
         init();
-        if (String.valueOf(checkDataSettings.contains(CHECK_DATA_VOLUME)).equals("true")) {
-            RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
-            RelativeLayout relativePlus = v.findViewById(R.id.Rel_plus);
-            relativeReadData.setVisibility(View.VISIBLE);
-            relativePlus.setVisibility(View.GONE);
-            downloadData();
-        }
+        checkData();
         return v;
     }
 
@@ -79,7 +76,33 @@ public class VolumesBodyFragment extends Fragment {
         shin = v.findViewById(R.id.shin);
 
         v.findViewById(R.id.but_plus).setOnClickListener(view ->
-            startActivity(new Intent(getContext(), FillingDataVolumesActivity.class)));
+                startActivityForResult(new Intent(getContext(), FillingDataVolumesActivity.class), 1));
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        String check = data.getStringExtra("check");
+        if (check.equals("true")) {
+            RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
+            RelativeLayout relativePlus = v.findViewById(R.id.Rel_plus);
+            relativeReadData.setVisibility(View.VISIBLE);
+            relativePlus.setVisibility(View.GONE);
+            downloadData();
+        }
+    }
+
+    private void checkData() {
+        if (String.valueOf(checkDataSettings.contains(CHECK_DATA_VOLUME)).equals("true")) {
+            RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
+            RelativeLayout relativePlus = v.findViewById(R.id.Rel_plus);
+            relativeReadData.setVisibility(View.VISIBLE);
+            relativePlus.setVisibility(View.GONE);
+            downloadData();
+        }
     }
 
     private void downloadData() {

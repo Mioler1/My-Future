@@ -3,10 +3,17 @@ package com.example.my_future;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.StateListAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,6 +25,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.example.my_future.Variables.ALL_CHECK_DATA;
+import static com.example.my_future.Variables.MY_AUTH;
+
 public class AuthorizationActivity extends AppCompatActivity {
     EditText email, password, emailResetPassword;
     Button come;
@@ -26,34 +36,30 @@ public class AuthorizationActivity extends AppCompatActivity {
     FirebaseDatabase db;
     DatabaseReference myRef;
     FirebaseAuth mAuth;
-    FirebaseUser mUser;
+    SharedPreferences checkDataSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorization);
-
         init();
     }
 
     private void init() {
         email = findViewById(R.id.email_authorization);
         password = findViewById(R.id.password_authorization);
+        come = findViewById(R.id.comeButton);
         progressBar = findViewById(R.id.progressBar);
 
         db = FirebaseDatabase.getInstance();
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+        checkDataSettings = getSharedPreferences(ALL_CHECK_DATA, MODE_PRIVATE);
 
         email.setText("veretennik-v@mail.ru");
         password.setText("121212");
-
 //        email.setText(getIntent().getStringExtra("email"));
 //        password.setText(getIntent().getStringExtra("password"));
-
-        come = findViewById(R.id.comeButton);
-        come.setOnClickListener(view -> Authorization());
     }
 
     private void MyToast(String message) {
@@ -69,7 +75,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         }
     }
 
-    private void Authorization() {
+    public void onClickAuthorization(View view) {
         String email_text = email.getText().toString();
         String password_text = password.getText().toString();
         if (email_text.isEmpty()) {
@@ -80,16 +86,17 @@ public class AuthorizationActivity extends AppCompatActivity {
             MyToast("Поле пароль пустое!");
             return;
         }
-
+        progressBar.setVisibility(View.VISIBLE);
+        come.setClickable(false);
         mAuth.signInWithEmailAndPassword(email_text, password_text)
                 .addOnCompleteListener(task -> {
-                    progressBar.setVisibility(View.VISIBLE);
                     if (task.isSuccessful()) {
                         comeEmailVer();
                         myRef.child(mAuth.getUid()).child("password").setValue(password_text);
                     } else {
                         MyToast("Авторизация провалена");
                         progressBar.setVisibility(View.GONE);
+                        come.setClickable(true);
                     }
                 });
     }
@@ -98,13 +105,20 @@ public class AuthorizationActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         assert user != null;
         if (user.isEmailVerified()) {
+            if (!checkDataSettings.getString(MY_AUTH, "").equals(String.valueOf(mAuth.getUid()))) {
+                checkDataSettings.edit().clear().apply();
+                SharedPreferences.Editor editorCheck = checkDataSettings.edit();
+                editorCheck.putString(MY_AUTH, String.valueOf(mAuth.getUid()));
+                editorCheck.apply();
+            }
             startActivity(new Intent(AuthorizationActivity.this, MainActivity.class)
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
             finish();
         } else {
             MyToast("Зайди на почту");
             progressBar.setVisibility(View.GONE);
         }
+        come.setClickable(true);
     }
 
     public void onClickRegistrationActivity(View view) {

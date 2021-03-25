@@ -36,9 +36,9 @@ import static com.example.my_future.Variables.CHECK_DATA_HEALTH;
 public class HealthFragment extends Fragment {
     TextView activism, diseases, experience, pressure;
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("Users");
+    FirebaseAuth mAuth;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     SharedPreferences mSettings, checkDataSettings;
     View v;
@@ -48,6 +48,50 @@ public class HealthFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.tab_fragment_health, container, false);
         init();
+        checkData();
+        return v;
+    }
+
+    private void init() {
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Users");
+        mSettings = getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
+        checkDataSettings = getContext().getSharedPreferences(ALL_CHECK_DATA, Context.MODE_PRIVATE);
+
+        activism = v.findViewById(R.id.activity);
+        diseases = v.findViewById(R.id.diseases);
+        experience = v.findViewById(R.id.experience);
+        pressure = v.findViewById(R.id.pressure);
+
+        v.findViewById(R.id.but_plus).setOnClickListener(view -> {
+            if (!String.valueOf(checkDataSettings.contains(CHECK_DATA_HEALTH)).equals("true")) {
+                startActivityForResult(new Intent(getContext(), FillingDataHealthActivity.class), 1);
+            } else {
+                startActivityForResult(new Intent(getContext(), FillingDataActivismActivity.class), 1);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        if (String.valueOf(checkDataSettings.contains(CHECK_DATA_ACTIVISM)).equals("true")) {
+            String check = data.getStringExtra("check");
+            if (check.equals("true")) {
+                RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
+                RelativeLayout relativePlus = v.findViewById(R.id.Rel_plus);
+                relativeReadData.setVisibility(View.VISIBLE);
+                relativePlus.setVisibility(View.GONE);
+                downloadData();
+            }
+        }
+    }
+
+    private void checkData() {
         if (String.valueOf(checkDataSettings.contains(CHECK_DATA_HEALTH)).equals("true") &&
                 String.valueOf(checkDataSettings.contains(CHECK_DATA_ACTIVISM)).equals("true")) {
             RelativeLayout relativeReadData = v.findViewById(R.id.RelRead);
@@ -56,24 +100,6 @@ public class HealthFragment extends Fragment {
             relativePlus.setVisibility(View.GONE);
             downloadData();
         }
-        return v;
-    }
-
-    private void init() {
-        mSettings = getContext().getSharedPreferences(ALL_DATA_USER, Context.MODE_PRIVATE);
-        checkDataSettings = getContext().getSharedPreferences(ALL_CHECK_DATA, Context.MODE_PRIVATE);
-        activism = v.findViewById(R.id.activity);
-        diseases = v.findViewById(R.id.diseases);
-        experience = v.findViewById(R.id.experience);
-        pressure = v.findViewById(R.id.pressure);
-
-        v.findViewById(R.id.but_plus).setOnClickListener(view -> {
-            if (!String.valueOf(checkDataSettings.contains(CHECK_DATA_HEALTH)).equals("true")) {
-                startActivity(new Intent(getContext(), FillingDataHealthActivity.class));
-            } else {
-                startActivity(new Intent(getContext(), FillingDataActivismActivity.class));
-            }
-        });
     }
 
     private void downloadData() {

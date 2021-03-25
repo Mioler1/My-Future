@@ -1,6 +1,5 @@
 package com.example.my_future.MenuBottom;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -91,6 +90,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         viewFragment = inflater.inflate(R.layout.bottom_fragment_profile, container, false);
+
         init();
         return viewFragment;
     }
@@ -141,26 +141,28 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences.Editor editorAvatar = avatarSettings.edit();
-                if (avatarSettings.contains(APP_DATA_AVATAR)) {
-                    String user_avatar = avatarSettings.getString(APP_DATA_AVATAR, "");
-                    Glide.with(avatar.getContext()).load(user_avatar).error(R.drawable.default_avatar).into(avatar);
-                    noImage = true;
-                } else {
-                    urlAvatar = String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue());
-                    Glide.with(avatar.getContext()).load(urlAvatar).listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            return false;
-                        }
+                if (isAdded()) {
+                    if (avatarSettings.contains(APP_DATA_AVATAR)) {
+                        String user_avatar = avatarSettings.getString(APP_DATA_AVATAR, "");
+                        Glide.with(avatar.getContext()).load(user_avatar).error(R.drawable.default_avatar).into(avatar);
+                        noImage = true;
+                    } else {
+                        urlAvatar = String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue());
+                        Glide.with(avatar.getContext()).load(urlAvatar).listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                return false;
+                            }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            editorAvatar.putString(APP_DATA_AVATAR, urlAvatar);
-                            editorAvatar.apply();
-                            noImage = true;
-                            return false;
-                        }
-                    }).error(R.drawable.default_avatar).into(avatar);
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                editorAvatar.putString(APP_DATA_AVATAR, urlAvatar);
+                                editorAvatar.apply();
+                                noImage = true;
+                                return false;
+                            }
+                        }).error(R.drawable.default_avatar).into(avatar);
+                    }
                 }
                 SharedPreferences.Editor editor = mSettings.edit();
                 if (mSettings.contains(APP_DATA_USER_NICKNAME)) {
@@ -269,7 +271,7 @@ public class ProfileFragment extends Fragment {
                 if (task.isSuccessful()) {
                     uploadUri = task.getResult();
                     buttonSave.setEnabled(true);
-                    buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
+                    buttonSave.setBackgroundResource(R.drawable.btn_save_active);
                     progressBarDataUser.setVisibility(View.GONE);
                 }
             }).addOnFailureListener(e -> MyToast("Картинка не загрузилась"));
@@ -277,7 +279,7 @@ public class ProfileFragment extends Fragment {
             MyToast("Размер картинки не более 5мб");
             changeAvatar.setImageResource(R.drawable.default_avatar);
             buttonSave.setEnabled(true);
-            buttonSave.setBackgroundResource(R.drawable.btn_save_actived);
+            buttonSave.setBackgroundResource(R.drawable.btn_save_active);
             progressBarDataUser.setVisibility(View.GONE);
         }
     }

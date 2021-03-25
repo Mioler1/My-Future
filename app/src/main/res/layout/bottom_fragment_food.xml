@@ -35,6 +35,6 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:textColor="@color/white"
-        android:background="@drawable/btn_save_actived"/>
+        android:background="@drawable/btn_save_active"/>
 
 </RelativeLayout>

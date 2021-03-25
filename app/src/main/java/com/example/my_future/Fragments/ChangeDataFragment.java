@@ -3,12 +3,10 @@ package com.example.my_future.Fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -851,7 +849,7 @@ public class ChangeDataFragment extends Fragment implements BackPressed {
                 if (task.isSuccessful()) {
                     uploadUri = task.getResult();
                     viewAlert.findViewById(R.id.butSaveChangeDate).setEnabled(true);
-                    viewAlert.findViewById(R.id.butSaveChangeDate).setBackgroundResource(R.drawable.btn_save_actived);
+                    viewAlert.findViewById(R.id.butSaveChangeDate).setBackgroundResource(R.drawable.btn_save_active);
                     progressBar.setVisibility(View.GONE);
                 }
             }

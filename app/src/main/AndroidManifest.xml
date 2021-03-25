@@ -13,11 +13,6 @@
         android:roundIcon="@drawable/logo_dark"
         android:supportsRtl="true"
         android:theme="@style/Theme.My_Future">
-        <activity android:name=".FillingDataActivismActivity"></activity>
-        <activity android:name=".FillingDataVolumesActivity" />
-        <activity android:name=".CalculetedActivity.CalculatedKetchActivity" />
-        <activity android:name=".CalculetedActivity.CalculetedMifflinActivity" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
@@ -27,7 +22,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,15 +38,27 @@
             android:name=".FillingDataUserActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FillingDataHealthActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Intro.IntroActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".FillingDataVolumesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FillingDataHealthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FillingDataActivismActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CalculetedActivity.CalculatedKetchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CalculetedActivity.CalculetedMifflinActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".Additionally.FragmentActivityActivism"
             android:screenOrientation="portrait" />
