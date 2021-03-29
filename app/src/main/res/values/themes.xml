@@ -26,7 +26,7 @@
     <style name="Theme.MyAlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="android:windowBackground">@color/invisible</item>
     </style>
-
+    //
     <style name="Theme.SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/fon</item>
     </style>
