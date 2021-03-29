@@ -4,17 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 
 public class StartScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.Theme_SplashTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_screen);
-        new Handler().postDelayed(() -> {
-            startActivity(new Intent(StartScreenActivity.this, FirstScreenActivity.class));
-            finish();
-        }, 2000);
+        startActivity(new Intent(StartScreenActivity.this, FirstScreenActivity.class));
+        finish();
     }
 }

@@ -187,7 +187,7 @@ public class ProfileFragment extends Fragment {
 
     private void changeAvatar() {
         avatar.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyAlertDialog);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.Theme_MyAlertDialog);
             LayoutInflater inflater = getLayoutInflater();
             viewAlert = inflater.inflate(R.layout.alert_dialog_change_avatar, null);
             changeAvatar = viewAlert.findViewById(R.id.avatar_change);

@@ -19,11 +19,15 @@
         <item name="backgroundColor">@color/custom</item>
     </style>
 
-    <style name="MyRadioButton" parent="Theme.AppCompat.Light">
+    <style name="Theme.MyRadioButton" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/for_button</item>
     </style>
 
-    <style name="MyAlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+    <style name="Theme.MyAlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="android:windowBackground">@color/invisible</item>
+    </style>
+
+    <style name="Theme.SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/fon</item>
     </style>
 </resources>
