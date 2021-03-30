@@ -154,14 +154,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Мужской"
-                        android:theme="@style/MyRadioButton" />
+                        android:theme="@style/Theme.MyRadioButton" />
 
                     <RadioButton
                         android:id="@+id/gender_girl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Женский"
-                        android:theme="@style/MyRadioButton" />
+                        android:theme="@style/Theme.MyRadioButton" />
 
                 </RadioGroup>
 
