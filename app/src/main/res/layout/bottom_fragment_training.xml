@@ -21,12 +21,57 @@
             android:textSize="34sp" />
 
         <View
+            android:id="@+id/Boo"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/f1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/tab_indicator_gray" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Boo"
+            android:gravity="center_horizontal">
+
+<!--            <Button-->
+<!--                android:id="@+id/AllTrains"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="All Trains"-->
+<!--                android:textAllCaps="false"-->
+<!--                />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/MyTrains"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_toRightOf="@id/AllTrains"-->
+<!--                android:text="My Trains"-->
+<!--                android:textAllCaps="false"-->
+<!--                />-->
+
+            <TextView
+                android:id="@+id/AllTrains"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All trains"
+                android:textSize="28sp"/>
+
+            <TextView
+                android:id="@+id/MyTrains"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/AllTrains"
+                android:text="My trains"
+                android:textSize="28sp"
+                />
+
+
+
+
+        </RelativeLayout>
 
         <Button
             android:id="@+id/but_start"

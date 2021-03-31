@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.My_Future" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+    <style name="Theme.My_Future" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/for_button</item>
         <item name="colorPrimaryVariant">@color/for_button</item>
@@ -23,10 +23,10 @@
         <item name="colorControlActivated">@color/for_button</item>
     </style>
 
-    <style name="Theme.MyAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="Theme.MyAlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
         <item name="android:windowBackground">@color/invisible</item>
     </style>
-
+    //
     <style name="Theme.SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/fon</item>
     </style>

@@ -1,22 +1,33 @@
 package com.example.my_future;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.my_future.MenuFlowing.CalculatedFragment;
-import com.example.my_future.MenuFlowing.MenuListFragment;
-import com.example.my_future.MenuFlowing.NavItemSelectedListener;
+import com.example.my_future.Menu.DrawerAdapter;
+import com.example.my_future.Menu.DrawerItem;
+import com.example.my_future.Menu.SimpleItem;
+import com.example.my_future.Menu.SpaceItem;
 import com.example.my_future.MenuBottom.FoodFragment;
 import com.example.my_future.MenuBottom.ForumFragment;
 import com.example.my_future.MenuBottom.NotebookFragment;
@@ -29,6 +40,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.yarolegovich.slidingrootnav.SlidingRootNav;
+import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
+
+import java.util.Arrays;
 
 import static com.example.my_future.Variables.ALL_CHECK_DATA;
 import static com.example.my_future.Variables.ALL_DATA_AVATAR;
@@ -38,13 +53,25 @@ import static com.example.my_future.Variables.MY_AUTH;
 import static com.example.my_future.Variables.fragmentsInStack;
 import static com.example.my_future.Variables.fragmentsInStackFlowing;
 
-public class MainActivity extends AppCompatActivity implements NavItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnItemSelectedListener {
     FirebaseDatabase db;
     DatabaseReference myRef;
     FirebaseAuth mAuth;
 
     BottomNavigationView bottomNav;
     SharedPreferences mSettings, checkDataSettings, avatarSettings;
+
+    private static final int POS_PROGRESS = 0;
+    private static final int POS_LISENSE = 1;
+    private static final int POS_HELP= 2;
+    private static final int POS_CALC= 3;
+    private static final int POS_SETTINGS= 4;
+    private static final int POS_LOGOUT = 6;
+
+    private String[] screenTitles;
+    private Drawable[] screenIcons;
+
+    private SlidingRootNav slidingRootNav;
 
     private final FoodFragment fragmentFood = new FoodFragment();
     private final ForumFragment fragmentForum = new ForumFragment();
@@ -56,9 +83,44 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar  = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        slidingRootNav = new SlidingRootNavBuilder(this)
+                .withDragDistance(180)
+                .withRootViewScale(0.75f)
+                .withRootViewElevation(25)
+                .withToolbarMenuToggle(toolbar)
+                .withMenuOpened(false)
+                .withContentClickableWhenMenuOpened(false)
+                .withSavedState(savedInstanceState)
+                .withMenuLayout(R.layout.menu_left)
+                .inject();
+
+        screenIcons = loadScreenIcons();
+        screenTitles = loadScreenTitles();
+
+        DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
+                createItemFor(POS_PROGRESS).setChecked(true),
+                createItemFor(POS_LISENSE),
+                createItemFor(POS_HELP),
+                createItemFor(POS_CALC),
+                createItemFor(POS_SETTINGS),
+                new SpaceItem(260),
+                createItemFor(POS_LOGOUT)
+        ));
+        adapter.setListener(this);
+
+        RecyclerView list = findViewById(R.id.drawer_list);
+        list.setNestedScrollingEnabled(false);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(adapter);
+
+        adapter.setSelected(POS_PROGRESS);
+
         init();
         clickBottomNavigationMenu();
-        setupMenu();
     }
 
     private void init() {
@@ -107,43 +169,6 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
                 MyToast(databaseError.getMessage());
             }
         });
-    }
-
-    private void setupMenu() {
-        FragmentManager fm = getSupportFragmentManager();
-        MenuListFragment mMenuFragment = (MenuListFragment) fm.findFragmentById(R.id.id_container_menu);
-        if (mMenuFragment == null) {
-            mMenuFragment = new MenuListFragment();
-            mMenuFragment.setNavItemSelectedListener(this);
-            fm.beginTransaction().add(R.id.id_container_menu, mMenuFragment).commit();
-        }
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public void onNavItemSelectedListener(MenuItem item) {
-        Fragment selectedFragment = null;
-        switch (item.getItemId()) {
-            case R.id.id_calculate:
-                selectedFragment = new CalculatedFragment();
-                break;
-            case R.id.id_out:
-                mSettings.edit().clear().apply();
-                avatarSettings.edit().clear().apply();
-                fragmentsInStack.clear();
-                fragmentsInStackFlowing.clear();
-                mAuth.signOut();
-                selectedFragment = new Fragment();
-                startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
-                finish();
-                break;
-        }
-        if (!fragmentsInStackFlowing.isEmpty()) {
-            fragmentsInStackFlowing.clear();
-        }
-        fragmentsInStackFlowing.remove(selectedFragment);
-        fragmentsInStackFlowing.add(selectedFragment);
-        changeFragment(selectedFragment);
     }
 
     private void clickBottomNavigationMenu() {
@@ -203,5 +228,58 @@ public class MainActivity extends AppCompatActivity implements NavItemSelectedLi
 
     private void MyToast(String message) {
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private DrawerItem createItemFor(int position) {
+        return new SimpleItem(screenIcons[position], screenTitles[position])
+                .withIconTint(color(R.color.white))
+                .withTextTint(color(R.color.white))
+                .withSelectedIconTint(Color.GRAY)
+                .withSelectedTextTint(Color.GRAY);
+    }
+
+    @ColorInt
+    private int color(@ColorRes int res) {
+        return ContextCompat.getColor(this, res);
+    }
+
+    private String[] loadScreenTitles() {
+        return getResources().getStringArray(R.array.id_activityScreenTitles);
+    }
+
+    private Drawable[] loadScreenIcons() {
+        TypedArray ta = getResources().obtainTypedArray(R.array.id_activityScreenIcons);
+        Drawable[] icons = new Drawable[ta.length()];
+        for (int i = 0; i < ta.length(); i++) {
+            int id = ta.getResourceId(i, 0);
+            if (id != 0) {
+                icons[i] = ContextCompat.getDrawable(this, id);
+            }
+        }
+        ta.recycle();
+        return icons;
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//        finish();
+//    }
+
+    @Override
+    public void onItemSelected(int position) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if (position == POS_PROGRESS){
+            ProfileFragment profileFragment = new ProfileFragment();
+            transaction.replace(R.id.container, profileFragment);
+        } else if (position == POS_CALC) {
+            ProfileFragment profileFragment = new ProfileFragment();
+            transaction.replace(R.id.container, profileFragment);
+        } else if (position == POS_LOGOUT) {
+            finish();
+        }
+
+        slidingRootNav.closeMenu();
+        transaction.commit();
     }
 }

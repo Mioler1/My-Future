@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.my_future.MenuFlowing.CalculatedFragment;
 import com.example.my_future.R;
 
 public class FoodFragment extends Fragment {
@@ -29,7 +28,7 @@ public class FoodFragment extends Fragment {
         Button button = v.findViewById(R.id.calc);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new CalculatedFragment()).commit();
+//                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new CalculatedFragment()).commit();
             }
         });
     }

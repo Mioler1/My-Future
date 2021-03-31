@@ -48,6 +48,25 @@
             android:textColorHint="@color/white"
             android:visibility="gone" />
 
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:hintTextAppearance="@style/TextAppearance.AppCompat.Small">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/email_change"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:hint="Введите новый email"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:visibility="gone"-->
+<!--                android:textColorHint="@color/white"-->
+<!--                android:inputType="textEmailAddress" />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
         <EditText
             android:id="@+id/old_password"
             android:layout_width="match_parent"
