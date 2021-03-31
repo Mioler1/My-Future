@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="id_activityScreenTitles">
+        <item>Прогресс</item>
+        <item>Лицензия</item>
+        <item>Помощь</item>
+        <item>Калькуляторы</item>
+        <item>Настройка</item>
+        <item/>
+        <item>Выход</item>
+    </string-array>
+
+    <array name="id_activityScreenIcons">
+        <item>@drawable/ic_baseline_auto_graph_24</item>
+        <item>@drawable/ic_baseline_featured_play_list_24</item>
+        <item>@drawable/ic_baseline_help_24</item>
+        <item>@drawable/ic_baseline_calculate_24</item>
+        <item>@drawable/ic_settings</item>
+        <item>0</item>
+        <item>@drawable/ic_baseline_login_24 </item>
+    </array>
+
+</resources>
