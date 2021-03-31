@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/f1"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="49dp"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/yanone_kaffeesatz"
             android:gravity="center|start"
