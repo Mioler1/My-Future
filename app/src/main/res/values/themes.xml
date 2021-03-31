@@ -30,4 +30,9 @@
     <style name="Theme.SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/fon</item>
     </style>
+
+    <style name="Theme.MyCheckBox" parent="Theme.MaterialComponents.Light">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/for_button</item>
+    </style>
 </resources>

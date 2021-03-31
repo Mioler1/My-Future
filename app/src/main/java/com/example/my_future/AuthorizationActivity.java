@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.StateListAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.my_future.Variables.ALL_CHECK_DATA;
+import static com.example.my_future.Variables.ALL_SAVE_SETTINGS;
 import static com.example.my_future.Variables.MY_AUTH;
 
 public class AuthorizationActivity extends AppCompatActivity {
@@ -36,7 +38,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     FirebaseDatabase db;
     DatabaseReference myRef;
     FirebaseAuth mAuth;
-    SharedPreferences checkDataSettings;
+    SharedPreferences checkDataSettings, saveSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         myRef = db.getReference("Users");
         mAuth = FirebaseAuth.getInstance();
         checkDataSettings = getSharedPreferences(ALL_CHECK_DATA, MODE_PRIVATE);
+        saveSettings = getSharedPreferences(ALL_SAVE_SETTINGS, Context.MODE_PRIVATE);
 
         email.setText("veretennik-v@mail.ru");
         password.setText("121212");
@@ -107,6 +110,7 @@ public class AuthorizationActivity extends AppCompatActivity {
         if (user.isEmailVerified()) {
             if (!checkDataSettings.getString(MY_AUTH, "").equals(String.valueOf(mAuth.getUid()))) {
                 checkDataSettings.edit().clear().apply();
+                saveSettings.edit().clear().apply();
                 SharedPreferences.Editor editorCheck = checkDataSettings.edit();
                 editorCheck.putString(MY_AUTH, String.valueOf(mAuth.getUid()));
                 editorCheck.apply();
@@ -126,7 +130,7 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     public void onClickResetPassword(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Light_Dialog_Alert);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_MyAlertDialog);
         LayoutInflater layoutInflater = getLayoutInflater();
         View viewAlert = layoutInflater.inflate(R.layout.alert_dialog_reset_password, null);
         builder.setView(viewAlert).setCancelable(true);

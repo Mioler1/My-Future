@@ -129,8 +129,9 @@ public class ProfileFragment extends Fragment {
         for (int i = 0; i < iconResId.length; i++) {
             tabLayout.getTabAt(i).setIcon(iconResId[i]);
         }
-
-        downloadData();
+        if (isAdded()) {
+            downloadData();
+        }
         changeAvatar();
         viewFragment.findViewById(R.id.ic_changeData).setOnClickListener(view ->
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ChangeDataFragment()).commit());
@@ -141,28 +142,26 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences.Editor editorAvatar = avatarSettings.edit();
-                if (isAdded()) {
-                    if (avatarSettings.contains(APP_DATA_AVATAR)) {
-                        String user_avatar = avatarSettings.getString(APP_DATA_AVATAR, "");
-                        Glide.with(avatar.getContext()).load(user_avatar).error(R.drawable.default_avatar).into(avatar);
-                        noImage = true;
-                    } else {
-                        urlAvatar = String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue());
-                        Glide.with(avatar.getContext()).load(urlAvatar).listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                return false;
-                            }
+                if (avatarSettings.contains(APP_DATA_AVATAR)) {
+                    String user_avatar = avatarSettings.getString(APP_DATA_AVATAR, "");
+                    Glide.with(avatar.getContext()).load(user_avatar).error(R.drawable.default_avatar).into(avatar);
+                    noImage = true;
+                } else {
+                    urlAvatar = String.valueOf(snapshot.child(mAuth.getUid()).child("profile").child("avatar").getValue());
+                    Glide.with(avatar.getContext()).load(urlAvatar).listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            return false;
+                        }
 
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                editorAvatar.putString(APP_DATA_AVATAR, urlAvatar);
-                                editorAvatar.apply();
-                                noImage = true;
-                                return false;
-                            }
-                        }).error(R.drawable.default_avatar).into(avatar);
-                    }
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            editorAvatar.putString(APP_DATA_AVATAR, urlAvatar);
+                            editorAvatar.apply();
+                            noImage = true;
+                            return false;
+                        }
+                    }).error(R.drawable.default_avatar).into(avatar);
                 }
                 SharedPreferences.Editor editor = mSettings.edit();
                 if (mSettings.contains(APP_DATA_USER_NICKNAME)) {

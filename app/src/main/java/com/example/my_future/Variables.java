@@ -15,6 +15,7 @@ public class Variables {
     public static final String ALL_DATA_USER = "saveDataUser";
     public static final String ALL_DATA_AVATAR = "saveDataAvatar";
     public static final String ALL_CHECK_DATA = "saveCheckData";
+    public static final String ALL_SAVE_SETTINGS = "saveSettings";
 
     //  Переменные данных пользователя
     public static final String APP_DATA_USER_NICKNAME = "Nickname";
@@ -45,4 +46,11 @@ public class Variables {
     public static final String CHECK_DATA_SPORT = "SportBool";
     public static final String CHECK_DATA_HEALTH = "HealthBool";
     public static final String CHECK_DATA_ACTIVISM = "ActivismBool";
+
+    //  Переменные сохранения чекбоксов спортивных результатов
+    public static final String SAVE_CHECKBOX_ALL = "CheckboxAll";
+    public static final String SAVE_CHECKBOX_BODYBUILDING = "CheckboxBodybuilding";
+    public static final String SAVE_CHECKBOX_ATHLETICS = "CheckboxAthletics";
+    public static final String SAVE_CHECKBOX_GYMNASTICS = "CheckboxGymnastics";
+    public static final String SAVE_CHECKBOX_AEROBICS = "CheckboxAerobics";
 }

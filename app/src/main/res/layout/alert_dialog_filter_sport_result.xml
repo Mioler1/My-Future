@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/background_alert_dialog"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <CheckBox
+            android:id="@+id/checkBoxAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Все"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:theme="@style/Theme.MyCheckBox" />
+
+        <CheckBox
+            android:id="@+id/checkBoxBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Бодибилдинг"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:theme="@style/Theme.MyCheckBox" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Тяжёлая атлетика"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:theme="@style/Theme.MyCheckBox" />
+
+        <CheckBox
+            android:id="@+id/checkBoxGym"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Гимнастика"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:theme="@style/Theme.MyCheckBox" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Аэробная нагрузка"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:theme="@style/Theme.MyCheckBox" />
+
+        <Button
+            android:id="@+id/but_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@color/invisible"
+            android:stateListAnimator="@animator/button_elevation"
+            android:text="Ок"
+            android:textColor="@color/for_button"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
