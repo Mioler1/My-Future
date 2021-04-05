@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         init();
         openMenu(savedInstanceState);
         clickBottomNavigationMenu();
