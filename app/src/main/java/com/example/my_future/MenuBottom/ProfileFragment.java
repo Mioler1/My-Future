@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -96,6 +98,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void init() {
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle("Профиль");
         avatar = viewFragment.findViewById(R.id.avatar);
         nickname = viewFragment.findViewById(R.id.nickname);
         target = viewFragment.findViewById(R.id.target);

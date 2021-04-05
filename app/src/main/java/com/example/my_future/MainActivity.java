@@ -7,32 +7,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.example.my_future.Menu.DrawerAdapter;
-import com.example.my_future.Menu.DrawerItem;
-import com.example.my_future.Menu.SimpleItem;
-import com.example.my_future.Menu.SpaceItem;
 import com.example.my_future.MenuBottom.FoodFragment;
 import com.example.my_future.MenuBottom.ForumFragment;
 import com.example.my_future.MenuBottom.NotebookFragment;
 import com.example.my_future.MenuBottom.PlanFragment;
 import com.example.my_future.MenuBottom.ProfileFragment;
+import com.example.my_future.MenuLeft.CalculatedFragment;
+import com.example.my_future.MenuLeft.DrawerAdapter;
+import com.example.my_future.MenuLeft.DrawerItem;
+import com.example.my_future.MenuLeft.SimpleItem;
+import com.example.my_future.MenuLeft.SpaceItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -49,7 +43,6 @@ import static com.example.my_future.Variables.ALL_CHECK_DATA;
 import static com.example.my_future.Variables.ALL_DATA_AVATAR;
 import static com.example.my_future.Variables.ALL_DATA_USER;
 import static com.example.my_future.Variables.CHECK_DATA_PROFILE;
-import static com.example.my_future.Variables.MY_AUTH;
 import static com.example.my_future.Variables.fragmentsInStack;
 import static com.example.my_future.Variables.fragmentsInStackFlowing;
 
@@ -58,20 +51,9 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     DatabaseReference myRef;
     FirebaseAuth mAuth;
 
+    Toolbar toolbar;
     BottomNavigationView bottomNav;
     SharedPreferences mSettings, checkDataSettings, avatarSettings;
-
-    private static final int POS_PROGRESS = 0;
-    private static final int POS_LISENSE = 1;
-    private static final int POS_HELP= 2;
-    private static final int POS_CALC= 3;
-    private static final int POS_SETTINGS= 4;
-    private static final int POS_LOGOUT = 6;
-
-    private String[] screenTitles;
-    private Drawable[] screenIcons;
-
-    private SlidingRootNav slidingRootNav;
 
     private final FoodFragment fragmentFood = new FoodFragment();
     private final ForumFragment fragmentForum = new ForumFragment();
@@ -79,51 +61,28 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
     private final PlanFragment fragmentPlan = new PlanFragment();
     private final ProfileFragment fragmentProfile = new ProfileFragment();
 
+    private static final int POS_PROGRESS = 0;
+    private static final int POS_LICENSE = 1;
+    private static final int POS_HELP = 2;
+    private static final int POS_CALCULATE = 3;
+    private static final int POS_SETTINGS = 4;
+    private static final int POS_LOGOUT = 6;
+    private String[] screenTitles;
+    private Drawable[] screenIcons;
+    private SlidingRootNav slidingRootNav;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar  = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        slidingRootNav = new SlidingRootNavBuilder(this)
-                .withDragDistance(180)
-                .withRootViewScale(0.75f)
-                .withRootViewElevation(25)
-                .withToolbarMenuToggle(toolbar)
-                .withMenuOpened(false)
-                .withContentClickableWhenMenuOpened(false)
-                .withSavedState(savedInstanceState)
-                .withMenuLayout(R.layout.menu_left)
-                .inject();
-
-        screenIcons = loadScreenIcons();
-        screenTitles = loadScreenTitles();
-
-        DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
-                createItemFor(POS_PROGRESS).setChecked(true),
-                createItemFor(POS_LISENSE),
-                createItemFor(POS_HELP),
-                createItemFor(POS_CALC),
-                createItemFor(POS_SETTINGS),
-                new SpaceItem(260),
-                createItemFor(POS_LOGOUT)
-        ));
-        adapter.setListener(this);
-
-        RecyclerView list = findViewById(R.id.drawer_list);
-        list.setNestedScrollingEnabled(false);
-        list.setLayoutManager(new LinearLayoutManager(this));
-        list.setAdapter(adapter);
-
-        adapter.setSelected(POS_PROGRESS);
-
         init();
+        openMenu(savedInstanceState);
         clickBottomNavigationMenu();
     }
 
     private void init() {
+        toolbar = findViewById(R.id.toolbar);
         bottomNav = findViewById(R.id.bottom_navigation);
         fragmentsInStack.add(fragmentPlan);
         changeFragment(fragmentPlan);
@@ -138,37 +97,102 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         checkProfile();
     }
 
-    private void checkProfile() {
-        SharedPreferences.Editor editor = checkDataSettings.edit();
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!String.valueOf(checkDataSettings.contains(CHECK_DATA_PROFILE)).equals("true")) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        if (snapshot.getKey().equals(mAuth.getUid())) {
-                            for (DataSnapshot s : snapshot.getChildren()) {
-                                if (s.getKey().equals("profile")) {
-                                    if (s.getValue().equals("none")) {
-                                        startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
-                                        fragmentsInStack.clear();
-                                        finish();
-                                    } else {
-                                        editor.putString(CHECK_DATA_PROFILE, "true");
-                                        editor.apply();
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+    private void openMenu(Bundle saved) {
+        slidingRootNav = new SlidingRootNavBuilder(this)
+                .withToolbarMenuToggle(toolbar)
+                .withMenuOpened(false)
+                .withContentClickableWhenMenuOpened(false)
+                .withSavedState(saved)
+                .withMenuLayout(R.layout.menu_left)
+                .inject();
+        screenIcons = loadScreenIcons();
+        screenTitles = loadScreenTitles();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                MyToast(databaseError.getMessage());
+        DrawerAdapter adapter = new DrawerAdapter(Arrays.asList(
+                createItemFor(POS_PROGRESS).setChecked(true),
+                createItemFor(POS_LICENSE),
+                createItemFor(POS_HELP),
+                createItemFor(POS_CALCULATE),
+                createItemFor(POS_SETTINGS),
+                new SpaceItem(50),
+                createItemFor(POS_LOGOUT)));
+        adapter.setListener(this);
+
+        RecyclerView list = findViewById(R.id.list);
+        list.setNestedScrollingEnabled(false);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        list.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemSelected(int position) {
+        Fragment selectedFragment = null;
+        if (position == POS_PROGRESS) {
+//            selectedFragment = ;
+        }
+        if (position == POS_LICENSE) {
+//            selectedFragment = ;
+        }
+        if (position == POS_HELP) {
+//            selectedFragment = ;
+        }
+        if (position == POS_CALCULATE) {
+            selectedFragment = new CalculatedFragment();
+            toolbar.setTitle("Калькуляторы");
+        }
+        if (position == POS_SETTINGS) {
+//            selectedFragment = ;
+        }
+        if (position == POS_LOGOUT) {
+            mSettings.edit().clear().apply();
+            avatarSettings.edit().clear().apply();
+            fragmentsInStack.clear();
+            fragmentsInStackFlowing.clear();
+            mAuth.signOut();
+            startActivity(new Intent(MainActivity.this, FirstScreenActivity.class));
+            finish();
+        }
+        slidingRootNav.closeMenu();
+        if (selectedFragment != null) {
+            if (!fragmentsInStackFlowing.isEmpty()) {
+                fragmentsInStackFlowing.clear();
             }
-        });
+            fragmentsInStackFlowing.remove(selectedFragment);
+            fragmentsInStackFlowing.add(selectedFragment);
+            changeFragment(selectedFragment);
+
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
+    private DrawerItem createItemFor(int position) {
+        return new SimpleItem(screenIcons[position], screenTitles[position])
+                .withIconTint(color(R.color.textColorSecondary))
+                .withTextTint(color(R.color.textColorPrimary))
+                .withSelectedIconTint(color(R.color.colorAccent))
+                .withSelectedTextTint(color(R.color.colorAccent));
+    }
+
+    private String[] loadScreenTitles() {
+        return getResources().getStringArray(R.array.id_activityScreenTitles);
+    }
+
+    private Drawable[] loadScreenIcons() {
+        TypedArray ta = getResources().obtainTypedArray(R.array.id_activityScreenIcons);
+        Drawable[] icons = new Drawable[ta.length()];
+        for (int i = 0; i < ta.length(); i++) {
+            int id = ta.getResourceId(i, 0);
+            if (id != 0) {
+                icons[i] = ContextCompat.getDrawable(this, id);
+            }
+        }
+        ta.recycle();
+        return icons;
+    }
+
+    @ColorInt
+    private int color(@ColorRes int res) {
+        return ContextCompat.getColor(this, res);
     }
 
     private void clickBottomNavigationMenu() {
@@ -230,56 +254,36 @@ public class MainActivity extends AppCompatActivity implements DrawerAdapter.OnI
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private DrawerItem createItemFor(int position) {
-        return new SimpleItem(screenIcons[position], screenTitles[position])
-                .withIconTint(color(R.color.white))
-                .withTextTint(color(R.color.white))
-                .withSelectedIconTint(Color.GRAY)
-                .withSelectedTextTint(Color.GRAY);
-    }
-
-    @ColorInt
-    private int color(@ColorRes int res) {
-        return ContextCompat.getColor(this, res);
-    }
-
-    private String[] loadScreenTitles() {
-        return getResources().getStringArray(R.array.id_activityScreenTitles);
-    }
-
-    private Drawable[] loadScreenIcons() {
-        TypedArray ta = getResources().obtainTypedArray(R.array.id_activityScreenIcons);
-        Drawable[] icons = new Drawable[ta.length()];
-        for (int i = 0; i < ta.length(); i++) {
-            int id = ta.getResourceId(i, 0);
-            if (id != 0) {
-                icons[i] = ContextCompat.getDrawable(this, id);
+    private void checkProfile() {
+        SharedPreferences.Editor editor = checkDataSettings.edit();
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!String.valueOf(checkDataSettings.contains(CHECK_DATA_PROFILE)).equals("true")) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (snapshot.getKey().equals(mAuth.getUid())) {
+                            for (DataSnapshot s : snapshot.getChildren()) {
+                                if (s.getKey().equals("profile")) {
+                                    if (s.getValue().equals("none")) {
+                                        startActivity(new Intent(MainActivity.this, FillingDataUserActivity.class));
+                                        fragmentsInStack.clear();
+                                        finish();
+                                    } else {
+                                        editor.putString(CHECK_DATA_PROFILE, "true");
+                                        editor.apply();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-        }
-        ta.recycle();
-        return icons;
-    }
 
-//    @Override
-//    public void onBackPressed() {
-//        finish();
-//    }
-
-    @Override
-    public void onItemSelected(int position) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        if (position == POS_PROGRESS){
-            ProfileFragment profileFragment = new ProfileFragment();
-            transaction.replace(R.id.container, profileFragment);
-        } else if (position == POS_CALC) {
-            ProfileFragment profileFragment = new ProfileFragment();
-            transaction.replace(R.id.container, profileFragment);
-        } else if (position == POS_LOGOUT) {
-            finish();
-        }
-
-        slidingRootNav.closeMenu();
-        transaction.commit();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                MyToast(databaseError.getMessage());
+            }
+        });
     }
 }

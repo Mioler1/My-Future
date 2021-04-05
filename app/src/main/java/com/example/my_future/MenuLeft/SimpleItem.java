@@ -1,4 +1,4 @@
-package com.example.my_future.Menu;
+package com.example.my_future.MenuLeft;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -9,15 +9,16 @@ import android.widget.TextView;
 
 import com.example.my_future.R;
 
-public class SimpleItem extends com.example.my_future.Menu.DrawerItem<SimpleItem.ViewHolder> {
+public class SimpleItem extends DrawerItem<SimpleItem.ViewHolder> {
+
     private int selectedItemIconTint;
     private int selectedItemTextTint;
 
     private int normalItemIconTint;
     private int normalItemTextTint;
 
-    private Drawable icon;
-    private String title;
+    private final Drawable icon;
+    private final String title;
 
     public SimpleItem(Drawable icon, String title) {
         this.icon = icon;
@@ -27,7 +28,7 @@ public class SimpleItem extends com.example.my_future.Menu.DrawerItem<SimpleItem
     @Override
     public ViewHolder createViewHolder(ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.item_option, parent, false);
+        View v = inflater.inflate(R.layout.menu_item_option, parent, false);
         return new ViewHolder(v);
     }
 
@@ -40,35 +41,35 @@ public class SimpleItem extends com.example.my_future.Menu.DrawerItem<SimpleItem
         holder.icon.setColorFilter(isChecked ? selectedItemIconTint : normalItemIconTint);
     }
 
-    public com.example.my_future.Menu.SimpleItem withSelectedIconTint(int selectedItemIconTint) {
+    public SimpleItem withSelectedIconTint(int selectedItemIconTint) {
         this.selectedItemIconTint = selectedItemIconTint;
         return this;
     }
 
-    public com.example.my_future.Menu.SimpleItem withSelectedTextTint(int selectedItemTextTint) {
+    public SimpleItem withSelectedTextTint(int selectedItemTextTint) {
         this.selectedItemTextTint = selectedItemTextTint;
         return this;
     }
 
-    public com.example.my_future.Menu.SimpleItem withIconTint(int normalItemIconTint) {
+    public SimpleItem withIconTint(int normalItemIconTint) {
         this.normalItemIconTint = normalItemIconTint;
         return this;
     }
 
-    public com.example.my_future.Menu.SimpleItem withTextTint(int normalItemTextTint) {
+    public SimpleItem withTextTint(int normalItemTextTint) {
         this.normalItemTextTint = normalItemTextTint;
         return this;
     }
 
-    static class ViewHolder extends com.example.my_future.Menu.DrawerAdapter.ViewHolder {
+    static class ViewHolder extends DrawerAdapter.ViewHolder {
 
-        private ImageView icon;
-        private TextView title;
+        private final ImageView icon;
+        private final TextView title;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            icon = itemView.findViewById(R.id.icon);
-            title = itemView.findViewById(R.id.title);
+            icon = (ImageView) itemView.findViewById(R.id.icon);
+            title = (TextView) itemView.findViewById(R.id.title);
         }
     }
 }

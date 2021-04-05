@@ -8,23 +8,13 @@
         android:layout_height="match_parent"
         android:background="@color/custom">
 
-        <TextView
-            android:id="@+id/f1"
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/yanone_kaffeesatz"
-            android:gravity="center|start"
-            android:paddingStart="15dp"
-            android:text="@string/Train"
-            android:textColor="#ffffff"
-            android:textSize="34sp" />
 
         <View
             android:id="@+id/Boo"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/f1"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="3dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/tab_indicator_gray" />

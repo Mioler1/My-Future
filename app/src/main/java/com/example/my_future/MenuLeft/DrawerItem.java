@@ -1,8 +1,8 @@
-package com.example.my_future.Menu;
+package com.example.my_future.MenuLeft;
 
 import android.view.ViewGroup;
 
-public abstract class DrawerItem<T extends com.example.my_future.Menu.DrawerAdapter.ViewHolder> {
+public abstract class DrawerItem<T extends DrawerAdapter.ViewHolder> {
 
     protected boolean isChecked;
 
@@ -10,7 +10,7 @@ public abstract class DrawerItem<T extends com.example.my_future.Menu.DrawerAdap
 
     public abstract void bindViewHolder(T holder);
 
-    public com.example.my_future.Menu.DrawerItem<T> setChecked(boolean isChecked) {
+    public DrawerItem<T> setChecked(boolean isChecked) {
         this.isChecked = isChecked;
         return this;
     }
@@ -22,4 +22,5 @@ public abstract class DrawerItem<T extends com.example.my_future.Menu.DrawerAdap
     public boolean isSelectable() {
         return true;
     }
+
 }

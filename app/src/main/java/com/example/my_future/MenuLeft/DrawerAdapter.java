@@ -1,4 +1,4 @@
-package com.example.my_future.Menu;
+package com.example.my_future.MenuLeft;
 
 import android.util.SparseArray;
 import android.view.View;
@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings({"rawtypes", "ConstantConditions"})
-public class DrawerAdapter extends RecyclerView.Adapter<com.example.my_future.Menu.DrawerAdapter.ViewHolder> {
+@SuppressWarnings({"rawtypes"})
+public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.ViewHolder> {
 
-    private List<DrawerItem> items;
-    private Map<Class<? extends DrawerItem>, Integer> viewTypes;
-    private SparseArray<DrawerItem> holderFactories;
+    private final List<DrawerItem> items;
+    private final Map<Class<? extends DrawerItem>, Integer> viewTypes;
+    private final SparseArray<DrawerItem> holderFactories;
 
     private OnItemSelectedListener listener;
 
@@ -28,26 +28,16 @@ public class DrawerAdapter extends RecyclerView.Adapter<com.example.my_future.Me
         processViewTypes();
     }
 
-    private void processViewTypes() {
-        int type = 0;
-        for (DrawerItem item : items) {
-            if (!viewTypes.containsKey(item.getClass())) {
-                viewTypes.put(item.getClass(), type);
-                holderFactories.put(type, item);
-                type++;
-            }
-        }
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ViewHolder holder = holderFactories.get(viewType).createViewHolder(parent);
-        holder.drawerAdapter= this;
+        holder.adapter = this;
         return holder;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         items.get(position).bindViewHolder(holder);
     }
@@ -60,6 +50,17 @@ public class DrawerAdapter extends RecyclerView.Adapter<com.example.my_future.Me
     @Override
     public int getItemViewType(int position) {
         return viewTypes.get(items.get(position).getClass());
+    }
+
+    private void processViewTypes() {
+        int type = 0;
+        for (DrawerItem item : items) {
+            if (!viewTypes.containsKey(item.getClass())) {
+                viewTypes.put(item.getClass(), type);
+                holderFactories.put(type, item);
+                type++;
+            }
+        }
     }
 
     public void setSelected(int position) {
@@ -76,6 +77,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<com.example.my_future.Me
                 break;
             }
         }
+
         newChecked.setChecked(true);
         notifyItemChanged(position);
 
@@ -88,22 +90,22 @@ public class DrawerAdapter extends RecyclerView.Adapter<com.example.my_future.Me
         this.listener = listener;
     }
 
-    public interface OnItemSelectedListener {
-        void onItemSelected(int position);
-    }
+    static abstract class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    static abstract class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private DrawerAdapter adapter;
 
-        private com.example.my_future.Menu.DrawerAdapter drawerAdapter;
-
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            drawerAdapter.setSelected(getAdapterPosition());
+            adapter.setSelected(getAdapterPosition());
         }
+    }
+
+    public interface OnItemSelectedListener {
+        void onItemSelected(int position);
     }
 }

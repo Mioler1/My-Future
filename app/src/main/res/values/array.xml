@@ -7,7 +7,7 @@
         <item>Помощь</item>
         <item>Калькуляторы</item>
         <item>Настройка</item>
-        <item/>
+        <item />
         <item>Выход</item>
     </string-array>
 
@@ -18,7 +18,7 @@
         <item>@drawable/ic_baseline_calculate_24</item>
         <item>@drawable/ic_settings</item>
         <item>0</item>
-        <item>@drawable/ic_baseline_login_24 </item>
+        <item>@drawable/ic_baseline_login_24</item>
     </array>
 
 </resources>
