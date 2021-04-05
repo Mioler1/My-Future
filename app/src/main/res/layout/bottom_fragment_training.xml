@@ -1,75 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/custom">
 
+        <TextView
+            android:id="@+id/f1"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/yanone_kaffeesatz"
+            android:gravity="center|start"
+            android:paddingStart="15dp"
+            android:text="@string/Train"
+            android:textColor="#ffffff"
+            android:textSize="34sp" />
 
         <View
             android:id="@+id/Boo"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="3dp"
+            android:layout_below="@+id/f1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/tab_indicator_gray" />
 
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:id="@+id/menu"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/Boo"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp">
 
-<!--            <Button-->
-<!--                android:id="@+id/AllTrains"-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="All Trains"-->
-<!--                android:textAllCaps="false"-->
-<!--                />-->
 
-<!--            <Button-->
-<!--                android:id="@+id/MyTrains"-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_toRightOf="@id/AllTrains"-->
-<!--                android:text="My Trains"-->
-<!--                android:textAllCaps="false"-->
-<!--                />-->
+            <RelativeLayout
+                android:id="@+id/Element1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/AllTrains"
+                <ImageButton
+                    android:id="@+id/Button_AllTrains"
+                    android:layout_width="175dp"
+                    android:layout_height="40dp"
+                    android:textAlignment="center"
+                    android:tooltipText="Мои тренировки"
+                    android:background="@drawable/button_full_solid"
+                    />
+
+                <TextView
+                    android:id="@+id/myImageViewText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="1dp"
+                    android:gravity="center"
+                    android:text="Все тренировки"
+                    android:textColor="@color/white" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/Element2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All trains"
-                android:textSize="28sp"/>
+                android:layout_toRightOf="@+id/Element1">
 
-            <TextView
-                android:id="@+id/MyTrains"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/AllTrains"
-                android:text="My trains"
-                android:textSize="28sp"
-                />
+                <ImageButton
+                    android:id="@+id/Button_MyTrains"
+                    android:layout_width="175dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/button_border_blue"
+                    android:textAlignment="center"
+                    android:tooltipText="Мои тренировки" />
 
+                <TextView
+                    android:id="@+id/myImageViewText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Мои тренировки"
+                    android:textColor="@color/white" />
+
+            </RelativeLayout>
 
 
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/but_start"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Начать" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/menu"
+            android:layout_marginTop="25dp">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/SportHall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="60dp"
+                        android:background="@drawable/border_for_element_training"
+                      />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="60dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/image_for_train1"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/Home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="60dp"
+                        android:background="@drawable/border_for_element_training"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/Workout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="60dp"
+                        android:background="@drawable/border_for_element_training"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/MushtsGroups"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_4"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="60dp"
+                        android:background="@drawable/border_for_element_training"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/StreetRunning"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp">
+
+                    <ImageButton
+                        android:id="@+id/image_click_activity_5"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="60dp"
+                        android:background="@drawable/border_for_element_training"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
 
     </RelativeLayout>

@@ -17,6 +17,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.my_future.FillingDataUserActivity;
+import com.example.my_future.FirstScreenActivity;
 import com.example.my_future.MenuBottom.FoodFragment;
 import com.example.my_future.MenuBottom.ForumFragment;
 import com.example.my_future.MenuBottom.NotebookFragment;
@@ -27,6 +29,7 @@ import com.example.my_future.MenuLeft.DrawerAdapter;
 import com.example.my_future.MenuLeft.DrawerItem;
 import com.example.my_future.MenuLeft.SimpleItem;
 import com.example.my_future.MenuLeft.SpaceItem;
+import com.example.my_future.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
